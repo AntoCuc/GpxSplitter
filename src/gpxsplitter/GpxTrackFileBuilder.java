@@ -22,6 +22,7 @@ public class GpxTrackFileBuilder extends GpxFileBuilder
      * GPX instructions per file and the number of files to be built.
      * TODO: split this method so it returns a testable gpx document.
      * TODO: do we need to pass in the num of instructions
+     * TODO: fix multiple files bug
      * @param file
      * @param instNum
      * @param filesNum
@@ -36,18 +37,20 @@ public class GpxTrackFileBuilder extends GpxFileBuilder
             Document newGpxDocument = createNewGpx();
             //RteType newRte = newGpxDocument.getRootElement();
 
-            Element rteSeg = new Element("trkseg");
+            Element track = new Element("trk");
+            Element trackSegment = new Element("trkseg");
+            track.setContent(trackSegment);
             for(WayPoint wpt : gpx.getIntructions())
             {
-                Element rtePt = new Element("trkpt");
-                rtePt.setAttribute("lat", wpt.getLatitude()+"");
-                rtePt.setAttribute("lon", wpt.getLongitude()+"");
+                Element trackPoint = new Element("trkpt");
+                trackPoint.setAttribute("lat", wpt.getLatitude()+"");
+                trackPoint.setAttribute("lon", wpt.getLongitude()+"");
                 Element ele = new Element("ele");
                 ele.setText(wpt.getElement());
-                rtePt.setContent(ele);
-                rteSeg.setContent(rtePt);
+                trackPoint.setContent(ele);
+                trackSegment.addContent(trackPoint);
             }
-            newGpxDocument.setContent(rteSeg);
+            newGpxDocument.getRootElement().setContent(track);
 
             saveFile(new File(file + "-" + fileNum + GPX_FORMAT), newGpxDocument);
             instrNum--; //The second route will start with the last wpt of the first
