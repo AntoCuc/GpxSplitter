@@ -1,10 +1,11 @@
 package gpxsplitter;
 
-import com.topografix.gpx.x1.x1.GpxDocument;
-import com.topografix.gpx.x1.x1.GpxType;
-import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 /**
  *
@@ -22,28 +23,24 @@ public abstract class GpxFileBuilder implements GpxBuilder
         this.gpx = gpx;
     }
 
-    protected GpxDocument createNewGpx()
+    protected Document createNewGpx()
     {
-        GpxDocument newGpxDocument = GpxDocument.Factory.newInstance();
-        GpxType newGpx = newGpxDocument.addNewGpx();
-        newGpx.setVersion(gpx.getVersion());
-        newGpx.setCreator(GPX_SPLITTER);
+        Document newGpxDocument = new Document(new Element("gpx"));
+        Element newGpx = newGpxDocument.getRootElement();
+        newGpx.setAttribute("version", gpx.getVersion());
+        newGpx.setAttribute("creator", GPX_SPLITTER);
         return newGpxDocument;
     }
 
     /**
      * This file is to be overriden in Unit tests.
      * TODO: is the dash necessary?
-     * @param fileName
+     * @param file
      * @param fileBuiltNum
      * @throws IOException
      */
-    void saveFile(String fileName, GpxDocument newGpxDocument) throws IOException
+    void saveFile(File file, Document newGpxDocument) throws IOException
     {
-        String gpxContent = newGpxDocument.toString().replace("ns:", "");
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-        bufferedWriter.write(gpxContent);
-        bufferedWriter.close();
-        //newGpxDocument.save(new File(fileName + "-" + fileBuiltNum + GPX_FORMAT));
+        new XMLOutputter().output(newGpxDocument, new FileWriter(file));
     }
 }

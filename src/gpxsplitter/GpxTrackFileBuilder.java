@@ -1,11 +1,9 @@
 package gpxsplitter;
 
-import com.topografix.gpx.x1.x1.GpxDocument;
-import com.topografix.gpx.x1.x1.TrksegType;
-import com.topografix.gpx.x1.x1.WptType;
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import org.apache.xmlbeans.XmlException;
+import org.jdom.Document;
+import org.jdom.Element;
 
 /**
  *
@@ -24,29 +22,36 @@ public class GpxTrackFileBuilder extends GpxFileBuilder
      * GPX instructions per file and the number of files to be built.
      * TODO: split this method so it returns a testable gpx document.
      * TODO: do we need to pass in the num of instructions
-     * @param fileName
+     * @param file
      * @param instNum
      * @param filesNum
      * @throws IOException
      */
-    public void build(String fileName, int totalInstructionsNum, int filesNum) throws XmlException, IOException
+    public void build(File file, int totalInstructionsNum, int filesNum) throws IOException
     {
         int fileNum = 1;
+        int instrNum = 1;
         while (fileNum <= filesNum)
         {
-            GpxDocument newGpxDocument = createNewGpx();
-            TrksegType newTrkseg = newGpxDocument.getGpx().addNewTrk().addNewTrkseg();
+            Document newGpxDocument = createNewGpx();
+            //RteType newRte = newGpxDocument.getRootElement();
 
-            for (int i = 0; i < gpx.getNumOfInstructions(); i++)
+            Element rteSeg = new Element("trkseg");
+            for(WayPoint wpt : gpx.getIntructions())
             {
-                List<WayPoint> waypoints = gpx.getIntructions();
-                WptType newTrkPoint = newTrkseg.addNewTrkpt();
-                newTrkPoint.setLat(waypoints.get(i).getLatitude());
-                newTrkPoint.setLon(waypoints.get(i).getLongitude());
-                newTrkPoint.setEle(waypoints.get(i).getElement());
+                Element rtePt = new Element("trkpt");
+                rtePt.setAttribute("lat", wpt.getLatitude()+"");
+                rtePt.setAttribute("lon", wpt.getLongitude()+"");
+                Element ele = new Element("ele");
+                ele.setText(wpt.getElement());
+                rtePt.setContent(ele);
+                rteSeg.setContent(rtePt);
             }
-            saveFile(fileName + "-" + fileNum + GPX_FORMAT, newGpxDocument);
-            fileNum++;
+            newGpxDocument.setContent(rteSeg);
+
+            saveFile(new File(file + "-" + fileNum + GPX_FORMAT), newGpxDocument);
+            instrNum--; //The second route will start with the last wpt of the first
+            fileNum++; // Proceed to next file
         }
 
     }

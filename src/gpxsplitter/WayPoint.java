@@ -5,8 +5,6 @@
 
 package gpxsplitter;
 
-import java.math.BigDecimal;
-
 /**
  *
  * @author Antonio
@@ -14,28 +12,28 @@ import java.math.BigDecimal;
 public class WayPoint
     {
 
-        private final BigDecimal latitude;
-        private final BigDecimal longitude;
-        private final BigDecimal element;
+        private final double latitude;
+        private final double longitude;
+        private final String element;
 
-        public WayPoint(BigDecimal latitude, BigDecimal longitude, BigDecimal element)
+        public WayPoint(double latitude, double longitude, String element)
         {
             this.latitude = latitude;
             this.longitude = longitude;
             this.element = element;
         }
 
-        public BigDecimal getElement()
+        public String getElement()
         {
             return element;
         }
 
-        public BigDecimal getLatitude()
+        public double getLatitude()
         {
             return latitude;
         }
 
-        public BigDecimal getLongitude()
+        public double getLongitude()
         {
             return longitude;
         }

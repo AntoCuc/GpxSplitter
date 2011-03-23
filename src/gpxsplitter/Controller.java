@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import org.apache.xmlbeans.XmlException;
+import org.jdom.JDOMException;
 
 /**
  *
@@ -32,12 +32,12 @@ public class Controller {
         this.view = view;
     }
 
-    void loadGpxFile(File gpxFile) throws XmlException, IOException {
+    void loadGpxFile(File gpxFile) throws IOException, JDOMException {
         loadedGpx = new Gpx(gpxFile);
         view.update(loadedGpx);
     }
 
-    void saveGpxFile(int desiredInstrNum, String gpxType, String fileName) throws IOException, XmlException {
+    void saveGpxFile(int desiredInstrNum, String gpxType, File file) throws IOException{
         if(loadedGpx == null)
         {
             JOptionPane.showMessageDialog(null, "A GPX to split has to be selected", "Error", JOptionPane.ERROR_MESSAGE);
@@ -55,7 +55,7 @@ public class Controller {
         }
         int totalNumOfInstr = loadedGpx.getNumOfInstructions();
         int filesNum = howManyFiles(totalNumOfInstr, desiredInstrNum);
-        gpxBuilder.build(fileName, totalNumOfInstr, filesNum);
+        gpxBuilder.build(file, totalNumOfInstr, filesNum);
         view.gpxSavedSuccessfully();
     }
 

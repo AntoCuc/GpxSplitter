@@ -1,16 +1,14 @@
 package gpxsplitter;
 
-import com.topografix.gpx.x1.x1.GpxDocument;
-import com.topografix.gpx.x1.x1.TrkType;
-import com.topografix.gpx.x1.x1.TrksegType;
-import com.topografix.gpx.x1.x1.WptType;
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.xmlbeans.XmlException;
-import org.apache.xmlbeans.XmlObject;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.filter.ElementFilter;
+import org.jdom.input.SAXBuilder;
 
 /**
  *
@@ -19,52 +17,58 @@ import org.apache.xmlbeans.XmlObject;
 public final class Gpx
 {
 
-    private final GpxDocument gpxDocument;
+    private final Document gpxDocument;
     private final File gpxFile;
     private final GpxType gpxType;
 
-    Gpx(File gpxFile) throws XmlException, IOException
+    Gpx(File gpxFile) throws IOException, JDOMException
     {
         this.gpxFile = gpxFile;
-        this.gpxDocument = GpxDocument.Factory.parse(gpxFile);
+        SAXBuilder builder = new SAXBuilder();
+        this.gpxDocument = builder.build(gpxFile);
         this.gpxType = getType();
     }
 
     String getVersion()
     {
 
-        return gpxDocument.getGpx().getVersion();
+        return ((Element) gpxDocument.getRootElement()).getAttributeValue("version");
     }
 
-    GpxType getType() throws XmlException
+    GpxType getType()
     {
-        if (gpxDocument.getGpx().getTrkArray().length > 0)
+        List segs = gpxDocument.getRootElement().getChildren();
+        
+        if (((Element)segs.get(0)).getName().equals("trk"))
         {
             return GpxType.Track;
         }
-        else if (gpxDocument.getGpx().getRteArray().length > 0)
+        else if (((Element) gpxDocument.getRootElement()).getChild("rte") != null)
         {
             return GpxType.Route;
         }
         else
         {
-            throw new XmlException("The gpx does not seem to be of the track nor route type");
+            return GpxType.NA;
         }
     }
 
-    int getNumOfInstructions() throws XmlException
+    int getNumOfInstructions()
     {
         if (gpxType == GpxType.Track)
         {
-            return gpxDocument.getGpx().getTrkArray()[0].getTrksegArray()[0].getTrkptArray().length;
+            /**
+             * TODO: refactor this
+             */
+            return ((Element)((Element)((Element) gpxDocument.getRootElement()).getChildren().get(0)).getChildren().get(1)).getChildren().size();
         }
         else if (gpxType == GpxType.Route)
         {
-            return gpxDocument.getGpx().getRteArray()[0].getRteptArray().length;
+            return ((Element) gpxDocument.getRootElement()).getChild("rte").getChild("rteseg").getChildren("rtept").size();
         }
         else
         {
-            throw new XmlException("The gpx does not seem to be of the track nor route type");
+            return 0;
         }
     }
 
@@ -78,21 +82,29 @@ public final class Gpx
         List<WayPoint> instructions = new ArrayList<WayPoint>();
         if (gpxType == GpxType.Track)
         {
-            WptType[] instr = gpxDocument.getGpx().getTrkArray()[0].getTrksegArray()[0].getTrkptArray();
-            for (int i = 0; i < instr.length; i++)
+            List<Element> instructionsList = ((Element)((Element)((Element) gpxDocument.getRootElement()).getChildren().get(0)).getChildren().get(1)).getChildren();
+            for (Element instruction : instructionsList)
             {
-                instructions.add(new WayPoint(instr[i].getLat(),
-                        instr[i].getLon(), instr[i].getEle()));
+                instructions.add(
+                        new WayPoint(
+                        Double.parseDouble(instruction.getAttributeValue("lat")),
+                        Double.parseDouble(instruction.getAttributeValue("lon")),
+                        ((Element)instruction.getContent(new ElementFilter("ele")).get(0)).getValue()
+                        ));
             }
             return instructions;
         }
         else
         {
-            WptType[] instr = gpxDocument.getGpx().getRteArray()[0].getRteptArray();
-            for (int i = 0; i < instr.length; i++)
+            List<Element> instructionsList = ((Element) gpxDocument.getRootElement()).getChild("rte").getChild("rteseg").getChildren("rtept");
+            for (Element instruction : instructionsList)
             {
-                instructions.add(new WayPoint(instr[i].getLat(),
-                        instr[i].getLon(), instr[i].getEle()));
+                instructions.add(
+                        new WayPoint(
+                        Double.parseDouble(instruction.getAttributeValue("lat")),
+                        Double.parseDouble(instruction.getAttributeValue("lon")),
+                        instruction.getChildText("ele"))
+                        );
             }
             return instructions;
         }

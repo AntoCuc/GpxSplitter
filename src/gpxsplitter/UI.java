@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import org.apache.xmlbeans.XmlException;
+import org.jdom.JDOMException;
 
 /**
  *
@@ -137,12 +137,11 @@ public class UI extends javax.swing.JFrame
             {
                 controller.loadGpxFile(selectedFile);
             }
-            catch (XmlException ex)
-            {
-                JOptionPane.showMessageDialog(this, "Attempting to load invalid file",
-                        "File error", JOptionPane.WARNING_MESSAGE);
-            }
             catch (IOException ex)
+            {
+                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch (JDOMException ex)
             {
                 Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -168,12 +167,11 @@ public class UI extends javax.swing.JFrame
         }
         try
         {
-            controller.saveGpxFile(instNum, gpxType, fileName.toString());
+            JFileChooser saveFileChooser = new JFileChooser(fileName);
+            saveFileChooser.setFileFilter(new GpxFileFilter());
+            saveFileChooser.showSaveDialog(this);
+            controller.saveGpxFile(instNum, gpxType, saveFileChooser.getSelectedFile());
 
-        }
-        catch (XmlException e)
-        {
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
         catch (IOException e)
         {
@@ -212,7 +210,7 @@ public class UI extends javax.swing.JFrame
      * Miniature observer/Observable pattern
      * @param gpx Used to populate the UI
      */
-    public void update(Gpx gpx) throws XmlException
+    public void update(Gpx gpx)
     {
         fileTypeValue.setText("Gpx " + gpx.getType() + " " + gpx.getVersion() + " (" + gpx.getNumOfInstructions() + " instructions)");
         openFileField.setText(gpx.getFilePath());
