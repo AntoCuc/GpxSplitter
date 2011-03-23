@@ -7,6 +7,7 @@ import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.Namespace;
 import org.jdom.filter.ElementFilter;
 import org.jdom.input.SAXBuilder;
 
@@ -16,22 +17,25 @@ import org.jdom.input.SAXBuilder;
  */
 public final class Gpx
 {
+    public static final String TRACKSEGMENT_TAG = "trkseg";
+    public static final String TRACKPOINT = "trkpt";
     public static final String ELEMENT_TAG = "ele";
     public static final String LATITUDE_TAG = "lat";
     public static final String LONGITUDE_TAG = "lon";
     public static final String TRK_TAG = "trk";
     private static final String RTE_TAG = "rte";
     private static final String VERSION = "version";
-
     private final Document gpxDocument;
     private final File gpxFile;
     private final GpxType gpxType;
+    private final Namespace namespace;
 
     Gpx(File gpxFile) throws IOException, JDOMException
     {
         this.gpxFile = gpxFile;
         SAXBuilder builder = new SAXBuilder();
         this.gpxDocument = builder.build(gpxFile);
+        this.namespace = gpxDocument.getRootElement().getNamespace();
         this.gpxType = getType();
     }
 
@@ -43,9 +47,7 @@ public final class Gpx
 
     GpxType getType()
     {
-        List segs = gpxDocument.getRootElement().getChildren();
-        
-        if (((Element)segs.get(0)).getName().equals(TRK_TAG))
+        if (gpxDocument.getRootElement().getChild(TRK_TAG, namespace) != null)
         {
             return GpxType.Track;
         }
@@ -63,10 +65,7 @@ public final class Gpx
     {
         if (gpxType == GpxType.Track)
         {
-            /**
-             * TODO: refactor this
-             */
-            return ((Element)((Element)((Element) gpxDocument.getRootElement()).getChildren().get(0)).getChildren().get(1)).getChildren().size();
+            return gpxDocument.getRootElement().getChild(TRK_TAG, namespace).getChild(TRACKSEGMENT_TAG, namespace).getChildren().size();
         }
         else if (gpxType == GpxType.Route)
         {
@@ -88,15 +87,14 @@ public final class Gpx
         List<WayPoint> instructions = new ArrayList<WayPoint>();
         if (gpxType == GpxType.Track)
         {
-            List<Element> instructionsList = ((Element)((Element)((Element) gpxDocument.getRootElement()).getChildren().get(0)).getChildren().get(1)).getChildren();
+            List<Element> instructionsList = gpxDocument.getRootElement().getChild(TRK_TAG, namespace).getChild(TRACKSEGMENT_TAG, namespace).getChildren();
             for (Element instruction : instructionsList)
             {
                 instructions.add(
                         new WayPoint(
                         Double.parseDouble(instruction.getAttributeValue(LATITUDE_TAG)),
                         Double.parseDouble(instruction.getAttributeValue(LONGITUDE_TAG)),
-                        ((Element)instruction.getContent(new ElementFilter(ELEMENT_TAG)).get(0)).getValue()
-                        ));
+                        ((Element) instruction.getContent(new ElementFilter(ELEMENT_TAG)).get(0)).getValue()));
             }
             return instructions;
         }
@@ -109,8 +107,7 @@ public final class Gpx
                         new WayPoint(
                         Double.parseDouble(instruction.getAttributeValue(LATITUDE_TAG)),
                         Double.parseDouble(instruction.getAttributeValue(LONGITUDE_TAG)),
-                        instruction.getChildText(ELEMENT_TAG))
-                        );
+                        instruction.getChildText(ELEMENT_TAG)));
             }
             return instructions;
         }
