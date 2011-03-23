@@ -16,6 +16,12 @@ import org.jdom.input.SAXBuilder;
  */
 public final class Gpx
 {
+    public static final String ELEMENT_TAG = "ele";
+    public static final String LATITUDE_TAG = "lat";
+    public static final String LONGITUDE_TAG = "lon";
+    private static final String RTE_TAG = "rte";
+    private static final String TRK_TAG = "trk";
+    private static final String VERSION = "version";
 
     private final Document gpxDocument;
     private final File gpxFile;
@@ -32,18 +38,18 @@ public final class Gpx
     String getVersion()
     {
 
-        return ((Element) gpxDocument.getRootElement()).getAttributeValue("version");
+        return ((Element) gpxDocument.getRootElement()).getAttributeValue(VERSION);
     }
 
     GpxType getType()
     {
         List segs = gpxDocument.getRootElement().getChildren();
         
-        if (((Element)segs.get(0)).getName().equals("trk"))
+        if (((Element)segs.get(0)).getName().equals(TRK_TAG))
         {
             return GpxType.Track;
         }
-        else if (((Element) gpxDocument.getRootElement()).getChild("rte") != null)
+        else if (((Element) gpxDocument.getRootElement()).getChild(RTE_TAG) != null)
         {
             return GpxType.Route;
         }
@@ -64,7 +70,7 @@ public final class Gpx
         }
         else if (gpxType == GpxType.Route)
         {
-            return ((Element) gpxDocument.getRootElement()).getChild("rte").getChild("rteseg").getChildren("rtept").size();
+            return ((Element) gpxDocument.getRootElement()).getChild(RTE_TAG).getChild("rteseg").getChildren("rtept").size();
         }
         else
         {
@@ -87,23 +93,23 @@ public final class Gpx
             {
                 instructions.add(
                         new WayPoint(
-                        Double.parseDouble(instruction.getAttributeValue("lat")),
-                        Double.parseDouble(instruction.getAttributeValue("lon")),
-                        ((Element)instruction.getContent(new ElementFilter("ele")).get(0)).getValue()
+                        Double.parseDouble(instruction.getAttributeValue(LATITUDE_TAG)),
+                        Double.parseDouble(instruction.getAttributeValue(LONGITUDE_TAG)),
+                        ((Element)instruction.getContent(new ElementFilter(ELEMENT_TAG)).get(0)).getValue()
                         ));
             }
             return instructions;
         }
         else
         {
-            List<Element> instructionsList = ((Element) gpxDocument.getRootElement()).getChild("rte").getChild("rteseg").getChildren("rtept");
+            List<Element> instructionsList = ((Element) gpxDocument.getRootElement()).getChild(RTE_TAG).getChild("rteseg").getChildren("rtept");
             for (Element instruction : instructionsList)
             {
                 instructions.add(
                         new WayPoint(
-                        Double.parseDouble(instruction.getAttributeValue("lat")),
-                        Double.parseDouble(instruction.getAttributeValue("lon")),
-                        instruction.getChildText("ele"))
+                        Double.parseDouble(instruction.getAttributeValue(LATITUDE_TAG)),
+                        Double.parseDouble(instruction.getAttributeValue(LONGITUDE_TAG)),
+                        instruction.getChildText(ELEMENT_TAG))
                         );
             }
             return instructions;

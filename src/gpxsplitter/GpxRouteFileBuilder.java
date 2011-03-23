@@ -27,9 +27,9 @@ public class GpxRouteFileBuilder extends GpxFileBuilder{
             for(WayPoint wpt : gpx.getIntructions())
             {
                 Element rtePt = new Element("rtePt");
-                rtePt.setAttribute("lat", wpt.getLatitude()+"");
-                rtePt.setAttribute("lon", wpt.getLongitude()+"");
-                Element ele = new Element("ele");
+                rtePt.setAttribute(Gpx.LATITUDE_TAG, wpt.getLatitude()+"");
+                rtePt.setAttribute(Gpx.LONGITUDE_TAG, wpt.getLongitude()+"");
+                Element ele = new Element(Gpx.ELEMENT_TAG);
                 ele.setText(wpt.getElement()+"");
                 rtePt.setContent(ele);
                 rteSeg.setContent(rtePt);
