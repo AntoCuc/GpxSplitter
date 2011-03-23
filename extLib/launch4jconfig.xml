@@ -1,0 +1,36 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\dist\GpxSplitter.jar</jar>
+  <outfile>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\dist\GpxSplitter.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon></icon>
+  <singleInstance>
+    <mutexName>GpxSplitter</mutexName>
+    <windowTitle>GpxSplitter</windowTitle>
+  </singleInstance>
+  <classPath>
+    <mainClass>gpxsplitter.Controller</mainClass>
+    <cp>lib/gpx1-1.jar</cp>
+    <cp>lib/jsr173_1.0_api.jar</cp>
+    <cp>lib/resolver.jar</cp>
+    <cp>lib/xbean.jar</cp>
+    <cp>lib/xbean_xpath.jar</cp>
+    <cp>lib/xmlbeans-qname.jar</cp>
+    <cp>lib/xmlpublic.jar</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <minVersion>1.5.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+  </jre>
+</launch4jConfig>
