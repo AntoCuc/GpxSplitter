@@ -12,7 +12,6 @@ import org.jdom.Element;
 public class GpxTrackFileBuilder extends GpxFileBuilder
 {
     private static final String TRACKSEGMENT_TAG = "trkseg";
-    private static final String TRACK_TAG = "trk";
     private static final String TRACKPOINT = "trkpt";
 
     public GpxTrackFileBuilder(Gpx gpx)
@@ -40,7 +39,7 @@ public class GpxTrackFileBuilder extends GpxFileBuilder
             Document newGpxDocument = createNewGpx();
             //RteType newRte = newGpxDocument.getRootElement();
 
-            Element track = new Element(TRACK_TAG);
+            Element track = new Element(Gpx.TRK_TAG);
             Element trackSegment = new Element(TRACKSEGMENT_TAG);
             track.setContent(trackSegment);
             for(WayPoint wpt : gpx.getIntructions())

@@ -19,8 +19,8 @@ public final class Gpx
     public static final String ELEMENT_TAG = "ele";
     public static final String LATITUDE_TAG = "lat";
     public static final String LONGITUDE_TAG = "lon";
+    public static final String TRK_TAG = "trk";
     private static final String RTE_TAG = "rte";
-    private static final String TRK_TAG = "trk";
     private static final String VERSION = "version";
 
     private final Document gpxDocument;
