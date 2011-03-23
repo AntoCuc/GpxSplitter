@@ -59,9 +59,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Browse..."/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="browseGpxFile"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="fileTypeLabel">
           <Properties>
@@ -178,9 +175,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Split"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="saveGpxFile"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

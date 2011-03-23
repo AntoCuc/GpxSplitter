@@ -5,13 +5,10 @@
  */
 package gpxsplitter;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import org.jdom.JDOMException;
 
 /**
  *
@@ -71,11 +68,6 @@ public class UI extends javax.swing.JFrame
         topPanel.add(openFileField);
 
         browseButton.setText("Browse...");
-        browseButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                browseGpxFile(evt);
-            }
-        });
         topPanel.add(browseButton);
 
         fileTypeLabel.setText("Loaded gpx:");
@@ -113,11 +105,6 @@ public class UI extends javax.swing.JFrame
 
         saveFileButton.setFont(new java.awt.Font("Tahoma", 1, 11));
         saveFileButton.setText("Split");
-        saveFileButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                saveGpxFile(evt);
-            }
-        });
         bottomPanel.add(saveFileButton);
 
         getContentPane().add(bottomPanel);
@@ -125,59 +112,6 @@ public class UI extends javax.swing.JFrame
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         setBounds((screenSize.width-416)/2, (screenSize.height-323)/2, 416, 323);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void browseGpxFile(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_browseGpxFile
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new GpxFileFilter());
-        fileChooser.showOpenDialog(this);
-        File selectedFile = fileChooser.getSelectedFile();
-        if (selectedFile != null)
-        {
-            try
-            {
-                controller.loadGpxFile(selectedFile);
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (JDOMException ex)
-            {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_browseGpxFile
-
-    private void saveGpxFile(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveGpxFile
-        String numOfInstructions = instrNumField.getText();
-        if (!isAValidInteger(numOfInstructions))
-        {
-            JOptionPane.showMessageDialog(this, "Instructions number not valid",
-                    "Validation error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int instNum = Integer.parseInt(numOfInstructions);
-        String gpxType = gpxTypeComboBox.getSelectedItem().toString();
-        String fileName = fileNameField.getText();
-        if (fileName.isEmpty())
-        {
-            JOptionPane.showMessageDialog(this, "File name cannot be empty",
-                    "Validation error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try
-        {
-            JFileChooser saveFileChooser = new JFileChooser(fileName);
-            saveFileChooser.setFileFilter(new GpxFileFilter());
-            saveFileChooser.showSaveDialog(this);
-            controller.saveGpxFile(instNum, gpxType, saveFileChooser.getSelectedFile());
-
-        }
-        catch (IOException e)
-        {
-            JOptionPane.showMessageDialog(this, "Problem whilst saving the file.");
-        }
-    }//GEN-LAST:event_saveGpxFile
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseButton;
     private javax.swing.JTextField fileNameField;
@@ -191,19 +125,6 @@ public class UI extends javax.swing.JFrame
     void setController(Controller controller)
     {
         this.controller = controller;
-    }
-
-    private boolean isAValidInteger(String intAsStr)
-    {
-        try
-        {
-            Integer.parseInt(intAsStr);
-            return true;
-        }
-        catch (NumberFormatException e)
-        {
-            return false;
-        }
     }
 
     /***
@@ -234,5 +155,30 @@ public class UI extends javax.swing.JFrame
     {
         JOptionPane.showMessageDialog(this, "Split GPX successfully saved.",
                 "Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    JButton getBrowseButton()
+    {
+        return browseButton;
+    }
+
+    JButton getSaveFileButton()
+    {
+        return saveFileButton;
+    }
+
+    String getInstructionsNumber()
+    {
+        return instrNumField.getText();
+    }
+
+    String getHighlightedGpxType()
+    {
+        return gpxTypeComboBox.getSelectedItem().toString();
+    }
+
+    String getNewGpxFileName()
+    {
+        return fileNameField.getText();
     }
 }
