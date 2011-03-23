@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import org.jdom.JDOMException;
 
@@ -71,11 +70,11 @@ public class Controller
     {
         if (loadedGpx == null)
         {
-            JOptionPane.showMessageDialog(null, "A GPX to split has to be selected", "Error", JOptionPane.ERROR_MESSAGE);
+            view.showMessage("A GPX to split has to be selected");
             return;
         }
 
-        JOptionPane.showMessageDialog(null, "Saving Gpx file(s) \n Instructions number: "
+        view.showMessage("Saving Gpx file(s) \n Instructions number: "
                 + desiredInstrNum + "\n Gpx Type: " + gpxType);
 
         GpxFileBuilder gpxBuilder;
@@ -148,8 +147,7 @@ public class Controller
         String numOfInstructions = view.getInstructionsNumber();
         if (!isAValidInteger(numOfInstructions))
         {
-            JOptionPane.showMessageDialog(view, "Instructions number not valid",
-                    "Validation error", JOptionPane.ERROR_MESSAGE);
+            view.showMessage("Instructions number not valid");
             return;
         }
         int instNum = Integer.parseInt(numOfInstructions);
@@ -157,8 +155,7 @@ public class Controller
         String fileName = view.getNewGpxFileName();
         if (fileName.isEmpty())
         {
-            JOptionPane.showMessageDialog(view, "File name cannot be empty",
-                    "Validation error", JOptionPane.ERROR_MESSAGE);
+            view.showMessage("File name cannot be empty");
             return;
         }
         try
@@ -171,7 +168,7 @@ public class Controller
         }
         catch (IOException e)
         {
-            JOptionPane.showMessageDialog(view, "Problem whilst saving the file.");
+            view.showMessage("Problem whilst saving the file.");
         }
     }
 

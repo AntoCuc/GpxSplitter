@@ -153,8 +153,7 @@ public class UI extends javax.swing.JFrame
 
     void gpxSavedSuccessfully()
     {
-        JOptionPane.showMessageDialog(this, "Split GPX successfully saved.",
-                "Information", JOptionPane.INFORMATION_MESSAGE);
+        showMessage("Split GPX successfully saved.");
     }
 
     JButton getBrowseButton()
@@ -180,5 +179,10 @@ public class UI extends javax.swing.JFrame
     String getNewGpxFileName()
     {
         return fileNameField.getText();
+    }
+
+    public void showMessage(String message)
+    {
+        JOptionPane.showMessageDialog(this, message);
     }
 }
