@@ -94,7 +94,7 @@ public final class Gpx
                         new WayPoint(
                         Double.parseDouble(instruction.getAttributeValue(LATITUDE_TAG)),
                         Double.parseDouble(instruction.getAttributeValue(LONGITUDE_TAG)),
-                        ((Element) instruction.getContent(new ElementFilter(ELEMENT_TAG)).get(0)).getValue()));
+                        instruction.getChildText(ELEMENT_TAG, namespace)));
             }
             return instructions;
         }
