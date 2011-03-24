@@ -63,7 +63,7 @@ public class Controller
     void loadGpxFile(File gpxFile) throws IOException, JDOMException
     {
         loadedGpx = new Gpx(gpxFile);
-        view.update(loadedGpx);
+        view.updateTopPanel(loadedGpx);
     }
 
     void saveGpxFile(int desiredInstrNum, String gpxType, File file) throws IOException
@@ -89,7 +89,7 @@ public class Controller
         int totalNumOfInstr = loadedGpx.getNumOfInstructions();
         int filesNum = howManyFiles(totalNumOfInstr, desiredInstrNum);
         gpxBuilder.build(file, totalNumOfInstr, filesNum);
-        view.gpxSavedSuccessfully();
+        view.showMessage("Split GPX successfully saved.");
     }
 
     /**

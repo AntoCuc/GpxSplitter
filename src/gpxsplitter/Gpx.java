@@ -8,7 +8,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
-import org.jdom.filter.ElementFilter;
 import org.jdom.input.SAXBuilder;
 
 /**
@@ -17,6 +16,7 @@ import org.jdom.input.SAXBuilder;
  */
 public final class Gpx
 {
+
     public static final String TRACKSEGMENT_TAG = "trkseg";
     public static final String TRACKPOINT = "trkpt";
     public static final String ELEMENT_TAG = "ele";
@@ -107,7 +107,7 @@ public final class Gpx
                         new WayPoint(
                         Double.parseDouble(instruction.getAttributeValue(LATITUDE_TAG)),
                         Double.parseDouble(instruction.getAttributeValue(LONGITUDE_TAG)),
-                        instruction.getChildText(ELEMENT_TAG)));
+                        instruction.getChildText(ELEMENT_TAG, namespace)));
             }
             return instructions;
         }

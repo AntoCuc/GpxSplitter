@@ -1,13 +1,6 @@
-/*
- * GpsSplitterFrame.java
- *
- * Created on 18-Jan-2011, 09:26:42
- */
 package gpxsplitter;
 
-import java.io.IOException;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -127,11 +120,7 @@ public class UI extends javax.swing.JFrame
         this.controller = controller;
     }
 
-    /***
-     * Miniature observer/Observable pattern
-     * @param gpx Used to populate the UI
-     */
-    public void update(Gpx gpx)
+    public void updateTopPanel(Gpx gpx)
     {
         fileTypeValue.setText("Gpx " + gpx.getType() + " " + gpx.getVersion() + " (" + gpx.getNumOfInstructions() + " instructions)");
         openFileField.setText(gpx.getFilePath());
@@ -149,11 +138,6 @@ public class UI extends javax.swing.JFrame
         {
             gpxTypeComboBox.addItem(format);
         }
-    }
-
-    void gpxSavedSuccessfully()
-    {
-        showMessage("Split GPX successfully saved.");
     }
 
     JButton getBrowseButton()
