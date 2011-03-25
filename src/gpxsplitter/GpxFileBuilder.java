@@ -14,7 +14,6 @@ import org.jdom.output.XMLOutputter;
 public abstract class GpxFileBuilder implements GpxBuilder
 {
 
-    private static final String GPX_SPLITTER = "Gpx Splitter";
     public static final String GPX_FORMAT = ".gpx";
     protected Gpx gpx;
 
@@ -28,7 +27,7 @@ public abstract class GpxFileBuilder implements GpxBuilder
         Document newGpxDocument = new Document(new Element("gpx"));
         Element newGpx = newGpxDocument.getRootElement();
         newGpx.setAttribute("version", gpx.getVersion());
-        newGpx.setAttribute("creator", GPX_SPLITTER);
+        newGpx.setAttribute("creator", UI.GPX_SPLITTER);
         return newGpxDocument;
     }
 

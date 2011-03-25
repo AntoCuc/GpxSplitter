@@ -14,7 +14,8 @@ import org.jdom.input.SAXBuilder;
  *
  * @author Antonio
  */
-public class GpxLoader {
+public class GpxLoader
+{
 
     private final Document gpxDocument;
     private final Gpx newGpx;
@@ -23,13 +24,13 @@ public class GpxLoader {
     {
         SAXBuilder builder = new SAXBuilder();
         this.gpxDocument = builder.build(file);
-        
+
         this.newGpx = new Gpx(getNamespace(), getType(), getVersion(), file.getAbsolutePath(), getInstructions());
     }
 
     private Namespace getNamespace()
     {
-       return gpxDocument.getRootElement().getNamespace();
+        return gpxDocument.getRootElement().getNamespace();
     }
 
     public Gpx getLoadedGpx()
@@ -44,7 +45,7 @@ public class GpxLoader {
         {
             return GpxType.Track;
         }
-        else if (((Element) gpxDocument.getRootElement()).getChild(Gpx.RTE_TAG) != null)
+        else if (gpxDocument.getRootElement().getChild(Gpx.RTE_TAG) != null)
         {
             return GpxType.Route;
         }
@@ -56,8 +57,7 @@ public class GpxLoader {
 
     private String getVersion()
     {
-
-        return ((Element) gpxDocument.getRootElement()).getAttributeValue(Gpx.VERSION);
+        return gpxDocument.getRootElement().getAttributeValue(Gpx.VERSION);
     }
 
     private List<WayPoint> getInstructions()
@@ -78,18 +78,16 @@ public class GpxLoader {
         }
         else
         {
-            List<Element> instructionsList = ((Element) gpxDocument.getRootElement()).getChild(Gpx.RTE_TAG).getChild("rteseg").getChildren("rtept");
+            List<Element> instructionsList = gpxDocument.getRootElement().getChild(Gpx.RTE_TAG).getChild("rteseg").getChildren("rtept");
             for (Element instruction : instructionsList)
             {
                 instructions.add(
                         new WayPoint(
                         Double.parseDouble(instruction.getAttributeValue(Gpx.LATITUDE_TAG)),
                         Double.parseDouble(instruction.getAttributeValue(Gpx.LONGITUDE_TAG)),
-                        instruction.getChildText(Gpx.ELEMENT_TAG, newGpx.getNamespace())));
+                        instruction.getChildText(Gpx.ELEMENT_TAG, getNamespace())));
             }
             return instructions;
         }
     }
-
-
 }

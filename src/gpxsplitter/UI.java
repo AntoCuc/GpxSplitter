@@ -10,7 +10,8 @@ import javax.swing.JOptionPane;
 public class UI extends javax.swing.JFrame
 {
 
-    Controller controller;
+    public static final String GPX_SPLITTER = "Gpx Splitter";
+    private Controller controller;
 
     /** Creates new form GpsSplitterFrame */
     public UI()
@@ -51,6 +52,7 @@ public class UI extends javax.swing.JFrame
         saveFileButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle(GPX_SPLITTER);
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridLayout(3, 1, 10, 10));
 
