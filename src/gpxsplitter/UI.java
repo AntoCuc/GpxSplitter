@@ -120,12 +120,6 @@ public class UI extends javax.swing.JFrame
         this.controller = controller;
     }
 
-    public void updateTopPanel(Gpx gpx)
-    {
-        fileTypeValue.setText("Gpx " + gpx.getType() + " " + gpx.getVersion() + " (" + gpx.getNumOfInstructions() + " instructions)");
-        openFileField.setText(gpx.getFilePath());
-    }
-
     GpxFormat getSelectedGpxType()
     {
         return (GpxFormat) gpxTypeComboBox.getSelectedItem();
@@ -163,6 +157,16 @@ public class UI extends javax.swing.JFrame
     String getNewGpxFileName()
     {
         return fileNameField.getText();
+    }
+
+    public void setFileTypeValue(String fileType)
+    {
+        fileTypeValue.setText(fileType);
+    }
+
+    public void setOpenFileField(String openedFile)
+    {
+        openFileField.setText(openedFile);
     }
 
     public void showMessage(String message)

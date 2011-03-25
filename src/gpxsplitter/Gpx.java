@@ -1,14 +1,7 @@
 package gpxsplitter;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
 
 /**
  *
@@ -23,93 +16,55 @@ public final class Gpx
     public static final String LATITUDE_TAG = "lat";
     public static final String LONGITUDE_TAG = "lon";
     public static final String TRK_TAG = "trk";
-    private static final String RTE_TAG = "rte";
-    private static final String VERSION = "version";
-    private final Document gpxDocument;
-    private final File gpxFile;
-    private final GpxType gpxType;
+    public static final String RTE_TAG = "rte";
+    public static final String VERSION = "version";
     private final Namespace namespace;
+    private final GpxType gpxType;
+    private final String version;
+    private final List<WayPoint> instructions;
+    private final String filePath;
 
-    Gpx(File gpxFile) throws IOException, JDOMException
+    Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<WayPoint> instructions)
     {
-        this.gpxFile = gpxFile;
-        SAXBuilder builder = new SAXBuilder();
-        this.gpxDocument = builder.build(gpxFile);
-        this.namespace = gpxDocument.getRootElement().getNamespace();
-        this.gpxType = getType();
+        this.namespace = namespace;
+        this.gpxType = gpxType;
+        this.version = version;
+        this.instructions = instructions;
+        this.filePath = filePath;
     }
 
-    String getVersion()
+    public GpxType getGpxType()
     {
-
-        return ((Element) gpxDocument.getRootElement()).getAttributeValue(VERSION);
-    }
-
-    GpxType getType()
-    {
-        if (gpxDocument.getRootElement().getChild(TRK_TAG, namespace) != null)
-        {
-            return GpxType.Track;
-        }
-        else if (((Element) gpxDocument.getRootElement()).getChild(RTE_TAG) != null)
-        {
-            return GpxType.Route;
-        }
-        else
-        {
-            return GpxType.NA;
-        }
+        return gpxType;
     }
 
     int getNumOfInstructions()
     {
-        if (gpxType == GpxType.Track)
-        {
-            return gpxDocument.getRootElement().getChild(TRK_TAG, namespace).getChild(TRACKSEGMENT_TAG, namespace).getChildren().size();
-        }
-        else if (gpxType == GpxType.Route)
-        {
-            return ((Element) gpxDocument.getRootElement()).getChild(RTE_TAG).getChild("rteseg").getChildren("rtept").size();
-        }
-        else
-        {
-            return 0;
-        }
+        return this.instructions.size();
+    }
+
+    public List<WayPoint> getInstructions()
+    {
+        return instructions;
+    }
+
+    Namespace getNamespace()
+    {
+        return namespace;
+    }
+
+    String getVersion()
+    {
+        return version;
+    }
+
+    String getType()
+    {
+        return gpxType.toString();
     }
 
     String getFilePath()
     {
-        return gpxFile.getAbsolutePath();
-    }
-
-    List<WayPoint> getIntructions()
-    {
-        List<WayPoint> instructions = new ArrayList<WayPoint>();
-        if (gpxType == GpxType.Track)
-        {
-            List<Element> instructionsList = gpxDocument.getRootElement().getChild(TRK_TAG, namespace).getChild(TRACKSEGMENT_TAG, namespace).getChildren();
-            for (Element instruction : instructionsList)
-            {
-                instructions.add(
-                        new WayPoint(
-                        Double.parseDouble(instruction.getAttributeValue(LATITUDE_TAG)),
-                        Double.parseDouble(instruction.getAttributeValue(LONGITUDE_TAG)),
-                        instruction.getChildText(ELEMENT_TAG, namespace)));
-            }
-            return instructions;
-        }
-        else
-        {
-            List<Element> instructionsList = ((Element) gpxDocument.getRootElement()).getChild(RTE_TAG).getChild("rteseg").getChildren("rtept");
-            for (Element instruction : instructionsList)
-            {
-                instructions.add(
-                        new WayPoint(
-                        Double.parseDouble(instruction.getAttributeValue(LATITUDE_TAG)),
-                        Double.parseDouble(instruction.getAttributeValue(LONGITUDE_TAG)),
-                        instruction.getChildText(ELEMENT_TAG, namespace)));
-            }
-            return instructions;
-        }
+        return filePath;
     }
 }

@@ -40,7 +40,7 @@ public class GpxTrackFileBuilder extends GpxFileBuilder
             Element track = new Element(Gpx.TRK_TAG);
             Element trackSegment = new Element(Gpx.TRACKSEGMENT_TAG);
             track.setContent(trackSegment);
-            for(WayPoint wpt : gpx.getIntructions())
+            for(WayPoint wpt : gpx.getInstructions())
             {
                 Element trackPoint = new Element(Gpx.TRACKPOINT);
                 trackPoint.setAttribute(Gpx.LATITUDE_TAG, wpt.getLatitude()+"");

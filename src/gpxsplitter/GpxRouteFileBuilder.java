@@ -24,7 +24,7 @@ public class GpxRouteFileBuilder extends GpxFileBuilder{
             //RteType newRte = newGpxDocument.getRootElement();
 
             Element rteSeg = new Element("rteseg");
-            for(WayPoint wpt : gpx.getIntructions())
+            for(WayPoint wpt : gpx.getInstructions())
             {
                 Element rtePt = new Element("rtePt");
                 rtePt.setAttribute(Gpx.LATITUDE_TAG, wpt.getLatitude()+"");
