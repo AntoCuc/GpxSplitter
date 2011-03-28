@@ -49,7 +49,7 @@ public class GpxLoader
         {
             return GpxType.Track;
         }
-        else if (gpxDocument.getRootElement().getChild(Gpx.RTE_TAG) != null)
+        else if (gpxDocument.getRootElement().getChild(Gpx.RTE_TAG, getNamespace()) != null)
         {
             return GpxType.Route;
         }
@@ -82,7 +82,7 @@ public class GpxLoader
         }
         else
         {
-            List<Element> instructionsList = gpxDocument.getRootElement().getChild(Gpx.RTE_TAG).getChild("rteseg").getChildren("rtept");
+            List<Element> instructionsList = gpxDocument.getRootElement().getChild(Gpx.RTE_TAG, getNamespace()).getChildren("rtept", getNamespace());
             for (Element instruction : instructionsList)
             {
                 instructions.add(

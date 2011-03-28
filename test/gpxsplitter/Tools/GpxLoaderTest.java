@@ -1,9 +1,8 @@
 /**
- * Gpx loader test builds a Gpx from a gpx markup file and tests its features.
+ * Builds a Gpx from a gpx markup file and tests its features.
  *
  * @author Antonino Cucchiara
  */
-
 package gpxsplitter.Tools;
 
 import gpxsplitter.Model.GpxType;
@@ -16,38 +15,19 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class GpxLoaderTest
+public abstract class GpxLoaderTest
 {
-    public static final String NAMESPACE = "http://www.topografix.com/GPX/1/1";
 
+    public static final String NAMESPACE = "http://www.topografix.com/GPX/1/1";
     private GpxLoader gpxLoader;
 
-    //public abstract String loadData();
+    public abstract String getData();
+    public abstract GpxType getExpectedType();
 
     @Before
     public void setUp() throws JDOMException, IOException
     {
-        String data = "<?xml version=\"1.0\"?>"
-                + "<gpx version=\"1.1\" "
-                + "creator=\"Bikely - http://www.bikely.com\" "
-                + "xmlns=\""+ NAMESPACE+"\" "
-                + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
-                + "xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\"> "
-                + "<trk>"
-                + "<name>Test track</name>"
-                + "<desc>Test track description</desc>"
-                + "<trkseg>"
-                + "<trkpt lat = \"51.2404704333\" lon = \"-0.1724553109\">"
-                + "<ele>75</ele >"
-                + "<time>2011 - 02 - 06 08:46:10></time>"
-                + "</trkpt>"
-                + "<trkpt lat = \"51.3\" lon = \"-0.1\">"
-                + "<ele>76</ele >"
-                + "<time>2011 - 02 - 06 08:46:10></time>"
-                + "</trkpt>"
-                + "</trkseg></trk></gpx>";
-
-        this.gpxLoader = new GpxLoader(new ByteArrayInputStream(data.getBytes()));
+        this.gpxLoader = new GpxLoader(new ByteArrayInputStream(this.getData().getBytes()), "");
     }
 
     ;
@@ -62,7 +42,7 @@ public class GpxLoaderTest
     @Test
     public void testGpxType()
     {
-        assertEquals(GpxType.Track, this.gpxLoader.getLoadedGpx().getGpxType());
+        assertEquals(this.getExpectedType(), this.gpxLoader.getLoadedGpx().getGpxType());
     }
 
     @Test
