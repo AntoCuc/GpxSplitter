@@ -25,7 +25,7 @@ public abstract class GpxLoaderTest
     public abstract GpxType getExpectedType();
 
     @Before
-    public void setUp() throws JDOMException, IOException
+    public void setUp() throws JDOMException, IOException, FileNotValidException
     {
         this.gpxLoader = new GpxLoader(new ByteArrayInputStream(this.getData().getBytes()), "");
     }
