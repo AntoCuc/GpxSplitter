@@ -14,18 +14,11 @@ public class UI extends javax.swing.JFrame
 {
 
     public static final String GPX_SPLITTER = "Gpx Splitter";
-    private Controller controller;
 
     public UI()
     {
         initComponents();
         populateOutputGpxFormats();
-    }
-
-    UI(Controller controller)
-    {
-        this();
-        this.controller = controller;
     }
 
     @SuppressWarnings("unchecked")
@@ -113,11 +106,6 @@ public class UI extends javax.swing.JFrame
     private javax.swing.JTextField openFileField;
     private javax.swing.JButton saveFileButton;
     // End of variables declaration//GEN-END:variables
-
-    void setController(Controller controller)
-    {
-        this.controller = controller;
-    }
 
     GpxType getSelectedGpxType()
     {

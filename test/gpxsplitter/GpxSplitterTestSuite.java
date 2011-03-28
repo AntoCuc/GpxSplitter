@@ -1,10 +1,10 @@
-package gpxsplitter;
-
 /**
  * This suite contains all the tests for the GpxSplitter.
  *
  * @author Antonino Cucchiara
  */
+
+package gpxsplitter;
 
 import gpxsplitter.Tools.GpxRouteLoaderTest;
 import gpxsplitter.Tools.GpxTrackLoaderTest;
@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GpxRouteLoaderTest.class, GpxTrackLoaderTest.class})
+@Suite.SuiteClasses({GpxRouteLoaderTest.class, GpxTrackLoaderTest.class, ControllerTest.class})
 public class GpxSplitterTestSuite {
 
     @BeforeClass

@@ -42,8 +42,7 @@ public class Controller
         }
 
         final UI view = new UI();
-        final Controller controller = new Controller(view);
-        view.setController(controller);
+        new Controller(view);
         view.setVisible(true);
     }
 
