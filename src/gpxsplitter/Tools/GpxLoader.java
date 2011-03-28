@@ -25,7 +25,7 @@ public class GpxLoader
     private final Document gpxDocument;
     private final Gpx newGpx;
 
-    public GpxLoader(InputStream fileInputStream, String gpxFilePath) throws JDOMException, IOException
+    public GpxLoader(InputStream fileInputStream, String gpxFilePath) throws JDOMException, IOException, FileNotValidException
     {
         SAXBuilder builder = new SAXBuilder();
         this.gpxDocument = builder.build(fileInputStream);
@@ -43,7 +43,7 @@ public class GpxLoader
         return newGpx;
     }
 
-    private GpxType getType()
+    private GpxType getType() throws FileNotValidException
     {
         if (gpxDocument.getRootElement().getChild(Gpx.TRK_TAG, getNamespace()) != null)
         {
@@ -55,7 +55,7 @@ public class GpxLoader
         }
         else
         {
-            return GpxType.NA;
+            throw new FileNotValidException("The file you are trying to load is not route nor track.");
         }
     }
 
@@ -64,7 +64,7 @@ public class GpxLoader
         return gpxDocument.getRootElement().getAttributeValue(Gpx.VERSION);
     }
 
-    private List<Waypoint> getInstructions()
+    private List<Waypoint> getInstructions() throws FileNotValidException
     {
         List<Waypoint> instructions = new ArrayList<Waypoint>();
         if (getType() == GpxType.Track)

@@ -6,6 +6,7 @@
 
 package gpxsplitter;
 
+import gpxsplitter.Tools.FileNotValidException;
 import gpxsplitter.Tools.GpxLoader;
 import gpxsplitter.Tools.GpxFileBuilder;
 import gpxsplitter.Tools.GpxRouteFileBuilder;
@@ -55,7 +56,14 @@ public class Controller
             @Override
             public void mousePressed(MouseEvent e)
             {
-                browseGpxFile();
+                try
+                {
+                    browseGpxFile();
+                }
+                catch (FileNotValidException ex)
+                {
+                    Controller.this.view.showMessage(ex.getMessage());
+                }
             }
         });
         this.view.getSaveFileButton().addMouseListener(new MouseAdapter()
@@ -69,7 +77,7 @@ public class Controller
         });
     }
 
-    void loadGpxFile(File gpxFile) throws IOException, JDOMException
+    void loadGpxFile(File gpxFile) throws IOException, JDOMException, FileNotValidException
     {
         loadedGpx = new GpxLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath()).getLoadedGpx();
         view.setFileTypeValue("Gpx " + loadedGpx.getType() + " " + loadedGpx.getVersion() + " (" + loadedGpx.getNumOfInstructions() + " instructions)");
@@ -129,7 +137,7 @@ public class Controller
         }
     }
 
-    private void browseGpxFile()
+    private void browseGpxFile() throws FileNotValidException
     {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new GpxFileFilter());
