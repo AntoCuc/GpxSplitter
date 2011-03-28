@@ -6,9 +6,16 @@
 
 package gpxsplitter;
 
+import gpxsplitter.Tools.GpxLoader;
+import gpxsplitter.Tools.GpxFileBuilder;
+import gpxsplitter.Tools.GpxRouteFileBuilder;
+import gpxsplitter.Tools.GpxTrackFileBuilder;
+import gpxsplitter.Model.GpxType;
+import gpxsplitter.Model.Gpx;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,7 +71,7 @@ public class Controller
 
     void loadGpxFile(File gpxFile) throws IOException, JDOMException
     {
-        loadedGpx = new GpxLoader(gpxFile).getLoadedGpx();
+        loadedGpx = new GpxLoader(new FileInputStream(gpxFile)).getLoadedGpx();
         view.setFileTypeValue("Gpx " + loadedGpx.getType() + " " + loadedGpx.getVersion() + " (" + loadedGpx.getNumOfInstructions() + " instructions)");
         view.setOpenFileField(loadedGpx.getFilePath());
     }

@@ -4,9 +4,12 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter;
+package gpxsplitter.Tools;
 
-import java.io.File;
+import gpxsplitter.Model.GpxType;
+import gpxsplitter.Model.Gpx;
+import gpxsplitter.Model.Waypoint;
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +25,12 @@ public class GpxLoader
     private final Document gpxDocument;
     private final Gpx newGpx;
 
-    public GpxLoader(File file) throws JDOMException, IOException
+    public GpxLoader(InputStream file) throws JDOMException, IOException
     {
         SAXBuilder builder = new SAXBuilder();
         this.gpxDocument = builder.build(file);
 
-        this.newGpx = new Gpx(getNamespace(), getType(), getVersion(), file.getAbsolutePath(), getInstructions());
+        this.newGpx = new Gpx(getNamespace(), getType(), getVersion(), "", getInstructions());
     }
 
     private Namespace getNamespace()
@@ -37,7 +40,6 @@ public class GpxLoader
 
     public Gpx getLoadedGpx()
     {
-
         return newGpx;
     }
 

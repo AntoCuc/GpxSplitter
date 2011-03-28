@@ -6,6 +6,7 @@
 
 package gpxsplitter;
 
+import gpxsplitter.Model.GpxType;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 

@@ -6,6 +6,7 @@
 
 package gpxsplitter;
 
+import gpxsplitter.Tools.GpxFileBuilder;
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 

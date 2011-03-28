@@ -4,34 +4,40 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter;
+package gpxsplitter.Model;
 
-class Waypoint {
+public class Waypoint {
 
     private final double latitude;
     private final double longitude;
     private final String element;
 
-    Waypoint(double latitude, double longitude, String element)
+    public Waypoint(double latitude, double longitude, String element)
     {
         this.latitude = latitude;
         this.longitude = longitude;
         this.element = element;
     }
 
-    String getLatitude()
+    public String getLatitude()
     {
         return String.valueOf(latitude);
     }
 
-    String getLongitude()
+    public String getLongitude()
     {
         return String.valueOf(longitude);
     }
 
-    String getElement()
+    public String getElement()
     {
         return element;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Waypoint{" + "latitude=" + latitude + "longitude=" + longitude + "element=" + element + '}';
     }
 
 }

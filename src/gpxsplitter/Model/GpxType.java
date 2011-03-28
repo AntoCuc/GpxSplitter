@@ -4,7 +4,7 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter;
+package gpxsplitter.Model;
 
 public enum GpxType {
 

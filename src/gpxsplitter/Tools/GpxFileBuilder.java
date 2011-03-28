@@ -4,8 +4,10 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter;
+package gpxsplitter.Tools;
 
+import gpxsplitter.Model.Gpx;
+import gpxsplitter.UI;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,7 +39,7 @@ public abstract class GpxFileBuilder implements GpxBuilder
      * This file is to be overriden in Unit tests.
      * TODO: is the dash necessary?
      * @param file
-     * @param fileBuiltNum
+     * @param gpx document to write to the file
      * @throws IOException
      */
     void saveFile(File file, Document newGpxDocument) throws IOException

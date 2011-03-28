@@ -4,7 +4,7 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter;
+package gpxsplitter.Model;
 
 import java.util.List;
 import org.jdom.Namespace;
@@ -26,7 +26,7 @@ public final class Gpx
     private final List<Waypoint> instructions;
     private final String filePath;
 
-    Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<Waypoint> instructions)
+    public Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<Waypoint> instructions)
     {
         this.namespace = namespace;
         this.gpxType = gpxType;
@@ -40,7 +40,7 @@ public final class Gpx
         return gpxType;
     }
 
-    int getNumOfInstructions()
+    public int getNumOfInstructions()
     {
         return this.instructions.size();
     }
@@ -50,22 +50,22 @@ public final class Gpx
         return instructions;
     }
 
-    Namespace getNamespace()
+    public Namespace getNamespace()
     {
         return namespace;
     }
 
-    String getVersion()
+    public String getVersion()
     {
         return version;
     }
 
-    String getType()
+    public String getType()
     {
         return gpxType.toString();
     }
 
-    String getFilePath()
+    public String getFilePath()
     {
         return filePath;
     }
