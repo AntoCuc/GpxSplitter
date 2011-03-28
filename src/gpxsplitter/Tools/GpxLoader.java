@@ -25,12 +25,12 @@ public class GpxLoader
     private final Document gpxDocument;
     private final Gpx newGpx;
 
-    public GpxLoader(InputStream file) throws JDOMException, IOException
+    public GpxLoader(InputStream fileInputStream, String gpxFilePath) throws JDOMException, IOException
     {
         SAXBuilder builder = new SAXBuilder();
-        this.gpxDocument = builder.build(file);
+        this.gpxDocument = builder.build(fileInputStream);
 
-        this.newGpx = new Gpx(getNamespace(), getType(), getVersion(), "", getInstructions());
+        this.newGpx = new Gpx(getNamespace(), getType(), getVersion(), gpxFilePath, getInstructions());
     }
 
     private Namespace getNamespace()

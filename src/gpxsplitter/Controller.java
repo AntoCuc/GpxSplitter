@@ -71,7 +71,7 @@ public class Controller
 
     void loadGpxFile(File gpxFile) throws IOException, JDOMException
     {
-        loadedGpx = new GpxLoader(new FileInputStream(gpxFile)).getLoadedGpx();
+        loadedGpx = new GpxLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath()).getLoadedGpx();
         view.setFileTypeValue("Gpx " + loadedGpx.getType() + " " + loadedGpx.getVersion() + " (" + loadedGpx.getNumOfInstructions() + " instructions)");
         view.setOpenFileField(loadedGpx.getFilePath());
     }

@@ -1,13 +1,13 @@
 /**
- * Gpx loader builds a Gpx from a gpx markup file.
+ * Gpx loader test builds a Gpx from a gpx markup file and tests its features.
  *
  * @author Antonino Cucchiara
  */
+
 package gpxsplitter.Tools;
 
 import gpxsplitter.Model.GpxType;
 import gpxsplitter.Model.Waypoint;
-import gpxsplitter.Tools.GpxLoader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import org.jdom.JDOMException;
