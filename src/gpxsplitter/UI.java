@@ -7,6 +7,9 @@
 package gpxsplitter;
 
 import gpxsplitter.Model.GpxType;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -43,6 +46,7 @@ public class UI extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(GPX_SPLITTER);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(UI.class.getResource("/gpxsplitter/media/map.png")));
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridLayout(3, 1, 10, 10));
 
