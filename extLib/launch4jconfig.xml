@@ -12,7 +12,7 @@
   <customProcName>false</customProcName>
   <stayAlive>false</stayAlive>
   <manifest></manifest>
-  <icon></icon>
+  <icon>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\src\gpxsplitter\media\favicon.ico</icon>
   <singleInstance>
     <mutexName>GpxSplitter</mutexName>
     <windowTitle>GpxSplitter</windowTitle>
