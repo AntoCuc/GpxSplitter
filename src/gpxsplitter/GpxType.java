@@ -1,9 +1,11 @@
+/**
+ * Class that represents the gpx type.
+ *
+ * @author Antonino Cucchiara
+ */
+
 package gpxsplitter;
 
-/**
- *
- * @author Antonio
- */
 public enum GpxType {
 
     Track(),

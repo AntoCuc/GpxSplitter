@@ -1,3 +1,9 @@
+/**
+ * Gpx loader builds a Gpx from a gpx markup file.
+ *
+ * @author Antonino Cucchiara
+ */
+
 package gpxsplitter;
 
 import java.io.File;
@@ -10,10 +16,6 @@ import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 
-/**
- *
- * @author Antonio
- */
 public class GpxLoader
 {
 
@@ -60,16 +62,16 @@ public class GpxLoader
         return gpxDocument.getRootElement().getAttributeValue(Gpx.VERSION);
     }
 
-    private List<WayPoint> getInstructions()
+    private List<Waypoint> getInstructions()
     {
-        List<WayPoint> instructions = new ArrayList<WayPoint>();
+        List<Waypoint> instructions = new ArrayList<Waypoint>();
         if (getType() == GpxType.Track)
         {
             List<Element> instructionsList = gpxDocument.getRootElement().getChild(Gpx.TRK_TAG, getNamespace()).getChild(Gpx.TRACKSEGMENT_TAG, getNamespace()).getChildren();
             for (Element instruction : instructionsList)
             {
                 instructions.add(
-                        new WayPoint(
+                        new Waypoint(
                         Double.parseDouble(instruction.getAttributeValue(Gpx.LATITUDE_TAG)),
                         Double.parseDouble(instruction.getAttributeValue(Gpx.LONGITUDE_TAG)),
                         instruction.getChildText(Gpx.ELEMENT_TAG, getNamespace())));
@@ -82,7 +84,7 @@ public class GpxLoader
             for (Element instruction : instructionsList)
             {
                 instructions.add(
-                        new WayPoint(
+                        new Waypoint(
                         Double.parseDouble(instruction.getAttributeValue(Gpx.LATITUDE_TAG)),
                         Double.parseDouble(instruction.getAttributeValue(Gpx.LONGITUDE_TAG)),
                         instruction.getChildText(Gpx.ELEMENT_TAG, getNamespace())));

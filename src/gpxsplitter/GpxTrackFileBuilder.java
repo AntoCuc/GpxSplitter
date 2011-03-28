@@ -1,3 +1,9 @@
+/**
+ * Builds gpx tracks from a gpx.
+ *
+ * @author Antonino Cucchiara
+ */
+
 package gpxsplitter;
 
 import java.io.File;
@@ -5,10 +11,6 @@ import java.io.IOException;
 import org.jdom.Document;
 import org.jdom.Element;
 
-/**
- *
- * @author anc6
- */
 public class GpxTrackFileBuilder extends GpxFileBuilder
 {
 
@@ -40,7 +42,7 @@ public class GpxTrackFileBuilder extends GpxFileBuilder
             Element track = new Element(Gpx.TRK_TAG);
             Element trackSegment = new Element(Gpx.TRACKSEGMENT_TAG);
             track.setContent(trackSegment);
-            for(WayPoint wpt : gpx.getInstructions())
+            for(Waypoint wpt : gpx.getInstructions())
             {
                 Element trackPoint = new Element(Gpx.TRACKPOINT);
                 trackPoint.setAttribute(Gpx.LATITUDE_TAG, wpt.getLatitude()+"");

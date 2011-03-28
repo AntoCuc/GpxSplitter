@@ -1,16 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * File filter that only allows .gpx files and directories.
+ *
+ * @author Antonino Cucchiara
  */
+
 package gpxsplitter;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 
-/**
- *
- * @author Antonio
- */
 public class GpxFileFilter extends FileFilter
 {
 

@@ -1,3 +1,9 @@
+/**
+ * Controller, handling user interaction and abstracting away the model.
+ *
+ * @author Antonino Cucchiara
+ */
+
 package gpxsplitter;
 
 import java.awt.event.MouseAdapter;
@@ -10,10 +16,6 @@ import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import org.jdom.JDOMException;
 
-/**
- *
- * @author anc6
- */
 public class Controller
 {
 
@@ -79,7 +81,7 @@ public class Controller
                 + desiredInstrNum + "\n Gpx Type: " + gpxType);
 
         GpxFileBuilder gpxBuilder;
-        if (view.getSelectedGpxType() == GpxFormat.Track)
+        if (view.getSelectedGpxType() == GpxType.Track)
         {
             gpxBuilder = new GpxTrackFileBuilder(loadedGpx);
         }

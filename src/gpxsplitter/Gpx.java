@@ -1,12 +1,14 @@
+/**
+ * Behold the gpx. Representation of the gpx.
+ *
+ * @author Antonino Cucchiara
+ */
+
 package gpxsplitter;
 
 import java.util.List;
 import org.jdom.Namespace;
 
-/**
- *
- * @author anc6
- */
 public final class Gpx
 {
 
@@ -21,10 +23,10 @@ public final class Gpx
     private final Namespace namespace;
     private final GpxType gpxType;
     private final String version;
-    private final List<WayPoint> instructions;
+    private final List<Waypoint> instructions;
     private final String filePath;
 
-    Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<WayPoint> instructions)
+    Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<Waypoint> instructions)
     {
         this.namespace = namespace;
         this.gpxType = gpxType;
@@ -43,7 +45,7 @@ public final class Gpx
         return this.instructions.size();
     }
 
-    public List<WayPoint> getInstructions()
+    public List<Waypoint> getInstructions()
     {
         return instructions;
     }

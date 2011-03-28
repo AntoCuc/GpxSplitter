@@ -1,40 +1,37 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Class that represents way points in a  gpx.
+ *
+ * @author Antonino Cucchiara
  */
 
 package gpxsplitter;
 
-/**
- *
- * @author Antonio
- */
-public class WayPoint
+class Waypoint {
+
+    private final double latitude;
+    private final double longitude;
+    private final String element;
+
+    Waypoint(double latitude, double longitude, String element)
     {
-
-        private final double latitude;
-        private final double longitude;
-        private final String element;
-
-        public WayPoint(double latitude, double longitude, String element)
-        {
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.element = element;
-        }
-
-        public String getElement()
-        {
-            return element;
-        }
-
-        public double getLatitude()
-        {
-            return latitude;
-        }
-
-        public double getLongitude()
-        {
-            return longitude;
-        }
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.element = element;
     }
+
+    String getLatitude()
+    {
+        return String.valueOf(latitude);
+    }
+
+    String getLongitude()
+    {
+        return String.valueOf(longitude);
+    }
+
+    String getElement()
+    {
+        return element;
+    }
+
+}

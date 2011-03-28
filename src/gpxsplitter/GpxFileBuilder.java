@@ -1,3 +1,9 @@
+/**
+ * Builds a gpx markup file.
+ *
+ * @author Antonino Cucchiara
+ */
+
 package gpxsplitter;
 
 import java.io.File;
@@ -7,10 +13,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
-/**
- *
- * @author anc6
- */
 public abstract class GpxFileBuilder implements GpxBuilder
 {
 
