@@ -36,7 +36,7 @@ public abstract class GpxFileBuilder implements GpxBuilder
     }
 
     /**
-     * This file is to be overriden in Unit tests.
+     * This method is to be overriden in Unit tests.
      * TODO: is the dash necessary?
      * @param file
      * @param gpx document to write to the file
@@ -45,5 +45,22 @@ public abstract class GpxFileBuilder implements GpxBuilder
     void saveFile(File file, Document newGpxDocument) throws IOException
     {
         new XMLOutputter().output(newGpxDocument, new FileWriter(file));
+    }
+
+    /**
+     * This method cleans the filename of the extension if it is there.
+     * @param file
+     * @return the filename stripped of the extension
+     */
+    String stripExtension(String fileName, String extension)
+    {
+        if (fileName.endsWith(extension))
+        {
+            return fileName.substring(0, (fileName.length() - extension.length()));
+        }
+        else
+        {
+            return fileName;
+        }
     }
 }
