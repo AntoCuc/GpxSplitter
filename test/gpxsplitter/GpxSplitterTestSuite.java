@@ -3,9 +3,9 @@
  *
  * @author Antonino Cucchiara
  */
-
 package gpxsplitter;
 
+import gpxsplitter.Tools.GpxFileBuilderTest;
 import gpxsplitter.Tools.GpxRouteLoaderTest;
 import gpxsplitter.Tools.GpxTrackLoaderTest;
 import org.junit.After;
@@ -16,8 +16,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GpxRouteLoaderTest.class, GpxTrackLoaderTest.class, ControllerTest.class})
-public class GpxSplitterTestSuite {
+@Suite.SuiteClasses(
+{
+    GpxRouteLoaderTest.class,
+    GpxTrackLoaderTest.class,
+    ControllerTest.class,
+    GpxFileBuilderTest.class
+})
+public class GpxSplitterTestSuite
+{
 
     @BeforeClass
     public static void setUpClass() throws Exception
@@ -38,5 +45,4 @@ public class GpxSplitterTestSuite {
     public void tearDown() throws Exception
     {
     }
-
 }
