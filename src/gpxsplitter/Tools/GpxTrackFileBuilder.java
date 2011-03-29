@@ -56,7 +56,7 @@ public class GpxTrackFileBuilder extends GpxFileBuilder
             }
             newGpxDocument.getRootElement().setContent(track);
 
-            saveFile(new File(stripExtension(file.getName(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
+            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
             instrNum--; //The second route will start with the last wpt of the first
             fileNum++; // Proceed to next file
         }
