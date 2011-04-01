@@ -5,14 +5,17 @@
  */
 package gpxsplitter.Tools;
 
+import gpxsplitter.Controller;
 import gpxsplitter.Model.Gpx;
 import gpxsplitter.Model.Waypoint;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 
-public class GpxTrackFileBuilder extends GpxFileBuilder
+public final class GpxTrackFileBuilder extends GpxFileBuilder
 {
 
     public GpxTrackFileBuilder(Gpx gpx)
@@ -32,34 +35,50 @@ public class GpxTrackFileBuilder extends GpxFileBuilder
      * @throws IOException
      */
     @Override
-    public void build(File file, int totalInstructionsNum, int filesNum) throws IOException
+    public void build(File file, int preferedInstrNum) throws IOException
     {
         int fileNum = 1;
-        int instrNum = 1;
-        while (fileNum <= filesNum)
+        List<Document> docs = buildSplitGpx(preferedInstrNum);
+        for(Document newGpxDocument : docs)
         {
-            Document newGpxDocument = createNewGpx();
-            //RteType newRte = newGpxDocument.getRootElement();
+            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
+            fileNum++;
+        }
+    }
+
+    @Override
+    public List<Document> buildSplitGpx(int preferredInstrNum)
+    {
+        List<Document> gpxList = new ArrayList<Document>();
+        List<Waypoint> instructions = gpx.getInstructions();
+        int splitFiles = Controller.howManyFiles(instructions.size(), preferredInstrNum);
+
+        int currInstr = 0;
+        int fileNum = 1;
+        while (fileNum <= splitFiles)
+        {
+            Document newGpxDocument = createGpxTemplate();
 
             Element track = new Element(Gpx.TRK_TAG);
             Element trackSegment = new Element(Gpx.TRACKSEGMENT_TAG);
             track.setContent(trackSegment);
-            for (Waypoint wpt : gpx.getInstructions())
+
+            for(int i=0; i<preferredInstrNum; i++)
             {
+                Waypoint currentInstruction = instructions.get(currInstr);
                 Element trackPoint = new Element(Gpx.TRACKPOINT);
-                trackPoint.setAttribute(Gpx.LATITUDE_TAG, wpt.getLatitude());
-                trackPoint.setAttribute(Gpx.LONGITUDE_TAG, wpt.getLongitude());
+                trackPoint.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
+                trackPoint.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
                 Element ele = new Element(Gpx.ELEMENT_TAG);
-                ele.setText(wpt.getElement());
+                ele.setText(currentInstruction.getElement());
                 trackPoint.setContent(ele);
                 trackSegment.addContent(trackPoint);
+                currInstr++;
             }
             newGpxDocument.getRootElement().setContent(track);
-
-            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
-            instrNum--; //The second route will start with the last wpt of the first
+            gpxList.add(newGpxDocument);
             fileNum++; // Proceed to next file
         }
-
+        return gpxList;
     }
 }

@@ -103,20 +103,19 @@ public class Controller
         {
             gpxBuilder = new GpxRouteFileBuilder(loadedGpx);
         }
-        int totalNumOfInstr = loadedGpx.getNumOfInstructions();
-        int filesNum = howManyFiles(totalNumOfInstr, desiredInstrNum);
-        gpxBuilder.build(file, totalNumOfInstr, filesNum);
+        gpxBuilder.build(file, desiredInstrNum);
         view.showMessage("Split GPX successfully saved.");
     }
 
     /**
      * This method calculates how many files have to be created when splitting
      * the GPX to the wanted number of instructions.
+     * TODO: move me to Gpx file builder
      * @param currNumOfInstr
      * @param desiredNumOfInstr
      * @return
      */
-    static int howManyFiles(int currNumOfInstr, int desiredNumOfInstr)
+    public static int howManyFiles(int currNumOfInstr, int desiredNumOfInstr)
     {
         try
         {

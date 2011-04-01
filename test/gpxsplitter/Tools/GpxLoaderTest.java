@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 public abstract class GpxLoaderTest
 {
 
-    public static final String NAMESPACE = "http://www.topografix.com/GPX/1/1";
     private GpxLoader gpxLoader;
 
     public abstract String getData();
@@ -35,7 +34,7 @@ public abstract class GpxLoaderTest
     @Test
     public void testNamespace()
     {
-        Namespace expected = Namespace.getNamespace(NAMESPACE);
+        Namespace expected = Namespace.getNamespace(TestMedia.NAMESPACE);
         assertEquals(expected, this.gpxLoader.getLoadedGpx().getNamespace());
     }
 

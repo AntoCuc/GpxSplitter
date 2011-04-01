@@ -11,6 +11,7 @@ import gpxsplitter.UI;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
@@ -26,7 +27,21 @@ public abstract class GpxFileBuilder implements GpxBuilder
         this.gpx = gpx;
     }
 
-    protected Document createNewGpx()
+    /**
+     * The method build split gpx uses the gpx document loaded and the
+     * preferred number of instructions to build a list of Gpx files ready
+     * to be written to file.
+     * @param preferredInstrNum
+     * @return a list of gpx files
+     */
+    public abstract List<Document> buildSplitGpx(int preferredInstrNum);
+
+    /**
+     * The method create gpx template creates the start elements and
+     * heading of a gpx document.
+     * @return a gpx document.
+     */
+    protected Document createGpxTemplate()
     {
         Document newGpxDocument = new Document(new Element("gpx"));
         Element newGpx = newGpxDocument.getRootElement();

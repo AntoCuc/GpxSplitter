@@ -6,7 +6,8 @@
 
 package gpxsplitter.Model;
 
-public class Waypoint {
+public class Waypoint
+{
 
     private final double latitude;
     private final double longitude;
@@ -35,9 +36,25 @@ public class Waypoint {
     }
 
     @Override
-    public String toString()
+    public boolean equals(Object obj)
     {
-        return "Waypoint{" + "latitude=" + latitude + "longitude=" + longitude + "element=" + element + '}';
+        if (obj instanceof Waypoint)
+        {
+            Waypoint other = (Waypoint) obj;
+            if (other.getElement().equals(this.getElement())
+                    && other.getLatitude().equals(this.getLatitude())
+                    && other.getLongitude().equals(this.getLongitude()))
+            {
+                return true;
+            }
+
+        }
+        return false;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Waypoint{" + "latitude=" + latitude + " longitude=" + longitude + " element=" + element + '}';
+    }
 }

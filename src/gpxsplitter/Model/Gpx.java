@@ -19,6 +19,8 @@ public final class Gpx
     public static final String LONGITUDE_TAG = "lon";
     public static final String TRK_TAG = "trk";
     public static final String RTE_TAG = "rte";
+    public static final String RTEPT_TAG = "rtept";
+    public static final String RTEPT_NAME_TAG = "name";
     public static final String VERSION = "version";
     private final Namespace namespace;
     private final GpxType gpxType;

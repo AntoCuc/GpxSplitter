@@ -10,5 +10,5 @@ import java.io.File;
 import java.io.IOException;
 
 interface GpxBuilder {
-    public void build(File fileName, int totalInstructionsNumber, int filesNum) throws IOException;
+    public void build(File fileName, int preferedInstrNum) throws IOException;
 }

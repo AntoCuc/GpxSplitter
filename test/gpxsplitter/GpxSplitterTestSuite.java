@@ -5,8 +5,10 @@
  */
 package gpxsplitter;
 
-import gpxsplitter.Tools.GpxFileBuilderTest;
+import gpxsplitter.Model.WaypointTest;
+import gpxsplitter.Tools.GpxRouteFileBuilderTest;
 import gpxsplitter.Tools.GpxRouteLoaderTest;
+import gpxsplitter.Tools.GpxTrackFileBuilderTest;
 import gpxsplitter.Tools.GpxTrackLoaderTest;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,10 +20,12 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
+    WaypointTest.class,
     GpxRouteLoaderTest.class,
     GpxTrackLoaderTest.class,
     ControllerTest.class,
-    GpxFileBuilderTest.class
+    GpxTrackFileBuilderTest.class,
+    GpxRouteFileBuilderTest.class
 })
 public class GpxSplitterTestSuite
 {
