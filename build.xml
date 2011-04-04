@@ -22,6 +22,27 @@
         <launch4j configFile="./extLib/launch4jconfig.xml" />
     </target>
 
+    <target name="create-osx-executable" description="Make a mac osx .app package">
+        <mkdir dir= "./dist/GpxSplitter.app"/>
+        <mkdir dir= "./dist/GpxSplitter.app/Contents/Resources/Java"/>
+        <mkdir dir= "./dist/GpxSplitter.app/Contents/MacOS"/>
+        <copy todir="./dist/GpxSplitter.app/Contents/Resources/Java">
+            <fileset dir="./dist">
+                <include name= "*.jar"/>
+            </fileset>
+        </copy>
+        <copy file="./extLib/mac/JavaApplicationStub" tofile="./dist/GpxSplitter.app/Contents/MacOS/GpxSplitter"/>
+        <exec executable="/bin/chmod">
+            <arg line="755 ./dist/GpxSplitter.app/Contents/MacOS/GpxSplitter"/>
+        </exec>
+        <copy file="./extLib/mac/Info.plist" toFile="./dist/GpxSplitter.app/Contents/Info.plist">
+            <filterset>
+                <filter token= "PROJECTNAMEASIDENTIFIER" value= "GpxSplitter"/>
+            </filterset>
+        </copy>
+        <copy file="./extLib/mac/GpxSplitter.icns" todir="./dist/GpxSplitter.app/Contents/Resources"/>
+    </target>
+
     <!--
 
     There exist several targets which are by default empty and which can be 
