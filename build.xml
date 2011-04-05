@@ -19,6 +19,10 @@
         :${launch4j.dir}/lib/xstream.jar" />
 
     <target name="-post-jar">
+        <!-- Enter here any post jar -->
+    </target>
+
+    <target name="create-windows-executable" description="Make a windows .exe package">
         <launch4j configFile="./extLib/launch4jconfig.xml" />
     </target>
 
