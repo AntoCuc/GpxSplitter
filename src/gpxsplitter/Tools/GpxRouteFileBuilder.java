@@ -6,7 +6,6 @@
 
 package gpxsplitter.Tools;
 
-import gpxsplitter.Controller;
 import gpxsplitter.Model.Gpx;
 import gpxsplitter.Model.Waypoint;
 import java.io.File;

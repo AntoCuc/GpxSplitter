@@ -13,6 +13,8 @@ import javax.swing.filechooser.FileFilter;
 public class GpxFileFilter extends FileFilter
 {
 
+
+    @Override
     public boolean accept(File pathname)
     {
         if (pathname.isDirectory() || pathname.getName().endsWith(GpxFileBuilder.GPX_FORMAT))

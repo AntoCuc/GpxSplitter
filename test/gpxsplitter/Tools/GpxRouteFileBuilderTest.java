@@ -11,7 +11,6 @@ import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public final class GpxRouteFileBuilderTest extends GpxFileBuilderTest
 {

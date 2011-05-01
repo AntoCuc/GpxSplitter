@@ -9,6 +9,5 @@ package gpxsplitter.Model;
 public enum GpxType {
 
     Track(),
-    Route(),
-    NA();
+    Route();
 }
