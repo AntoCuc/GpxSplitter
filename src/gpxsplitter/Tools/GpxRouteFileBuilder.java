@@ -54,7 +54,7 @@ public final class GpxRouteFileBuilder extends GpxFileBuilder{
     {
         List<Document> gpxList = new ArrayList<Document>();
         List<Waypoint> instructions = gpx.getInstructions();
-        int splitFiles = Controller.howManyFiles(instructions.size(), preferredInstrNum);
+        int splitFiles = howManyFiles(instructions.size(), preferredInstrNum);
 
         int currInstr = 0;
         int fileNum = 1;

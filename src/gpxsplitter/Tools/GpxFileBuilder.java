@@ -52,7 +52,6 @@ public abstract class GpxFileBuilder implements GpxBuilder
 
     /**
      * This method is to be overriden in Unit tests.
-     * TODO: is the dash necessary?
      * @param file
      * @param gpx document to write to the file
      * @throws IOException
@@ -76,6 +75,33 @@ public abstract class GpxFileBuilder implements GpxBuilder
         else
         {
             return fileName;
+        }
+    }
+
+    /**
+     * This method calculates how many files have to be created when splitting
+     * the GPX to the wanted number of instructions.
+     * @param currNumOfInstr
+     * @param desiredNumOfInstr
+     * @return
+     */
+    static int howManyFiles(int currNumOfInstr, int desiredNumOfInstr)
+    {
+        try
+        {
+            int numOfFiles = (currNumOfInstr / desiredNumOfInstr);
+            /***
+             * If there are any points left out one more file is going to be created.
+             */
+            if ((currNumOfInstr % desiredNumOfInstr) > 0)
+            {
+                numOfFiles++;
+            }
+            return numOfFiles;
+        }
+        catch (ArithmeticException e)
+        { //No instructions or invalid instructions output number
+            return 0;
         }
     }
 }

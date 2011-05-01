@@ -107,34 +107,6 @@ public class Controller
         view.showMessage("Split GPX successfully saved.");
     }
 
-    /**
-     * This method calculates how many files have to be created when splitting
-     * the GPX to the wanted number of instructions.
-     * TODO: move me to Gpx file builder
-     * @param currNumOfInstr
-     * @param desiredNumOfInstr
-     * @return
-     */
-    public static int howManyFiles(int currNumOfInstr, int desiredNumOfInstr)
-    {
-        try
-        {
-            int numOfFiles = (currNumOfInstr / desiredNumOfInstr);
-            /***
-             * If there are any points left out one more file is going to be created.
-             */
-            if ((currNumOfInstr % desiredNumOfInstr) > 0)
-            {
-                numOfFiles++;
-            }
-            return numOfFiles;
-        }
-        catch (ArithmeticException e)
-        { //No instructions or invalid instructions output number
-            return 0;
-        }
-    }
-
     private void browseGpxFile() throws FileNotValidException
     {
         JFileChooser fileChooser = new JFileChooser();

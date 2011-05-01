@@ -26,7 +26,6 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder
     /**
      * This method will build a set of GPX files given the file name, number of
      * GPX instructions per file and the number of files to be built.
-     * TODO: split this method so it returns a testable gpx document.
      * TODO: do we need to pass in the num of instructions
      * TODO: fix multiple files bug
      * @param file
@@ -51,7 +50,7 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder
     {
         List<Document> gpxList = new ArrayList<Document>();
         List<Waypoint> instructions = gpx.getInstructions();
-        int splitFiles = Controller.howManyFiles(instructions.size(), preferredInstrNum);
+        int splitFiles = howManyFiles(instructions.size(), preferredInstrNum);
 
         int currInstr = 0;
         int fileNum = 1;
