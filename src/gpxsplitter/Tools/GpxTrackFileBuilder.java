@@ -26,7 +26,6 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder
     /**
      * This method will build a set of GPX files given the file name, number of
      * GPX instructions per file and the number of files to be built.
-     * TODO: do we need to pass in the num of instructions
      * TODO: fix multiple files bug
      * @param file
      * @param instNum
