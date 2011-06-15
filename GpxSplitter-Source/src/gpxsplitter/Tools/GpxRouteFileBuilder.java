@@ -24,27 +24,11 @@ public final class GpxRouteFileBuilder extends GpxFileBuilder{
     @Override
     public void build(File file, int preferedInstrNum) throws IOException {
         int fileNum = 1;
-        int instrNum = 1;
-        while (fileNum <= fileNum)
+        List<Document> docs = buildSplitGpx(preferedInstrNum);
+        for(Document newGpxDocument : docs)
         {
-            Document newGpxDocument = createGpxTemplate();
-
-            Element rteSeg = new Element("rteseg");
-            for(Waypoint wpt : gpx.getInstructions())
-            {
-                Element rtePt = new Element("rtePt");
-                rtePt.setAttribute(Gpx.LATITUDE_TAG, wpt.getLatitude());
-                rtePt.setAttribute(Gpx.LONGITUDE_TAG, wpt.getLongitude());
-                Element ele = new Element(Gpx.ELEMENT_TAG);
-                ele.setText(wpt.getElement());
-                rtePt.setContent(ele);
-                rteSeg.setContent(rtePt);
-            }
-            newGpxDocument.setContent(rteSeg);
-
-            saveFile(new File(file.getName() + "-" + fileNum + GPX_FORMAT), newGpxDocument);
-            instrNum--; //The second route will start with the last wpt of the first
-            fileNum++; // Proceed to next file
+            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
+            fileNum++;
         }
     }
 
@@ -65,19 +49,27 @@ public final class GpxRouteFileBuilder extends GpxFileBuilder{
 
             for(int i=0; i<preferredInstrNum; i++)
             {
-                Waypoint currentInstruction = instructions.get(currInstr);
-                Element routePt = new Element(Gpx.RTEPT_TAG);
-                routePt.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
-                routePt.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
-                Element ele = new Element(Gpx.ELEMENT_TAG);
-                ele.setText(currentInstruction.getElement());
-                routePt.setContent(ele);
-                //For now the name is the same as the Element
-                Element name = new Element(Gpx.ELEMENT_TAG);
-                name.setText(currentInstruction.getElement());
-                routePt.setContent(name);
-                route.addContent(routePt);
-                currInstr++;
+                try
+                {
+                    Waypoint currentInstruction = instructions.get(currInstr);
+                    Element routePt = new Element(Gpx.RTEPT_TAG);
+                    routePt.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
+                    routePt.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
+                    Element ele = new Element(Gpx.ELEMENT_TAG);
+                    ele.setText(currentInstruction.getElement());
+                    routePt.setContent(ele);
+                    //For now the name is the same as the Element
+                    Element name = new Element(Gpx.ELEMENT_TAG);
+                    name.setText(currentInstruction.getElement());
+                    routePt.setContent(name);
+                    route.addContent(routePt);
+                    currInstr++;
+                }
+                catch(IndexOutOfBoundsException e)
+                {
+                    //Break the loop, the file does not have any further instructions.
+                    break;
+                }
             }
             newGpxDocument.getRootElement().setContent(route);
             gpxList.add(newGpxDocument);

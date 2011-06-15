@@ -62,15 +62,23 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder
 
             for(int i=0; i<preferredInstrNum; i++)
             {
-                Waypoint currentInstruction = instructions.get(currInstr);
-                Element trackPoint = new Element(Gpx.TRACKPOINT);
-                trackPoint.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
-                trackPoint.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
-                Element ele = new Element(Gpx.ELEMENT_TAG);
-                ele.setText(currentInstruction.getElement());
-                trackPoint.setContent(ele);
-                trackSegment.addContent(trackPoint);
-                currInstr++;
+                try
+                {
+                    Waypoint currentInstruction = instructions.get(currInstr);
+                    Element trackPoint = new Element(Gpx.TRACKPOINT);
+                    trackPoint.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
+                    trackPoint.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
+                    Element ele = new Element(Gpx.ELEMENT_TAG);
+                    ele.setText(currentInstruction.getElement());
+                    trackPoint.setContent(ele);
+                    trackSegment.addContent(trackPoint);
+                    currInstr++;
+                }
+                catch(IndexOutOfBoundsException e)
+                {
+                    //Break the loop, the file does not have any further instructions.
+                    break;
+                }
             }
             newGpxDocument.getRootElement().setContent(track);
             gpxList.add(newGpxDocument);

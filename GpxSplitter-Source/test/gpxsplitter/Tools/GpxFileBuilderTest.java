@@ -5,7 +5,6 @@
  */
 package gpxsplitter.tools;
 
-import gpxsplitter.Tools.TestMedia;
 import org.jdom.Element;
 import org.jdom.Document;
 import gpxsplitter.model.Waypoint;
@@ -75,6 +74,32 @@ public abstract class GpxFileBuilderTest
         assertEquals(String.valueOf(LON_WPT_2), wpt2.getAttribute(Gpx.LONGITUDE_TAG).getValue());
         assertEquals(ELE_WPT_2, wpt2.getChild(Gpx.ELEMENT_TAG).getValue());
     }
+
+    @Test
+    public void testBuildSplitGpxsWithUnevenNumberOfInstructionsComparedToThePreferred()
+    {
+        final int preferredNumOfWpts = 3;
+        final int expectedNumOfWpts = 2;
+        List<Document> actual = this.gpxFileBuilder.buildSplitGpx(preferredNumOfWpts);
+
+        int expectedNumOfDocs = 1;
+        int actualNumOfDocs = actual.size();
+        assertEquals(expectedNumOfDocs, actualNumOfDocs);
+
+        List<Element> actualWaypointsDoc1 = getWaypoints(actual.get(0));
+        assertEquals(expectedNumOfWpts, actualWaypointsDoc1.size());
+
+        Element wpt = actualWaypointsDoc1.get(0);
+        assertEquals(String.valueOf(LAT_WPT_1), wpt.getAttribute(Gpx.LATITUDE_TAG).getValue());
+        assertEquals(String.valueOf(LON_WPT_1), wpt.getAttribute(Gpx.LONGITUDE_TAG).getValue());
+        assertEquals(ELE_WPT_1, wpt.getChild(Gpx.ELEMENT_TAG).getValue());
+
+        Element wpt2 = actualWaypointsDoc1.get(1);
+        assertEquals(String.valueOf(LAT_WPT_2), wpt2.getAttribute(Gpx.LATITUDE_TAG).getValue());
+        assertEquals(String.valueOf(LON_WPT_2), wpt2.getAttribute(Gpx.LONGITUDE_TAG).getValue());
+        assertEquals(ELE_WPT_2, wpt2.getChild(Gpx.ELEMENT_TAG).getValue());
+    }
+
 
     @Test
     public void testStripExtensionWithExtension() throws Exception
