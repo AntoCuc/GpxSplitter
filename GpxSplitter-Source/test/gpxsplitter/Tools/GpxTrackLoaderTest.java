@@ -5,7 +5,6 @@
  */
 package gpxsplitter.tools;
 
-import gpxsplitter.Tools.TestMedia;
 import gpxsplitter.model.GpxType;
 
 /**
