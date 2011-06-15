@@ -4,7 +4,7 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter.Tools;
+package gpxsplitter.tools;
 
 import java.io.File;
 import java.io.IOException;

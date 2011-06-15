@@ -3,9 +3,10 @@
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.Tools;
+package gpxsplitter.tools;
 
-import gpxsplitter.Model.GpxType;
+import gpxsplitter.Tools.TestMedia;
+import gpxsplitter.model.GpxType;
 
 public class GpxRouteLoaderTest extends GpxLoaderTest
 {

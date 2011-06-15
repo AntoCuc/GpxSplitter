@@ -3,16 +3,17 @@
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.Tools;
+package gpxsplitter.tools;
 
+import gpxsplitter.Tools.TestMedia;
 import org.jdom.Element;
 import org.jdom.Document;
-import gpxsplitter.Model.Waypoint;
+import gpxsplitter.model.Waypoint;
 import java.util.List;
 import java.util.ArrayList;
 import org.junit.Before;
-import gpxsplitter.Model.Gpx;
-import gpxsplitter.Model.GpxType;
+import gpxsplitter.model.Gpx;
+import gpxsplitter.model.GpxType;
 import org.jdom.Namespace;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -73,8 +74,6 @@ public abstract class GpxFileBuilderTest
         assertEquals(String.valueOf(LAT_WPT_2), wpt2.getAttribute(Gpx.LATITUDE_TAG).getValue());
         assertEquals(String.valueOf(LON_WPT_2), wpt2.getAttribute(Gpx.LONGITUDE_TAG).getValue());
         assertEquals(ELE_WPT_2, wpt2.getChild(Gpx.ELEMENT_TAG).getValue());
-
-
     }
 
     @Test

@@ -3,10 +3,10 @@
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.Tools;
+package gpxsplitter.tools;
 
-import gpxsplitter.Model.Gpx;
-import gpxsplitter.Model.GpxType;
+import gpxsplitter.model.Gpx;
+import gpxsplitter.model.GpxType;
 import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;

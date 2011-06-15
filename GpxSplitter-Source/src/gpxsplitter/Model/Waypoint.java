@@ -4,7 +4,7 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter.Model;
+package gpxsplitter.model;
 
 public class Waypoint
 {

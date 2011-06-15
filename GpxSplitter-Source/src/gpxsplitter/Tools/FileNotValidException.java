@@ -4,7 +4,7 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter.Tools;
+package gpxsplitter.tools;
 
 public class FileNotValidException extends Exception{
 

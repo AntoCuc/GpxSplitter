@@ -3,7 +3,7 @@
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.Model;
+package gpxsplitter.model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

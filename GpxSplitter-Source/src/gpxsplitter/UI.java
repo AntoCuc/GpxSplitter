@@ -6,10 +6,8 @@
 
 package gpxsplitter;
 
-import gpxsplitter.Model.GpxType;
-import java.awt.Image;
+import gpxsplitter.model.GpxType;
 import java.awt.Toolkit;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 

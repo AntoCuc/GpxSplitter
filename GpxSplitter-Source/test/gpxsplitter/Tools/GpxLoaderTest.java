@@ -3,10 +3,11 @@
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.Tools;
+package gpxsplitter.tools;
 
-import gpxsplitter.Model.GpxType;
-import gpxsplitter.Model.Waypoint;
+import gpxsplitter.Tools.TestMedia;
+import gpxsplitter.model.GpxType;
+import gpxsplitter.model.Waypoint;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import org.jdom.JDOMException;
