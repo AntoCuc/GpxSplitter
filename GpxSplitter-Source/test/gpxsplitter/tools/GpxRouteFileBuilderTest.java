@@ -10,20 +10,9 @@ import gpxsplitter.model.GpxType;
 import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.junit.Test;
 
 public final class GpxRouteFileBuilderTest extends GpxFileBuilderTest
 {
-
-    @Test
-    public void testBuild() throws Exception
-    {
-    }
-
-    @Test
-    public void testBuildGpx()
-    {
-    }
 
     @Override
     public GpxFileBuilder getGpxFileBuilder(Gpx gpx)
