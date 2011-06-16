@@ -148,7 +148,8 @@ public class Controller
         }
         try
         {
-            JFileChooser saveFileChooser = new JFileChooser(fileName);
+            JFileChooser saveFileChooser = new JFileChooser();
+            saveFileChooser.setSelectedFile(new File(fileName));
             saveFileChooser.setFileFilter(new GpxFileFilter());
             saveFileChooser.showSaveDialog(view);
             saveGpxFile(instNum, gpxType, saveFileChooser.getSelectedFile());
