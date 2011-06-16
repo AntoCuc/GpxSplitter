@@ -8,8 +8,6 @@ package gpxsplitter.tools;
 
 import gpxsplitter.model.Gpx;
 import gpxsplitter.model.Waypoint;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Document;
@@ -19,17 +17,6 @@ public final class GpxRouteFileBuilder extends GpxFileBuilder{
 
     public GpxRouteFileBuilder(Gpx gpx) {
         super(gpx);
-    }
-
-    @Override
-    public void build(File file, int preferedInstrNum) throws IOException {
-        int fileNum = 1;
-        List<Document> docs = buildSplitGpx(preferedInstrNum);
-        for(Document newGpxDocument : docs)
-        {
-            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
-            fileNum++;
-        }
     }
 
     @Override

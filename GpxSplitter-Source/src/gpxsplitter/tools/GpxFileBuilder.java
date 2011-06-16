@@ -28,6 +28,26 @@ public abstract class GpxFileBuilder implements GpxBuilder
     }
 
     /**
+     * This method will build a set of GPX files given the file name, number of
+     * GPX instructions per file and the number of files to be built.
+     * @param file
+     * @param instNum
+     * @param filesNum
+     * @throws IOException
+     */
+    @Override
+    public void build(File file, int preferedInstrNum) throws IOException
+    {
+        int fileNum = 1;
+        List<Document> docs = buildSplitGpx(preferedInstrNum);
+        for(Document newGpxDocument : docs)
+        {
+            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
+            fileNum++;
+        }
+    }
+
+    /**
      * The method build split gpx uses the gpx document loaded and the
      * preferred number of instructions to build a list of Gpx files ready
      * to be written to file.

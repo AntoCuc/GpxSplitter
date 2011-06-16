@@ -7,8 +7,6 @@ package gpxsplitter.tools;
 
 import gpxsplitter.model.Waypoint;
 import gpxsplitter.model.Gpx;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Document;
@@ -20,27 +18,6 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder
     public GpxTrackFileBuilder(Gpx gpx)
     {
         super(gpx);
-    }
-
-    /**
-     * This method will build a set of GPX files given the file name, number of
-     * GPX instructions per file and the number of files to be built.
-     * TODO: fix multiple files bug
-     * @param file
-     * @param instNum
-     * @param filesNum
-     * @throws IOException
-     */
-    @Override
-    public void build(File file, int preferedInstrNum) throws IOException
-    {
-        int fileNum = 1;
-        List<Document> docs = buildSplitGpx(preferedInstrNum);
-        for(Document newGpxDocument : docs)
-        {
-            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
-            fileNum++;
-        }
     }
 
     @Override
