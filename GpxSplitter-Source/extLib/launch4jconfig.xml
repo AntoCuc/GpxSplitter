@@ -1,8 +1,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\dist\GpxSplitter.jar</jar>
-  <outfile>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\dist\GpxSplitter.exe</outfile>
+  <jar>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\GpxSplitter-Source\dist\GpxSplitter.jar</jar>
+  <outfile>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\GpxSplitter-Source\dist\GpxSplitter.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
@@ -12,7 +12,7 @@
   <customProcName>false</customProcName>
   <stayAlive>false</stayAlive>
   <manifest></manifest>
-  <icon>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\src\gpxsplitter\media\favicon.ico</icon>
+  <icon>C:\Documents and Settings\Antonio\Documenti\Dropbox\Projects\Netbeans Projects\GpxSplitter\GpxSplitter-Source\src\gpxsplitter\media\favicon.ico</icon>
   <singleInstance>
     <mutexName>GpxSplitter</mutexName>
     <windowTitle>GpxSplitter</windowTitle>
