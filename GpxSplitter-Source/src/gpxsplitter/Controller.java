@@ -74,6 +74,15 @@ public class Controller
                 saveGpxFile();
             }
         });
+        this.view.getExitMenuItem().addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                System.exit(0);
+            }
+
+        });
     }
 
     void loadGpxFile(File gpxFile) throws IOException, JDOMException, FileNotValidException

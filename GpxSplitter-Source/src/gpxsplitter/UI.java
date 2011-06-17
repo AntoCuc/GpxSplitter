@@ -9,6 +9,7 @@ package gpxsplitter;
 import gpxsplitter.model.GpxType;
 import java.awt.Toolkit;
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class UI extends javax.swing.JFrame
@@ -41,6 +42,9 @@ public class UI extends javax.swing.JFrame
         fileNameField = new javax.swing.JTextField();
         javax.swing.JLabel emptyLabel = new javax.swing.JLabel();
         saveFileButton = new javax.swing.JButton();
+        javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
+        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        exitMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(GPX_SPLITTER);
@@ -96,11 +100,21 @@ public class UI extends javax.swing.JFrame
 
         getContentPane().add(bottomPanel);
 
+        fileMenu.setText("File");
+
+        exitMenuItem.setText("Exit");
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        setJMenuBar(menuBar);
+
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-416)/2, (screenSize.height-323)/2, 416, 323);
+        setBounds((screenSize.width-430)/2, (screenSize.height-350)/2, 430, 350);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseButton;
+    private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JTextField fileNameField;
     private javax.swing.JLabel fileTypeValue;
     private javax.swing.JComboBox gpxTypeComboBox;
@@ -131,6 +145,11 @@ public class UI extends javax.swing.JFrame
     JButton getSaveFileButton()
     {
         return saveFileButton;
+    }
+
+    JMenuItem getExitMenuItem()
+    {
+        return exitMenuItem;
     }
 
     String getInstructionsNumber()
