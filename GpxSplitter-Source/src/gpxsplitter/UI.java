@@ -3,7 +3,6 @@
  *
  * @author Antonino Cucchiara
  */
-
 package gpxsplitter;
 
 import gpxsplitter.model.GpxType;
@@ -46,6 +45,7 @@ public class UI extends javax.swing.JFrame
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
+        helpMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -111,6 +111,9 @@ public class UI extends javax.swing.JFrame
 
         helpMenu.setText("?");
 
+        helpMenuItem.setText("Help");
+        helpMenu.add(helpMenuItem);
+
         aboutMenuItem.setText("About");
         helpMenu.add(aboutMenuItem);
 
@@ -128,6 +131,7 @@ public class UI extends javax.swing.JFrame
     private javax.swing.JTextField fileNameField;
     private javax.swing.JLabel fileTypeValue;
     private javax.swing.JComboBox gpxTypeComboBox;
+    private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JTextField instrNumField;
     private javax.swing.JTextField openFileField;
     private javax.swing.JButton saveFileButton;
@@ -160,6 +164,11 @@ public class UI extends javax.swing.JFrame
     JMenuItem getExitMenuItem()
     {
         return exitMenuItem;
+    }
+
+    JMenuItem getHelpMenuItem()
+    {
+        return helpMenuItem;
     }
 
     JMenuItem getAboutMenuItem()
@@ -213,4 +222,21 @@ public class UI extends javax.swing.JFrame
 
     }
 
+    void browseHelpSystem()
+    {
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+        if (!desktop.isSupported(java.awt.Desktop.Action.BROWSE))
+        {
+            showMessage("Desktop doesn't support the browse action the online help cannot be open.");
+        }
+        try
+        {
+            java.net.URI uri = new java.net.URI("http://antocuc.github.com/GpxSplitterHelp.html");
+            desktop.browse(uri);
+        }
+        catch (Exception e)
+        {
+            showMessage("Problem reaching the website.");
+        }
+    }
 }

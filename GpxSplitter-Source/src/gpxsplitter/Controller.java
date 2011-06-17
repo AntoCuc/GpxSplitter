@@ -90,6 +90,16 @@ public class Controller
             }
 
         });
+        this.view.getHelpMenuItem().addMouseListener(new MouseAdapter()
+        {
+
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                Controller.this.view.browseHelpSystem();
+            }
+
+        });
     }
 
     void loadGpxFile(File gpxFile) throws IOException, JDOMException, FileNotValidException
