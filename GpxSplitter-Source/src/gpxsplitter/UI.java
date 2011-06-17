@@ -45,6 +45,8 @@ public class UI extends javax.swing.JFrame
         javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
+        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
+        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(GPX_SPLITTER);
@@ -107,12 +109,20 @@ public class UI extends javax.swing.JFrame
 
         menuBar.add(fileMenu);
 
+        helpMenu.setText("?");
+
+        aboutMenuItem.setText("About");
+        helpMenu.add(aboutMenuItem);
+
+        menuBar.add(helpMenu);
+
         setJMenuBar(menuBar);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         setBounds((screenSize.width-430)/2, (screenSize.height-350)/2, 430, 350);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton browseButton;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JTextField fileNameField;
@@ -152,6 +162,11 @@ public class UI extends javax.swing.JFrame
         return exitMenuItem;
     }
 
+    JMenuItem getAboutMenuItem()
+    {
+        return aboutMenuItem;
+    }
+
     String getInstructionsNumber()
     {
         return instrNumField.getText();
@@ -181,4 +196,21 @@ public class UI extends javax.swing.JFrame
     {
         JOptionPane.showMessageDialog(this, message);
     }
+
+    void showAboutPane()
+    {
+        JOptionPane.showMessageDialog(
+                this,
+                "<html><h3>GPX Splitter vHEAD</h3>" +
+                "<p>Author: Antonio Cucchiara <br>" +
+                "Homepage: http://antocuc.github.com/GpxSplitter.html <br>" +
+                "License:  Creative Commons  3.0" +
+                "<ul><li>Attribution</li><li>Non Commercial</li><li>Share Alike</li></ul>" +
+                "</p></html>",
+                "About " + GPX_SPLITTER,
+                JOptionPane.PLAIN_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/gpxsplitter/media/map.png")));
+
+    }
+
 }

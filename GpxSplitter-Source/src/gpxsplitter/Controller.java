@@ -3,7 +3,6 @@
  *
  * @author Antonino Cucchiara
  */
-
 package gpxsplitter;
 
 import gpxsplitter.tools.FileNotValidException;
@@ -67,19 +66,27 @@ public class Controller
         });
         this.view.getSaveFileButton().addMouseListener(new MouseAdapter()
         {
-
             @Override
             public void mousePressed(MouseEvent e)
             {
                 saveGpxFile();
             }
         });
-        this.view.getExitMenuItem().addMouseListener(new MouseAdapter(){
-
+        this.view.getExitMenuItem().addMouseListener(new MouseAdapter()
+        {
             @Override
             public void mousePressed(MouseEvent e)
             {
                 System.exit(0);
+            }
+        });
+        this.view.getAboutMenuItem().addMouseListener(new MouseAdapter()
+        {
+
+            @Override
+            public void mouseReleased(MouseEvent e)
+            {
+                Controller.this.view.showAboutPane();
             }
 
         });
@@ -100,8 +107,7 @@ public class Controller
             return;
         }
 
-        view.showMessage("Saving Gpx file(s) \n Instructions number: "
-                + desiredInstrNum + "\n Gpx Type: " + gpxType);
+        view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + gpxType);
 
         GpxFileBuilder gpxBuilder;
         if (view.getSelectedGpxType() == GpxType.Track)
