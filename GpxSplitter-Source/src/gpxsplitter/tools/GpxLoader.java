@@ -82,7 +82,7 @@ public class GpxLoader
         }
         else
         {
-            List<Element> instructionsList = gpxDocument.getRootElement().getChild(Gpx.RTE_TAG, getNamespace()).getChildren("rtept", getNamespace());
+            List<Element> instructionsList = gpxDocument.getRootElement().getChild(Gpx.RTE_TAG, getNamespace()).getChildren(Gpx.RTEPT_TAG, getNamespace());
             for (Element instruction : instructionsList)
             {
                 instructions.add(
@@ -93,5 +93,19 @@ public class GpxLoader
             }
             return instructions;
         }
+    }
+
+    public boolean isGpxMultitrack() throws FileNotValidException
+    {
+        if(getType() == GpxType.Track && (getTracksNum() > 1))
+        {
+                return true;
+        }
+        return false;
+    }
+
+    public int getTracksNum()
+    {
+        return gpxDocument.getRootElement().getChildren(Gpx.TRK_TAG, getNamespace()).size();
     }
 }

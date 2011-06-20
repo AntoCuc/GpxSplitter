@@ -7,9 +7,6 @@ package gpxsplitter.tools;
 
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.Waypoint;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,18 +15,20 @@ import static org.junit.Assert.*;
 public abstract class GpxLoaderTest
 {
 
-    private GpxLoader gpxLoader;
+    protected GpxLoader gpxLoader;
 
     public abstract String getData();
+    public abstract GpxLoader getGpxLoader()throws Exception;
     public abstract GpxType getExpectedType();
 
-    @Before
-    public void setUp() throws JDOMException, IOException, FileNotValidException
-    {
-        this.gpxLoader = new GpxLoader(new ByteArrayInputStream(this.getData().getBytes()), "");
-    }
+    public abstract void testGetTracksNum();
+    public abstract void testIsGpxMultiTrack() throws FileNotValidException;
 
-    ;
+    @Before
+    public void setUp() throws Exception
+    {
+        this.gpxLoader = getGpxLoader();
+    }
 
     @Test
     public void testNamespace()
