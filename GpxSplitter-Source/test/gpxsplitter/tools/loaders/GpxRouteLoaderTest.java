@@ -1,20 +1,18 @@
 /**
- * Builds a Gpx from a gpx track markup file and tests its features.
+ * Builds a Gpx from a gpx route markup file and tests its features.
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.tools;
+package gpxsplitter.tools.loaders;
 
+import gpxsplitter.tools.*;
+import gpxsplitter.tools.loaders.GpxLoader;
 import gpxsplitter.model.GpxType;
 import java.io.ByteArrayInputStream;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Antonio
- */
-public final class GpxMultiTrackLoaderTest extends GpxLoaderTest
+public class GpxRouteLoaderTest extends GpxLoaderTest
 {
 
     @Override
@@ -26,26 +24,26 @@ public final class GpxMultiTrackLoaderTest extends GpxLoaderTest
     @Override
     public String getData()
     {
-        return TestMedia.getTestGpxWithMultipleTracks();
+        return TestMedia.getTestRoute();
     }
 
     @Override
     public GpxType getExpectedType()
     {
-        return GpxType.Track;
+        return GpxType.Route;
     }
 
     @Test
     @Override
     public void testGetTracksNum()
     {
-        assertEquals(2, gpxLoader.getTracksNum());
+        assertEquals(0, gpxLoader.getTracksNum());
     }
 
     @Test
     @Override
     public void testIsGpxMultiTrack() throws FileNotValidException
     {
-        assertTrue(this.gpxLoader.isGpxMultitrack());
+        assertFalse(this.gpxLoader.isGpxMultitrack());
     }
 }

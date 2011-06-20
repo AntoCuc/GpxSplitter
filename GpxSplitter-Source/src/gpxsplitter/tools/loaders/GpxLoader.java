@@ -4,8 +4,9 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter.tools;
+package gpxsplitter.tools.loaders;
 
+import gpxsplitter.tools.*;
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.Gpx;
 import gpxsplitter.model.Waypoint;

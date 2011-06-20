@@ -3,8 +3,10 @@
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.tools;
+package gpxsplitter.tools.loaders;
 
+import gpxsplitter.tools.*;
+import gpxsplitter.tools.loaders.GpxLoader;
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.Waypoint;
 import org.jdom.Namespace;

@@ -3,8 +3,11 @@
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.tools;
+package gpxsplitter.tools.loaders;
 
+import gpxsplitter.tools.*;
+import gpxsplitter.tools.loaders.GpxLoaderTest;
+import gpxsplitter.tools.loaders.GpxLoader;
 import gpxsplitter.model.GpxType;
 import java.io.ByteArrayInputStream;
 import org.junit.Test;
@@ -14,7 +17,7 @@ import static org.junit.Assert.*;
  *
  * @author Antonio
  */
-public final class GpxTrackLoaderTest extends GpxLoaderTest
+public final class GpxMultiTrackLoaderTest extends GpxLoaderTest
 {
 
     @Override
@@ -26,7 +29,7 @@ public final class GpxTrackLoaderTest extends GpxLoaderTest
     @Override
     public String getData()
     {
-        return TestMedia.getTestTrack();
+        return TestMedia.getTestGpxWithMultipleTracks();
     }
 
     @Override
@@ -39,13 +42,13 @@ public final class GpxTrackLoaderTest extends GpxLoaderTest
     @Override
     public void testGetTracksNum()
     {
-        assertEquals(1, gpxLoader.getTracksNum());
+        assertEquals(2, gpxLoader.getTracksNum());
     }
 
     @Test
     @Override
     public void testIsGpxMultiTrack() throws FileNotValidException
     {
-        assertFalse(this.gpxLoader.isGpxMultitrack());
+        assertTrue(this.gpxLoader.isGpxMultitrack());
     }
 }

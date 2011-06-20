@@ -1,22 +1,22 @@
 /**
- * Builds gpx tracks from a gpx.
+ * Builds gpx routes from a gpx.
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter.tools;
 
-import gpxsplitter.model.Waypoint;
+package gpxsplitter.tools.builders;
+
+import gpxsplitter.tools.*;
 import gpxsplitter.model.Gpx;
+import gpxsplitter.model.Waypoint;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 
-public final class GpxTrackFileBuilder extends GpxFileBuilder
-{
+public final class GpxRouteFileBuilder extends GpxFileBuilder{
 
-    public GpxTrackFileBuilder(Gpx gpx)
-    {
+    public GpxRouteFileBuilder(Gpx gpx) {
         super(gpx);
     }
 
@@ -33,22 +33,24 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder
         {
             Document newGpxDocument = createGpxTemplate();
 
-            Element track = new Element(Gpx.TRK_TAG);
-            Element trackSegment = new Element(Gpx.TRACKSEGMENT_TAG);
-            track.setContent(trackSegment);
+            Element route = new Element(Gpx.RTE_TAG);
 
             for(int i=0; i<preferredInstrNum; i++)
             {
                 try
                 {
                     Waypoint currentInstruction = instructions.get(currInstr);
-                    Element trackPoint = new Element(Gpx.TRACKPOINT);
-                    trackPoint.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
-                    trackPoint.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
+                    Element routePt = new Element(Gpx.RTEPT_TAG);
+                    routePt.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
+                    routePt.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
                     Element ele = new Element(Gpx.ELEMENT_TAG);
                     ele.setText(currentInstruction.getElement());
-                    trackPoint.setContent(ele);
-                    trackSegment.addContent(trackPoint);
+                    routePt.setContent(ele);
+                    //For now the name is the same as the Element
+                    Element name = new Element(Gpx.ELEMENT_TAG);
+                    name.setText(currentInstruction.getElement());
+                    routePt.setContent(name);
+                    route.addContent(routePt);
                     currInstr++;
                 }
                 catch(IndexOutOfBoundsException e)
@@ -57,10 +59,11 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder
                     break;
                 }
             }
-            newGpxDocument.getRootElement().setContent(track);
+            newGpxDocument.getRootElement().setContent(route);
             gpxList.add(newGpxDocument);
             fileNum++; // Proceed to next file
         }
         return gpxList;
+
     }
 }

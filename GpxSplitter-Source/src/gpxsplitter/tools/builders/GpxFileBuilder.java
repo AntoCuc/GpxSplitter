@@ -4,8 +4,9 @@
  * @author Antonino Cucchiara
  */
 
-package gpxsplitter.tools;
+package gpxsplitter.tools.builders;
 
+import gpxsplitter.tools.*;
 import gpxsplitter.model.Gpx;
 import gpxsplitter.UI;
 import java.io.File;

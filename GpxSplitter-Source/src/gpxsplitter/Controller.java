@@ -6,12 +6,10 @@
 package gpxsplitter;
 
 import gpxsplitter.tools.FileNotValidException;
-import gpxsplitter.tools.GpxLoader;
-import gpxsplitter.tools.GpxFileBuilder;
-import gpxsplitter.tools.GpxRouteFileBuilder;
-import gpxsplitter.tools.GpxTrackFileBuilder;
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.Gpx;
+import gpxsplitter.tools.builders.*;
+import gpxsplitter.tools.loaders.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
