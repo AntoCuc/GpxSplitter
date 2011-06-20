@@ -6,10 +6,15 @@
 package gpxsplitter;
 
 import gpxsplitter.tools.FileNotValidException;
+import gpxsplitter.tools.builders.GpxFileBuilder;
+import gpxsplitter.tools.builders.GpxRouteFileBuilder;
+import gpxsplitter.tools.builders.GpxTrackFileBuilder;
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.Gpx;
-import gpxsplitter.tools.builders.*;
-import gpxsplitter.tools.loaders.*;
+import gpxsplitter.tools.loaders.GpxFileLoader;
+import gpxsplitter.tools.loaders.GpxMultiTrackFileLoader;
+import gpxsplitter.tools.loaders.GpxRouteFileLoader;
+import gpxsplitter.tools.loaders.GpxTrackFileLoader;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -19,7 +24,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
+import org.jdom.Document;
 import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 
 public class Controller
 {
@@ -64,6 +71,7 @@ public class Controller
         });
         this.view.getSaveFileButton().addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mousePressed(MouseEvent e)
             {
@@ -72,6 +80,7 @@ public class Controller
         });
         this.view.getExitMenuItem().addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mousePressed(MouseEvent e)
             {
@@ -86,7 +95,6 @@ public class Controller
             {
                 Controller.this.view.showAboutPane();
             }
-
         });
         this.view.getHelpMenuItem().addMouseListener(new MouseAdapter()
         {
@@ -96,15 +104,45 @@ public class Controller
             {
                 Controller.this.view.browseHelpSystem();
             }
-
         });
     }
 
     void loadGpxFile(File gpxFile) throws IOException, JDOMException, FileNotValidException
     {
-        loadedGpx = new GpxLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath()).getLoadedGpx();
-        view.setFileTypeValue("Gpx " + loadedGpx.getType() + " " + loadedGpx.getVersion() + " (" + loadedGpx.getNumOfInstructions() + " instructions)");
+        GpxFileLoader gpxLoader;
+
+        final SAXBuilder builder = new SAXBuilder();
+        final Document gpxDocument = builder.build(new FileInputStream(gpxFile));
+
+        if (GpxFileLoader.getType(gpxDocument) == GpxType.Route)
+        {
+            gpxLoader = new GpxRouteFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
+            view.setSingleTrackMode();
+        }
+        else if ((GpxFileLoader.getType(gpxDocument) == GpxType.Track))
+        {
+            if (GpxFileLoader.isGpxMultitrack(gpxDocument))
+            {
+                gpxLoader = new GpxMultiTrackFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
+                view.setMultiTrackMode();
+                view.setTracksNumValue(String.valueOf(GpxFileLoader.getTracksNum(gpxDocument)));
+            }
+            else
+            {
+                gpxLoader = new GpxTrackFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
+                view.setSingleTrackMode();
+            }
+        }
+        else
+        {
+            throw new FileNotValidException("The file you are trying to load is not route nor track.");
+        }
+        loadedGpx = gpxLoader.load();
+
+        String fileType = "Gpx " + loadedGpx.getType() + " " + loadedGpx.getVersion();
+        fileType += " (" + loadedGpx.getNumOfInstructions() + " instructions)";
         view.setOpenFileField(loadedGpx.getFilePath());
+        view.setFileTypeValue(fileType);
     }
 
     void saveGpxFile(int desiredInstrNum, String gpxType, File file) throws IOException
@@ -126,6 +164,7 @@ public class Controller
         {
             gpxBuilder = new GpxRouteFileBuilder(loadedGpx);
         }
+
         gpxBuilder.build(file, desiredInstrNum);
         view.showMessage("Split GPX successfully saved.");
     }

@@ -6,11 +6,11 @@
 package gpxsplitter;
 
 import gpxsplitter.model.WaypointTest;
-import gpxsplitter.tools.loaders.GpxMultiTrackLoaderTest;
+import gpxsplitter.tools.loaders.GpxMultiTrackFileLoaderTest;
 import gpxsplitter.tools.builders.GpxRouteFileBuilderTest;
-import gpxsplitter.tools.loaders.GpxRouteLoaderTest;
+import gpxsplitter.tools.loaders.GpxRouteFileLoaderTest;
 import gpxsplitter.tools.builders.GpxTrackFileBuilderTest;
-import gpxsplitter.tools.loaders.GpxTrackLoaderTest;
+import gpxsplitter.tools.loaders.GpxTrackFileLoaderTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,9 +22,9 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses(
 {
     WaypointTest.class,
-    GpxRouteLoaderTest.class,
-    GpxTrackLoaderTest.class,
-    GpxMultiTrackLoaderTest.class,
+    GpxRouteFileLoaderTest.class,
+    GpxTrackFileLoaderTest.class,
+    GpxMultiTrackFileLoaderTest.class,
     ControllerTest.class,
     GpxTrackFileBuilderTest.class,
     GpxRouteFileBuilderTest.class

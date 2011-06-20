@@ -6,10 +6,10 @@
 package gpxsplitter.tools.loaders;
 
 import gpxsplitter.tools.*;
-import gpxsplitter.tools.loaders.GpxLoaderTest;
-import gpxsplitter.tools.loaders.GpxLoader;
 import gpxsplitter.model.GpxType;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import org.jdom.JDOMException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,13 +17,13 @@ import static org.junit.Assert.*;
  *
  * @author Antonio
  */
-public final class GpxMultiTrackLoaderTest extends GpxLoaderTest
+public final class GpxMultiTrackFileLoaderTest extends GpxFileLoaderTest
 {
 
     @Override
-    public GpxLoader getGpxLoader() throws Exception
+    public GpxFileLoader getGpxLoader() throws Exception
     {
-        return new GpxLoader(new ByteArrayInputStream(this.getData().getBytes()), "");
+        return new GpxMultiTrackFileLoader(new ByteArrayInputStream(this.getData().getBytes()), "");
     }
 
     @Override
@@ -40,15 +40,15 @@ public final class GpxMultiTrackLoaderTest extends GpxLoaderTest
 
     @Test
     @Override
-    public void testGetTracksNum()
+    public void testGetTracksNum()throws IOException, JDOMException, FileNotValidException
     {
-        assertEquals(2, gpxLoader.getTracksNum());
+        assertEquals(2, GpxFileLoader.getTracksNum(getGpxDocument()));
     }
 
     @Test
     @Override
-    public void testIsGpxMultiTrack() throws FileNotValidException
+    public void testIsGpxMultiTrack() throws IOException, JDOMException, FileNotValidException
     {
-        assertTrue(this.gpxLoader.isGpxMultitrack());
+        assertTrue(GpxFileLoader.isGpxMultitrack(getGpxDocument()));
     }
 }
