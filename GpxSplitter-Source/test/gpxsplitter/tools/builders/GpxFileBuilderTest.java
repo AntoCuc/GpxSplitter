@@ -22,14 +22,14 @@ import static org.junit.Assert.*;
 public abstract class GpxFileBuilderTest
 {
 
-    private static final double LAT_WPT_1 = 51.2404704333;
-    private static final double LON_WPT_1 = -0.1724553109;
+    static final double LAT_WPT_1 = 51.2404704333;
+    static final double LON_WPT_1 = -0.1724553109;
     public static final String ELE_WPT_1 = "75";
     public static final double LAT_WPT_2 = 51.3;
     public static final double LON_WPT_2 = -0.1;
     public static final String ELE_WPT_2 = "76";
     
-    private GpxFileBuilder gpxFileBuilder;
+    GpxFileBuilder gpxFileBuilder;
 
     public abstract GpxFileBuilder getGpxFileBuilder(Gpx gpx);
 
@@ -47,8 +47,10 @@ public abstract class GpxFileBuilderTest
         waypoints.add(waypoint1);
         Waypoint waypoint2 = new Waypoint(LAT_WPT_2, LON_WPT_2, ELE_WPT_2);
         waypoints.add(waypoint2);
-        Itinerary testItinerary = new Itinerary(waypoints);
-        itineraries.add(testItinerary);
+        Itinerary testItinerary1 = new Itinerary(waypoints);
+        itineraries.add(testItinerary1);
+        Itinerary testItinerary2 = new Itinerary(waypoints);
+        itineraries.add(testItinerary2);
         Gpx expectedGpx = new Gpx(Namespace.getNamespace(TestMedia.NAMESPACE), getGpxType(), "1.1", "", itineraries);
         this.gpxFileBuilder = getGpxFileBuilder(expectedGpx);
     }

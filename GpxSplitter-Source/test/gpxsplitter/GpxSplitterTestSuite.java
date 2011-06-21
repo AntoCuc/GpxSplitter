@@ -10,6 +10,7 @@ import gpxsplitter.tools.loaders.GpxMultiTrackFileLoaderTest;
 import gpxsplitter.tools.builders.GpxRouteFileBuilderTest;
 import gpxsplitter.tools.loaders.GpxRouteFileLoaderTest;
 import gpxsplitter.tools.builders.GpxTrackFileBuilderTest;
+import gpxsplitter.tools.builders.SingleTrackFileBuilderTest;
 import gpxsplitter.tools.loaders.GpxTrackFileLoaderTest;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -27,7 +28,8 @@ import org.junit.runners.Suite;
     GpxMultiTrackFileLoaderTest.class,
     ControllerTest.class,
     GpxTrackFileBuilderTest.class,
-    GpxRouteFileBuilderTest.class
+    GpxRouteFileBuilderTest.class,
+    SingleTrackFileBuilderTest.class
 })
 public class GpxSplitterTestSuite
 {

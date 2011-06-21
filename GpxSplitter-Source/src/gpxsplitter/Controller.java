@@ -11,6 +11,7 @@ import gpxsplitter.tools.builders.GpxRouteFileBuilder;
 import gpxsplitter.tools.builders.GpxTrackFileBuilder;
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.Gpx;
+import gpxsplitter.tools.builders.SingleTrackGpxFileBuilder;
 import gpxsplitter.tools.loaders.GpxFileLoader;
 import gpxsplitter.tools.loaders.GpxMultiTrackFileLoader;
 import gpxsplitter.tools.loaders.GpxRouteFileLoader;
@@ -175,7 +176,11 @@ public class Controller
         view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + gpxType);
 
         GpxFileBuilder gpxBuilder;
-        if (view.getSelectedGpxType() == GpxType.Track)
+        if(view.getSeparateTracksRadioButton().isSelected())
+        {
+            gpxBuilder = new SingleTrackGpxFileBuilder(loadedGpx);
+        }
+        else if (view.getSelectedGpxType() == GpxType.Track)
         {
             gpxBuilder = new GpxTrackFileBuilder(loadedGpx);
         }
