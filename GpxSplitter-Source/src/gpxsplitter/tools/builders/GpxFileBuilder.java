@@ -3,7 +3,6 @@
  *
  * @author Antonino Cucchiara
  */
-
 package gpxsplitter.tools.builders;
 
 import gpxsplitter.model.Gpx;
@@ -20,7 +19,7 @@ public abstract class GpxFileBuilder implements GpxBuilder
 {
 
     public static final String GPX_FORMAT = ".gpx";
-    protected Gpx gpx;
+    protected final Gpx gpx;
 
     public GpxFileBuilder(Gpx gpx)
     {
@@ -40,7 +39,7 @@ public abstract class GpxFileBuilder implements GpxBuilder
     {
         int fileNum = 1;
         List<Document> docs = buildSplitGpx(preferedInstrNum);
-        for(Document newGpxDocument : docs)
+        for (Document newGpxDocument : docs)
         {
             saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
             fileNum++;

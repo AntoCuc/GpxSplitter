@@ -6,7 +6,6 @@
 
 package gpxsplitter.tools.builders;
 
-import gpxsplitter.tools.*;
 import gpxsplitter.model.Gpx;
 import gpxsplitter.model.Waypoint;
 import java.util.ArrayList;
@@ -24,8 +23,8 @@ public final class GpxRouteFileBuilder extends GpxFileBuilder{
     public List<Document> buildSplitGpx(int preferredInstrNum)
     {
         List<Document> gpxList = new ArrayList<Document>();
-        List<Waypoint> instructions = gpx.getInstructions();
-        int splitFiles = howManyFiles(instructions.size(), preferredInstrNum);
+        List<Waypoint> waypoints = gpx.getItineraries().get(0).getWaypoints();
+        int splitFiles = howManyFiles(waypoints.size(), preferredInstrNum);
 
         int currInstr = 0;
         int fileNum = 1;
@@ -39,7 +38,7 @@ public final class GpxRouteFileBuilder extends GpxFileBuilder{
             {
                 try
                 {
-                    Waypoint currentInstruction = instructions.get(currInstr);
+                    Waypoint currentInstruction = waypoints.get(currInstr);
                     Element routePt = new Element(Gpx.RTEPT_TAG);
                     routePt.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
                     routePt.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());

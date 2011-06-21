@@ -25,15 +25,15 @@ public final class Gpx
     private final Namespace namespace;
     private final GpxType gpxType;
     private final String version;
-    private final List<Waypoint> instructions;
+    private final List<Itinerary> itineraries;
     private final String filePath;
 
-    public Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<Waypoint> instructions)
+    public Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<Itinerary> instructions)
     {
         this.namespace = namespace;
         this.gpxType = gpxType;
         this.version = version;
-        this.instructions = instructions;
+        this.itineraries = instructions;
         this.filePath = filePath;
     }
 
@@ -44,12 +44,17 @@ public final class Gpx
 
     public int getNumOfInstructions()
     {
-        return this.instructions.size();
+        Itinerary firstItinerary = this.itineraries.get(0);
+        if(firstItinerary != null)
+        {
+            return firstItinerary.getWaypoints().size();
+        }
+        return 0;
     }
 
-    public List<Waypoint> getInstructions()
+    public List<Itinerary> getItineraries()
     {
-        return instructions;
+        return itineraries;
     }
 
     public Namespace getNamespace()

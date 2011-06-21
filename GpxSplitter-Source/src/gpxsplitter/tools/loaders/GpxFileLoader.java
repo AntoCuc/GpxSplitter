@@ -8,7 +8,7 @@ package gpxsplitter.tools.loaders;
 import gpxsplitter.tools.*;
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.Gpx;
-import gpxsplitter.model.Waypoint;
+import gpxsplitter.model.Itinerary;
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +24,7 @@ public abstract class GpxFileLoader implements GpxLoader
     private final String gpxFilePath;
     protected Gpx newGpx;
 
-    abstract List<Waypoint> getInstructions() throws FileNotValidException;
+    abstract List<Itinerary> getItineraries() throws FileNotValidException;
 
     public GpxFileLoader(Document gpxDocument, String gpxFilePath) throws JDOMException, IOException, FileNotValidException
     {
@@ -81,6 +81,6 @@ public abstract class GpxFileLoader implements GpxLoader
     @Override
     public Gpx load() throws FileNotValidException, IOException, JDOMException
     {
-        return new Gpx(getNamespace(), getType(gpxDocument), getVersion(), gpxFilePath, getInstructions());
+        return new Gpx(getNamespace(), getType(gpxDocument), getVersion(), gpxFilePath, getItineraries());
     }
 }

@@ -6,6 +6,7 @@
 package gpxsplitter.tools.loaders;
 
 import gpxsplitter.model.Gpx;
+import gpxsplitter.model.Itinerary;
 import gpxsplitter.model.Waypoint;
 import gpxsplitter.tools.FileNotValidException;
 import java.io.IOException;
@@ -16,8 +17,8 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
-
-public final class GpxMultiTrackFileLoader extends GpxFileLoader{
+public final class GpxMultiTrackFileLoader extends GpxFileLoader
+{
 
     public GpxMultiTrackFileLoader(Document gpxDocument, String gpxFilePath) throws JDOMException, IOException, FileNotValidException
     {
@@ -30,22 +31,26 @@ public final class GpxMultiTrackFileLoader extends GpxFileLoader{
     }
 
     @Override
-    List<Waypoint> getInstructions() throws FileNotValidException
+    List<Itinerary> getItineraries() throws FileNotValidException
     {
-        List<Waypoint> instructions = new ArrayList<Waypoint>();
+        List<Itinerary> itineraries = new ArrayList<Itinerary>();
+
         List<Element> tracksList = gpxDocument.getRootElement().getChildren(Gpx.TRK_TAG, getNamespace());
         for (Element track : tracksList)
         {
-            List<Element> instructionsList = track.getChild(Gpx.TRACKSEGMENT_TAG, getNamespace()).getChildren();
-            for (Element instruction : instructionsList)
+            List<Waypoint> waypoints = new ArrayList<Waypoint>();
+
+            List<Element> waypointsList = track.getChild(Gpx.TRACKSEGMENT_TAG, getNamespace()).getChildren();
+            for (Element waypoint : waypointsList)
             {
-                instructions.add(
+                waypoints.add(
                         new Waypoint(
-                        Double.parseDouble(instruction.getAttributeValue(Gpx.LATITUDE_TAG)),
-                        Double.parseDouble(instruction.getAttributeValue(Gpx.LONGITUDE_TAG)),
-                        instruction.getChildText(Gpx.ELEMENT_TAG, getNamespace())));
+                        Double.parseDouble(waypoint.getAttributeValue(Gpx.LATITUDE_TAG)),
+                        Double.parseDouble(waypoint.getAttributeValue(Gpx.LONGITUDE_TAG)),
+                        waypoint.getChildText(Gpx.ELEMENT_TAG, getNamespace())));
             }
+            itineraries.add(new Itinerary(waypoints));
         }
-        return instructions;
+        return itineraries;
     }
 }

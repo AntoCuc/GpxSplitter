@@ -6,7 +6,6 @@
 package gpxsplitter.tools.builders;
 
 import gpxsplitter.tools.*;
-import gpxsplitter.tools.builders.GpxFileBuilder;
 import org.jdom.Element;
 import org.jdom.Document;
 import gpxsplitter.model.Waypoint;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import gpxsplitter.model.Gpx;
 import gpxsplitter.model.GpxType;
+import gpxsplitter.model.Itinerary;
 import org.jdom.Namespace;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -41,12 +41,15 @@ public abstract class GpxFileBuilderTest
     public void setUp()
     {
 
+        List<Itinerary> itineraries = new ArrayList<Itinerary>();
         List<Waypoint> waypoints = new ArrayList<Waypoint>();
         Waypoint waypoint1 = new Waypoint(LAT_WPT_1, LON_WPT_1, ELE_WPT_1);
         waypoints.add(waypoint1);
         Waypoint waypoint2 = new Waypoint(LAT_WPT_2, LON_WPT_2, ELE_WPT_2);
         waypoints.add(waypoint2);
-        Gpx expectedGpx = new Gpx(Namespace.getNamespace(TestMedia.NAMESPACE), getGpxType(), "1.1", "", waypoints);
+        Itinerary testItinerary = new Itinerary(waypoints);
+        itineraries.add(testItinerary);
+        Gpx expectedGpx = new Gpx(Namespace.getNamespace(TestMedia.NAMESPACE), getGpxType(), "1.1", "", itineraries);
         this.gpxFileBuilder = getGpxFileBuilder(expectedGpx);
     }
 

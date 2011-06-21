@@ -61,11 +61,11 @@ public abstract class GpxFileLoaderTest
     @Test
     public void testInstructions() throws FileNotValidException, IOException, JDOMException
     {
-        assertEquals(2, this.gpxLoader.load().getInstructions().size());
+        assertEquals(2, this.gpxLoader.load().getItineraries().get(0).getWaypoints().size());
         assertEquals(new Waypoint(51.2404704333, -0.1724553109, "75").toString(),
-                this.gpxLoader.load().getInstructions().get(0).toString());
+                this.gpxLoader.load().getItineraries().get(0).getWaypoints().get(0).toString());
         assertEquals(new Waypoint(51.3, -0.1, "76").toString(),
-                this.gpxLoader.load().getInstructions().get(1).toString());
+                this.gpxLoader.load().getItineraries().get(0).getWaypoints().get(1).toString());
     }
 
     Document getGpxDocument() throws IOException, JDOMException, FileNotValidException

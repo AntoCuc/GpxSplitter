@@ -5,8 +5,6 @@
  */
 package gpxsplitter.tools.builders;
 
-import gpxsplitter.tools.builders.GpxFileBuilder;
-import gpxsplitter.tools.builders.GpxTrackFileBuilder;
 import org.jdom.Document;
 import gpxsplitter.model.Gpx;
 import gpxsplitter.model.GpxType;

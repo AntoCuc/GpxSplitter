@@ -7,6 +7,7 @@ package gpxsplitter.tools.loaders;
 
 import gpxsplitter.tools.*;
 import gpxsplitter.model.GpxType;
+import gpxsplitter.model.Waypoint;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import org.jdom.JDOMException;
@@ -50,5 +51,17 @@ public final class GpxMultiTrackFileLoaderTest extends GpxFileLoaderTest
     public void testIsGpxMultiTrack() throws IOException, JDOMException, FileNotValidException
     {
         assertTrue(GpxFileLoader.isGpxMultitrack(getGpxDocument()));
+    }
+
+    @Test
+    @Override
+    public void testInstructions() throws FileNotValidException, IOException, JDOMException
+    {
+        assertEquals(1, this.gpxLoader.load().getItineraries().get(0).getWaypoints().size());
+        assertEquals(1, this.gpxLoader.load().getItineraries().get(1).getWaypoints().size());
+        assertEquals(new Waypoint(51.2404704333, -0.1724553109, "75").toString(),
+                this.gpxLoader.load().getItineraries().get(0).getWaypoints().get(0).toString());
+        assertEquals(new Waypoint(51.3, -0.1, "76").toString(),
+                this.gpxLoader.load().getItineraries().get(1).getWaypoints().get(0).toString());
     }
 }

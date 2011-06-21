@@ -6,6 +6,7 @@
 package gpxsplitter.tools.loaders;
 
 import gpxsplitter.model.Gpx;
+import gpxsplitter.model.Itinerary;
 import gpxsplitter.model.Waypoint;
 import gpxsplitter.tools.FileNotValidException;
 import java.io.IOException;
@@ -29,19 +30,21 @@ public final class GpxTrackFileLoader extends GpxFileLoader{
     }
 
     @Override
-    List<Waypoint> getInstructions() throws FileNotValidException
+    List<Itinerary> getItineraries() throws FileNotValidException
     {
-        List<Waypoint> instructions = new ArrayList<Waypoint>();
+        List<Waypoint> waypoints = new ArrayList<Waypoint>();
         List<Element> instructionsList = gpxDocument.getRootElement().getChild(Gpx.TRK_TAG, getNamespace()).getChild(Gpx.TRACKSEGMENT_TAG, getNamespace()).getChildren();
             for (Element instruction : instructionsList)
             {
-                instructions.add(
+                waypoints.add(
                         new Waypoint(
                         Double.parseDouble(instruction.getAttributeValue(Gpx.LATITUDE_TAG)),
                         Double.parseDouble(instruction.getAttributeValue(Gpx.LONGITUDE_TAG)),
                         instruction.getChildText(Gpx.ELEMENT_TAG, getNamespace())));
             }
-            return instructions;
+            List<Itinerary> itineraries = new ArrayList<Itinerary>();
+            itineraries.add(new Itinerary(waypoints));
+            return itineraries;
     }
 
 
