@@ -105,6 +105,24 @@ public class Controller
                 Controller.this.view.browseHelpSystem();
             }
         });
+        this.view.getSeparateTracksRadioButton().addMouseListener(new MouseAdapter()
+        {
+
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                Controller.this.view.setSplittingEnabled(false);
+            }
+        });
+        this.view.getJoinTracksRadioButton().addMouseListener(new MouseAdapter()
+        {
+
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                Controller.this.view.setSplittingEnabled(true);
+            }
+        });
     }
 
     void loadGpxFile(File gpxFile) throws IOException, JDOMException, FileNotValidException
@@ -117,20 +135,21 @@ public class Controller
         if (GpxFileLoader.getType(gpxDocument) == GpxType.Route)
         {
             gpxLoader = new GpxRouteFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
-            view.setSingleTrackMode();
+            view.setMultiTrackEnabled(false);
+            
         }
         else if ((GpxFileLoader.getType(gpxDocument) == GpxType.Track))
         {
             if (GpxFileLoader.isGpxMultitrack(gpxDocument))
             {
                 gpxLoader = new GpxMultiTrackFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
-                view.setMultiTrackMode();
                 view.setTracksNumValue(String.valueOf(GpxFileLoader.getTracksNum(gpxDocument)));
+                view.setMultiTrackEnabled(true);
             }
             else
             {
                 gpxLoader = new GpxTrackFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
-                view.setSingleTrackMode();
+                view.setMultiTrackEnabled(false);
             }
         }
         else

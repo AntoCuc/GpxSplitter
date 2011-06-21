@@ -7,10 +7,12 @@ package gpxsplitter;
 
 import gpxsplitter.model.GpxType;
 import java.awt.Toolkit;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 public class UI extends javax.swing.JFrame
 {
@@ -28,7 +30,7 @@ public class UI extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        multiTrackOperationButtonGroup = new javax.swing.ButtonGroup();
+        javax.swing.ButtonGroup multiTrackOperationButtonGroup = new javax.swing.ButtonGroup();
         javax.swing.JPanel topPanel = new javax.swing.JPanel();
         openFileField = new javax.swing.JTextField();
         browseButton = new javax.swing.JButton();
@@ -171,7 +173,6 @@ public class UI extends javax.swing.JFrame
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JTextField instrNumField;
     private javax.swing.JRadioButton joinTracksRadioButton;
-    private javax.swing.ButtonGroup multiTrackOperationButtonGroup;
     private javax.swing.JTextField openFileField;
     private javax.swing.JButton saveFileButton;
     private javax.swing.JRadioButton separateTracksRadioButton;
@@ -232,6 +233,16 @@ public class UI extends javax.swing.JFrame
         return fileNameField.getText();
     }
 
+    JRadioButton getSeparateTracksRadioButton()
+    {
+        return separateTracksRadioButton;
+    }
+
+    JRadioButton getJoinTracksRadioButton()
+    {
+        return joinTracksRadioButton;
+    }
+
     public void setFileTypeValue(String fileType)
     {
         fileTypeValue.setText(fileType);
@@ -242,22 +253,17 @@ public class UI extends javax.swing.JFrame
         openFileField.setText(openedFile);
     }
 
-    void setSingleTrackMode()
+    void setSplittingEnabled(boolean enabled)
     {
-        instrNumField.setEnabled(true);
-        gpxTypeComboBox.setEnabled(true);
-
-        joinTracksRadioButton.setEnabled(false);
-        separateTracksRadioButton.setEnabled(false);
+        instrNumField.setEnabled(enabled);
+        gpxTypeComboBox.setEnabled(enabled);
     }
 
-    public void setMultiTrackMode()
+    void setMultiTrackEnabled(boolean enabled)
     {
-        instrNumField.setEnabled(false);
-        gpxTypeComboBox.setEnabled(false);
-
-        joinTracksRadioButton.setEnabled(true);
-        separateTracksRadioButton.setEnabled(true);
+        joinTracksRadioButton.setEnabled(enabled);
+        separateTracksRadioButton.setEnabled(enabled);
+        tracksNumValue.setEnabled(enabled);
     }
 
     public void setTracksNumValue(String tracksNum)
