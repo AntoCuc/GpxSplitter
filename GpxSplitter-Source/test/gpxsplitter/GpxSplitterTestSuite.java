@@ -5,6 +5,7 @@
  */
 package gpxsplitter;
 
+import gpxsplitter.model.GpxTest;
 import gpxsplitter.model.WaypointTest;
 import gpxsplitter.tools.loaders.GpxMultiTrackFileLoaderTest;
 import gpxsplitter.tools.builders.GpxRouteFileBuilderTest;
@@ -22,6 +23,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
+    GpxTest.class,
     WaypointTest.class,
     GpxRouteFileLoaderTest.class,
     GpxTrackFileLoaderTest.class,

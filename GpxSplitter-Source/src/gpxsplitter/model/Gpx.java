@@ -44,12 +44,12 @@ public final class Gpx
 
     public int getNumOfInstructions()
     {
-        Itinerary firstItinerary = this.itineraries.get(0);
-        if(firstItinerary != null)
+        int wayPointsNum = 0;
+        for(Itinerary itinerary : itineraries)
         {
-            return firstItinerary.getWaypoints().size();
+            wayPointsNum += itinerary.getWaypoints().size();
         }
-        return 0;
+        return wayPointsNum;
     }
 
     public List<Itinerary> getItineraries()
