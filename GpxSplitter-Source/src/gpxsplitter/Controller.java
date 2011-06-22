@@ -62,7 +62,7 @@ public class Controller
             {
                 try
                 {
-                    browseGpxFile();
+                    loadGpxFile();
                 }
                 catch (FileNotValidException ex)
                 {
@@ -126,6 +126,29 @@ public class Controller
         });
     }
 
+    private void loadGpxFile() throws FileNotValidException
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new GpxFileFilter());
+        fileChooser.showOpenDialog(view);
+        File selectedFile = fileChooser.getSelectedFile();
+        if (selectedFile != null)
+        {
+            try
+            {
+                loadGpxFile(selectedFile);
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch (JDOMException ex)
+            {
+                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     void loadGpxFile(File gpxFile) throws IOException, JDOMException, FileNotValidException
     {
         GpxFileLoader gpxLoader;
@@ -137,7 +160,7 @@ public class Controller
         {
             gpxLoader = new GpxRouteFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
             view.setMultiTrackEnabled(false);
-            
+
         }
         else if ((GpxFileLoader.getType(gpxDocument) == GpxType.Track))
         {
@@ -163,57 +186,6 @@ public class Controller
         fileType += " (" + loadedGpx.getNumOfInstructions() + " instructions)";
         view.setOpenFileField(loadedGpx.getFilePath());
         view.setFileTypeValue(fileType);
-    }
-
-    void saveGpxFile(int desiredInstrNum, String gpxType, File file) throws IOException
-    {
-        if (loadedGpx == null)
-        {
-            view.showMessage("A GPX to split has to be selected");
-            return;
-        }
-
-        view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + gpxType);
-
-        GpxFileBuilder gpxBuilder;
-        if(view.getSeparateTracksRadioButton().isSelected())
-        {
-            gpxBuilder = new SingleTrackGpxFileBuilder(loadedGpx);
-        }
-        else if (view.getSelectedGpxType() == GpxType.Track)
-        {
-            gpxBuilder = new GpxTrackFileBuilder(loadedGpx);
-        }
-        else
-        {
-            gpxBuilder = new GpxRouteFileBuilder(loadedGpx);
-        }
-
-        gpxBuilder.build(file, desiredInstrNum);
-        view.showMessage("Split GPX successfully saved.");
-    }
-
-    private void browseGpxFile() throws FileNotValidException
-    {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new GpxFileFilter());
-        fileChooser.showOpenDialog(view);
-        File selectedFile = fileChooser.getSelectedFile();
-        if (selectedFile != null)
-        {
-            try
-            {
-                loadGpxFile(selectedFile);
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (JDOMException ex)
-            {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     private void saveGpxFile()
@@ -243,8 +215,36 @@ public class Controller
         }
         catch (IOException e)
         {
-            view.showMessage("Problem whilst saving the file.");
+            view.showMessage("Problem whilst saving the file." + UI.LINE_SEPARATOR + "Do you have the rights to write to that location?");
         }
+    }
+
+    void saveGpxFile(int desiredInstrNum, String gpxType, File file) throws IOException
+    {
+        if (loadedGpx == null)
+        {
+            view.showMessage("A GPX to split has to be selected");
+            return;
+        }
+
+        view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + gpxType);
+
+        GpxFileBuilder gpxBuilder;
+        if (view.getSeparateTracksRadioButton().isSelected())
+        {
+            gpxBuilder = new SingleTrackGpxFileBuilder(loadedGpx);
+        }
+        else if (view.getSelectedGpxType() == GpxType.Track)
+        {
+            gpxBuilder = new GpxTrackFileBuilder(loadedGpx);
+        }
+        else
+        {
+            gpxBuilder = new GpxRouteFileBuilder(loadedGpx);
+        }
+
+        gpxBuilder.build(file, desiredInstrNum);
+        view.showMessage("Split GPX successfully saved.");
     }
 
     private boolean isAValidInteger(String intAsStr)

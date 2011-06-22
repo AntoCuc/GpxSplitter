@@ -13,10 +13,6 @@ import org.jdom.JDOMException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Antonio
- */
 public final class GpxTrackFileLoaderTest extends GpxFileLoaderTest
 {
 
