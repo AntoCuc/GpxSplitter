@@ -3,9 +3,9 @@
  *
  * @author Antonino Cucchiara
  */
-
 package gpxsplitter.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Namespace;
 
@@ -25,16 +25,16 @@ public final class Gpx
     private final Namespace namespace;
     private final GpxType gpxType;
     private final String version;
-    private final List<Itinerary> itineraries;
     private final String filePath;
+    private final List<Itinerary> itineraries = new ArrayList<Itinerary>();
 
-    public Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<Itinerary> instructions)
+    public Gpx(Namespace namespace, GpxType gpxType, String version, String filePath, List<Itinerary> itineraries)
     {
         this.namespace = namespace;
         this.gpxType = gpxType;
         this.version = version;
-        this.itineraries = instructions;
         this.filePath = filePath;
+        this.itineraries.addAll(itineraries);
     }
 
     public GpxType getGpxType()
@@ -45,7 +45,7 @@ public final class Gpx
     public int getNumOfInstructions()
     {
         int wayPointsNum = 0;
-        for(Itinerary itinerary : itineraries)
+        for (Itinerary itinerary : itineraries)
         {
             wayPointsNum += itinerary.getWaypoints().size();
         }

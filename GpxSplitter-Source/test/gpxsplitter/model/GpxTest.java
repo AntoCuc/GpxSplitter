@@ -51,6 +51,15 @@ public class GpxTest {
      * Test of getNumOfInstructions method, of class Gpx.
      */
     @Test
+    public void testGetNumOfInstructionsWithNoWaypoints()
+    {
+        Gpx instance = new Gpx(null, null, null, null, new ArrayList<Itinerary>());
+        int expResult = 0;
+        int result = instance.getNumOfInstructions();
+        assertEquals(expResult, result);
+    }
+
+    @Test
     public void testGetNumOfInstructionsWithSingleItineraryAndSingleWaypoint()
     {
         List<Itinerary> itineraries = new ArrayList<Itinerary>();
