@@ -96,5 +96,18 @@ public final class SingleTrackFileBuilderTest extends GpxFileBuilderTest
         assertEquals(String.valueOf(LAT_WPT_2), wpt2.getAttribute(Gpx.LATITUDE_TAG).getValue());
         assertEquals(String.valueOf(LON_WPT_2), wpt2.getAttribute(Gpx.LONGITUDE_TAG).getValue());
         assertEquals(ELE_WPT_2, wpt2.getChild(Gpx.ELEMENT_TAG).getValue());
+
+        List<Element> actualWaypointsDoc2 = getWaypoints(actual.get(1));
+        assertEquals(expectedNumOfWpts, actualWaypointsDoc2.size());
+
+        Element wpt3 = actualWaypointsDoc2.get(0);
+        assertEquals(String.valueOf(LAT_WPT_1), wpt3.getAttribute(Gpx.LATITUDE_TAG).getValue());
+        assertEquals(String.valueOf(LON_WPT_1), wpt3.getAttribute(Gpx.LONGITUDE_TAG).getValue());
+        assertEquals(ELE_WPT_1, wpt3.getChild(Gpx.ELEMENT_TAG).getValue());
+
+        Element wpt4 = actualWaypointsDoc2.get(1);
+        assertEquals(String.valueOf(LAT_WPT_2), wpt4.getAttribute(Gpx.LATITUDE_TAG).getValue());
+        assertEquals(String.valueOf(LON_WPT_2), wpt4.getAttribute(Gpx.LONGITUDE_TAG).getValue());
+        assertEquals(ELE_WPT_2, wpt4.getChild(Gpx.ELEMENT_TAG).getValue());
     }
 }

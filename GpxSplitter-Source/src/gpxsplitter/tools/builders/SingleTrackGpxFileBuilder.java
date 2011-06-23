@@ -33,11 +33,8 @@ public final class SingleTrackGpxFileBuilder extends GpxFileBuilder
         List<Document> gpxDocumentsList = new ArrayList<Document>();
         List<Itinerary> itineraries = gpx.getItineraries();
 
-
-        for (int i = 0; i < itineraries.size(); i++)
+        for (Itinerary currentItinerary : itineraries)
         {
-            Itinerary currentItinerary = itineraries.get(i);
-
             Document newGpxDocument = createGpxTemplate();
             Element track = new Element(Gpx.TRK_TAG);
             Element trackSegment = new Element(Gpx.TRACKSEGMENT_TAG);
