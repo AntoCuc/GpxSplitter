@@ -7,6 +7,7 @@ package gpxsplitter.tools.builders;
 
 import gpxsplitter.model.Waypoint;
 import gpxsplitter.model.Gpx;
+import gpxsplitter.model.Itinerary;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Document;
@@ -24,42 +25,54 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder
     public List<Document> buildSplitGpx(int preferredInstrNum)
     {
         List<Document> gpxList = new ArrayList<Document>();
-        List<Waypoint> waypoints = gpx.getItineraries().get(0).getWaypoints();
-        int splitFiles = howManyFiles(waypoints.size(), preferredInstrNum);
-
-        int currInstr = 0;
-        int fileNum = 1;
-        while (fileNum <= splitFiles)
+        /**
+         * GpxTrackFileBuilder only considers the first itinerary (See break).
+         */
+        for (Itinerary itinerary : gpx.getItineraries())
         {
-            Document newGpxDocument = createGpxTemplate();
+            List<Waypoint> waypoints = itinerary.getWaypoints();
+            int splitFiles = howManyFiles(waypoints.size(), preferredInstrNum);
 
-            Element track = new Element(Gpx.TRK_TAG);
-            Element trackSegment = new Element(Gpx.TRACKSEGMENT_TAG);
-            track.setContent(trackSegment);
-
-            for(int i=0; i<preferredInstrNum; i++)
+            int currInstr = 0;
+            int fileNum = 1;
+            while (fileNum <= splitFiles)
             {
-                try
+                Document newGpxDocument = createGpxTemplate();
+
+                Element track = new Element(Gpx.TRK_TAG);
+                Element trackSegment = new Element(Gpx.TRACKSEGMENT_TAG);
+                track.setContent(trackSegment);
+
+                for (int i = 0; i < preferredInstrNum; i++)
                 {
-                    Waypoint currentInstruction = waypoints.get(currInstr);
-                    Element trackPoint = new Element(Gpx.TRACKPOINT);
-                    trackPoint.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
-                    trackPoint.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
-                    Element ele = new Element(Gpx.ELEMENT_TAG);
-                    ele.setText(currentInstruction.getElement());
-                    trackPoint.setContent(ele);
-                    trackSegment.addContent(trackPoint);
-                    currInstr++;
+                    try
+                    {
+                        Waypoint currentInstruction = waypoints.get(currInstr);
+                        Element trackPoint = new Element(Gpx.TRACKPOINT);
+                        trackPoint.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
+                        trackPoint.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
+                        Element ele = new Element(Gpx.ELEMENT_TAG);
+                        ele.setText(currentInstruction.getElement());
+                        trackPoint.setContent(ele);
+                        trackSegment.addContent(trackPoint);
+                        currInstr++;
+                    }
+                    catch (IndexOutOfBoundsException e)
+                    {
+                        //Break the loop, the file does not have any further instructions.
+                        break;
+                    }
                 }
-                catch(IndexOutOfBoundsException e)
-                {
-                    //Break the loop, the file does not have any further instructions.
-                    break;
-                }
+                newGpxDocument.getRootElement().setContent(track);
+                gpxList.add(newGpxDocument);
+                fileNum++; // Proceed to next file
             }
-            newGpxDocument.getRootElement().setContent(track);
-            gpxList.add(newGpxDocument);
-            fileNum++; // Proceed to next file
+            /**
+             * GpxTrackFileBuilder only considers the first itinerary.
+             * Avoids a NullPointerException to be thrown in case there are
+             * no Tracks in the GPX file loaded.
+             */
+            break;
         }
         return gpxList;
     }
