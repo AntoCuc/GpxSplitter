@@ -21,8 +21,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import org.jdom.Document;
@@ -140,11 +138,11 @@ public class Controller
             }
             catch (IOException ex)
             {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+                view.showMessage("A problem occured when loading the file." + UI.LINE_SEPARATOR + "Do you have the rights to read from that location?");
             }
             catch (JDOMException ex)
             {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+                view.showMessage("The file you tried to load is not a valid GPX.");
             }
         }
     }
