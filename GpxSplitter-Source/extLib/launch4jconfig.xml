@@ -19,13 +19,7 @@
   </singleInstance>
   <classPath>
     <mainClass>gpxsplitter.Controller</mainClass>
-    <cp>lib/gpx1-1.jar</cp>
-    <cp>lib/jsr173_1.0_api.jar</cp>
-    <cp>lib/resolver.jar</cp>
-    <cp>lib/xbean.jar</cp>
-    <cp>lib/xbean_xpath.jar</cp>
-    <cp>lib/xmlbeans-qname.jar</cp>
-    <cp>lib/xmlpublic.jar</cp>
+    <cp>extLib/jdom.jar</cp>
   </classPath>
   <jre>
     <path></path>

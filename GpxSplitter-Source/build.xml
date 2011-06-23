@@ -35,6 +35,11 @@
                 <include name= "*.jar"/>
             </fileset>
         </copy>
+        <copy todir="./dist/GpxSplitter.app/Contents/Resources/Java/lib">
+            <fileset dir="./dist/lib">
+                <include name= "*.jar"/>
+            </fileset>
+        </copy>
         <copy file="./extLib/mac/JavaApplicationStub" tofile="./dist/GpxSplitter.app/Contents/MacOS/GpxSplitter"/>
         <exec executable="/bin/chmod">
             <arg line="755 ./dist/GpxSplitter.app/Contents/MacOS/GpxSplitter"/>
