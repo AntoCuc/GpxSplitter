@@ -7,9 +7,7 @@ package gpxsplitter;
 
 import gpxsplitter.model.GpxType;
 import java.awt.Toolkit;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
