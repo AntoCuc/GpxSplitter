@@ -5,21 +5,19 @@
  */
 package gpxsplitter;
 
-import gpxsplitter.model.GpxType;
 import java.awt.Toolkit;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
-public class UI extends javax.swing.JFrame
-{
+public class UI extends javax.swing.JFrame {
 
     public static final String GPX_SPLITTER = "Gpx Splitter";
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
-    public UI()
-    {
+    public UI() {
         initComponents();
         populateOutputGpxFormats();
     }
@@ -29,24 +27,24 @@ public class UI extends javax.swing.JFrame
     private void initComponents() {
 
         javax.swing.ButtonGroup multiTrackOperationButtonGroup = new javax.swing.ButtonGroup();
-        javax.swing.JPanel topPanel = new javax.swing.JPanel();
+        javax.swing.JPanel inputFilePanel = new javax.swing.JPanel();
         openFileField = new javax.swing.JTextField();
         browseButton = new javax.swing.JButton();
         javax.swing.JLabel fileTypeLabel = new javax.swing.JLabel();
         fileTypeValue = new javax.swing.JLabel();
-        javax.swing.JPanel multiTrackGpxPanel = new javax.swing.JPanel();
+        javax.swing.JPanel inputConfigurationPanel = new javax.swing.JPanel();
         javax.swing.JLabel tracksNumLabel = new javax.swing.JLabel();
         tracksNumValue = new javax.swing.JLabel();
         javax.swing.JLabel operationLabel = new javax.swing.JLabel();
         javax.swing.JPanel operationsPanel = new javax.swing.JPanel();
         joinTracksRadioButton = new javax.swing.JRadioButton();
         separateTracksRadioButton = new javax.swing.JRadioButton();
-        javax.swing.JPanel middlePanel = new javax.swing.JPanel();
+        javax.swing.JPanel ouputConfigurationPanel = new javax.swing.JPanel();
         javax.swing.JLabel instrNumLabel = new javax.swing.JLabel();
         instrNumField = new javax.swing.JTextField();
         javax.swing.JLabel gpxTypeLabel = new javax.swing.JLabel();
         gpxTypeComboBox = new javax.swing.JComboBox();
-        javax.swing.JPanel bottomPanel = new javax.swing.JPanel();
+        javax.swing.JPanel outputFilePanel = new javax.swing.JPanel();
         javax.swing.JLabel fileNameLabel = new javax.swing.JLabel();
         fileNameField = new javax.swing.JTextField();
         javax.swing.JLabel emptyLabel = new javax.swing.JLabel();
@@ -64,34 +62,34 @@ public class UI extends javax.swing.JFrame
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridLayout(4, 1, 10, 10));
 
-        topPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Open Gpx file"));
-        topPanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+        inputFilePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Open Gpx file"));
+        inputFilePanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
 
         openFileField.setEnabled(false);
-        topPanel.add(openFileField);
+        inputFilePanel.add(openFileField);
 
         browseButton.setText("Browse...");
-        topPanel.add(browseButton);
+        inputFilePanel.add(browseButton);
 
         fileTypeLabel.setText("Loaded gpx:");
-        topPanel.add(fileTypeLabel);
+        inputFilePanel.add(fileTypeLabel);
 
         fileTypeValue.setText("N/A");
-        topPanel.add(fileTypeValue);
+        inputFilePanel.add(fileTypeValue);
 
-        getContentPane().add(topPanel);
+        getContentPane().add(inputFilePanel);
 
-        multiTrackGpxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Multi track settings"));
-        multiTrackGpxPanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+        inputConfigurationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Multi track settings"));
+        inputConfigurationPanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
 
         tracksNumLabel.setText("Tracks on the gpx:");
-        multiTrackGpxPanel.add(tracksNumLabel);
+        inputConfigurationPanel.add(tracksNumLabel);
 
         tracksNumValue.setText("N/A");
-        multiTrackGpxPanel.add(tracksNumValue);
+        inputConfigurationPanel.add(tracksNumValue);
 
         operationLabel.setText("Operation:");
-        multiTrackGpxPanel.add(operationLabel);
+        inputConfigurationPanel.add(operationLabel);
 
         operationsPanel.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -104,40 +102,40 @@ public class UI extends javax.swing.JFrame
         separateTracksRadioButton.setText("Separate");
         operationsPanel.add(separateTracksRadioButton);
 
-        multiTrackGpxPanel.add(operationsPanel);
+        inputConfigurationPanel.add(operationsPanel);
 
-        getContentPane().add(multiTrackGpxPanel);
+        getContentPane().add(inputConfigurationPanel);
 
-        middlePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Single track settings"));
-        middlePanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+        ouputConfigurationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Single track settings"));
+        ouputConfigurationPanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
 
         instrNumLabel.setText("Instructions / file:");
-        middlePanel.add(instrNumLabel);
+        ouputConfigurationPanel.add(instrNumLabel);
 
         instrNumField.setText("125");
-        middlePanel.add(instrNumField);
+        ouputConfigurationPanel.add(instrNumField);
 
         gpxTypeLabel.setText("Gpx type:");
-        middlePanel.add(gpxTypeLabel);
+        ouputConfigurationPanel.add(gpxTypeLabel);
 
         gpxTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Track", "Route" }));
-        middlePanel.add(gpxTypeComboBox);
+        ouputConfigurationPanel.add(gpxTypeComboBox);
 
-        getContentPane().add(middlePanel);
+        getContentPane().add(ouputConfigurationPanel);
 
-        bottomPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Save Gpx files"));
-        bottomPanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+        outputFilePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Save Gpx files"));
+        outputFilePanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
 
         fileNameLabel.setText("File's name:");
-        bottomPanel.add(fileNameLabel);
-        bottomPanel.add(fileNameField);
-        bottomPanel.add(emptyLabel);
+        outputFilePanel.add(fileNameLabel);
+        outputFilePanel.add(fileNameField);
+        outputFilePanel.add(emptyLabel);
 
-        saveFileButton.setFont(new java.awt.Font("Tahoma", 1, 11));
+        saveFileButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         saveFileButton.setText("Save");
-        bottomPanel.add(saveFileButton);
+        outputFilePanel.add(saveFileButton);
 
-        getContentPane().add(bottomPanel);
+        getContentPane().add(outputFilePanel);
 
         fileMenu.setText("File");
 
@@ -158,8 +156,8 @@ public class UI extends javax.swing.JFrame
 
         setJMenuBar(menuBar);
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-430)/2, (screenSize.height-460)/2, 430, 460);
+        setSize(new java.awt.Dimension(430, 460));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -177,138 +175,111 @@ public class UI extends javax.swing.JFrame
     private javax.swing.JLabel tracksNumValue;
     // End of variables declaration//GEN-END:variables
 
-    GpxType getSelectedGpxType()
-    {
-        return (GpxType) gpxTypeComboBox.getSelectedItem();
+    String getSelectedGpxType() {
+        return (String) gpxTypeComboBox.getSelectedItem();
     }
 
-    private void populateOutputGpxFormats()
-    {
+    private void populateOutputGpxFormats() {
         gpxTypeComboBox.removeAllItems(); // Clear and repopulate from the enum
-        for (GpxType format : GpxType.values())
-        {
-            gpxTypeComboBox.addItem(format);
-        }
+        gpxTypeComboBox.addItem("Track");
+        gpxTypeComboBox.addItem("Route");
     }
 
-    JButton getBrowseButton()
-    {
+    JButton getBrowseButton() {
         return browseButton;
     }
 
-    JButton getSaveFileButton()
-    {
+    JButton getSaveFileButton() {
         return saveFileButton;
     }
 
-    JMenuItem getExitMenuItem()
-    {
+    JMenuItem getExitMenuItem() {
         return exitMenuItem;
     }
 
-    JMenuItem getHelpMenuItem()
-    {
+    JMenuItem getHelpMenuItem() {
         return helpMenuItem;
     }
 
-    JMenuItem getAboutMenuItem()
-    {
+    JMenuItem getAboutMenuItem() {
         return aboutMenuItem;
     }
 
-    String getInstructionsNumber()
-    {
+    String getInstructionsNumber() {
         return instrNumField.getText();
     }
 
-    String getHighlightedGpxType()
-    {
+    String getHighlightedGpxType() {
         return gpxTypeComboBox.getSelectedItem().toString();
     }
 
-    String getNewGpxFileName()
-    {
+    String getNewGpxFileName() {
         return fileNameField.getText();
     }
 
-    JRadioButton getSeparateTracksRadioButton()
-    {
+    JRadioButton getSeparateTracksRadioButton() {
         return separateTracksRadioButton;
     }
 
-    JRadioButton getJoinTracksRadioButton()
-    {
+    JRadioButton getJoinTracksRadioButton() {
         return joinTracksRadioButton;
     }
 
-    public void setFileTypeValue(String fileType)
-    {
+    public void setFileTypeValue(String fileType) {
         fileTypeValue.setText(fileType);
     }
 
-    public void setOpenFileField(String openedFile)
-    {
+    public void setOpenFileField(String openedFile) {
         openFileField.setText(openedFile);
     }
 
-    void setSplittingEnabled(boolean enabled)
-    {
+    void setSplittingEnabled(boolean enabled) {
         instrNumField.setEnabled(enabled);
         gpxTypeComboBox.setEnabled(enabled);
     }
 
-    void setMultiTrackEnabled(boolean enabled)
-    {
+    void setMultiTrackEnabled(boolean enabled) {
         joinTracksRadioButton.setEnabled(enabled);
         separateTracksRadioButton.setEnabled(enabled);
         tracksNumValue.setEnabled(enabled);
     }
 
-    public void setTracksNumValue(String tracksNum)
-    {
+    public void setTracksNumValue(String tracksNum) {
         this.tracksNumValue.setText(tracksNum);
     }
 
-    public void showMessage(String message)
-    {
+    public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
 
-    int showConfirmDialog(String message)
-    {
+    int showConfirmDialog(String message) {
         return JOptionPane.showConfirmDialog(this, message);
     }
 
-    void showAboutPane()
-    {
+    void showAboutPane() {
         JOptionPane.showMessageDialog(
                 this,
-                "<html><h3>GPX Splitter vHEAD</h3>" +
-                "<p>Author: Antonio Cucchiara <br>" +
-                "Homepage: http://antocuc.github.com/GpxSplitter.html <br>" +
-                "License:  Creative Commons  3.0" +
-                "<ul><li>Attribution</li><li>Non Commercial</li><li>Share Alike</li></ul>" +
-                "</p></html>",
+                "<html><h3>GPX Splitter vHEAD</h3>"
+                + "<p>Author: Antonio Cucchiara <br>"
+                + "Homepage: http://antocuc.github.com/GpxSplitter.html <br>"
+                + "License:  Creative Commons  3.0"
+                + "<ul><li>Attribution</li><li>Non Commercial</li><li>Share Alike</li></ul>"
+                + "</p></html>",
                 "About " + GPX_SPLITTER,
                 JOptionPane.PLAIN_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/gpxsplitter/media/map.png")));
 
     }
 
-    void browseHelpSystem()
-    {
+    void browseHelpSystem() {
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        if (!desktop.isSupported(java.awt.Desktop.Action.BROWSE))
-        {
+        if (!desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
             showMessage("Desktop doesn't support the browse action the online help cannot be open.");
         }
-        try
-        {
+        try {
             java.net.URI uri = new java.net.URI("http://antocuc.github.com/GpxSplitterHelp.html");
             desktop.browse(uri);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             showMessage("Problem reaching the website.");
         }
     }

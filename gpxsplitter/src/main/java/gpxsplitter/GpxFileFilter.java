@@ -12,24 +12,17 @@ import javax.swing.filechooser.FileFilter;
 
 public class GpxFileFilter extends FileFilter
 {
-
+    static final String GPX_FILE_DESCRIPTION = "Gpx files (*.gpx)";
 
     @Override
     public boolean accept(File pathname)
     {
-        if (pathname.isDirectory() || pathname.getName().endsWith(GpxFileBuilder.GPX_FORMAT))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return pathname.isDirectory() || pathname.getName().endsWith(GpxFileBuilder.GPX_EXTENSION);
     }
 
     @Override
     public String getDescription()
     {
-        return "Gpx files (*.gpx)";
+        return GPX_FILE_DESCRIPTION;
     }
 }

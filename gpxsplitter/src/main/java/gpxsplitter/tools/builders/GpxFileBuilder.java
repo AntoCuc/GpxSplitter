@@ -5,94 +5,90 @@
  */
 package gpxsplitter.tools.builders;
 
-import gpxsplitter.model.Gpx;
 import gpxsplitter.UI;
+import gpxsplitter.model.GpxType;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
 
-public abstract class GpxFileBuilder implements GpxBuilder
-{
+public abstract class GpxFileBuilder implements GpxBuilder {
 
-    public static final String GPX_FORMAT = ".gpx";
-    protected final Gpx gpx;
-
-    public GpxFileBuilder(Gpx gpx)
-    {
-        this.gpx = gpx;
-    }
+    public static final String GPX_EXTENSION = ".gpx";
+    static final String GPX_VERSION = "1.1";
 
     /**
      * This method will build a set of GPX files given the file name, number of
      * GPX instructions per file and the number of files to be built.
+     *
      * @param file
-     * @param instNum
-     * @param filesNum
-     * @throws IOException
+     * @param gpx
+     * @param preferedInstrNum
+     * @throws javax.xml.bind.JAXBException
      */
     @Override
-    public void build(File file, int preferedInstrNum) throws IOException
-    {
+    public void build(File file, GpxType gpx, int preferedInstrNum) throws JAXBException {
         int fileNum = 1;
-        List<Document> docs = buildSplitGpx(preferedInstrNum);
-        for (Document newGpxDocument : docs)
-        {
-            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_FORMAT) + "-" + fileNum + GPX_FORMAT), newGpxDocument);
+        List<GpxType> newGpxList = buildSplitGpx(gpx, preferedInstrNum);
+        for (GpxType newGpx : newGpxList) {
+            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_EXTENSION) + "-" + fileNum + GPX_EXTENSION), newGpx);
             fileNum++;
         }
     }
 
     /**
-     * The method build split gpx uses the gpx document loaded and the
-     * preferred number of instructions to build a list of Gpx files ready
-     * to be written to file.
+     * The method build split gpx uses the gpx document loaded and the preferred
+     * number of instructions to build a list of Gpx files ready to be written
+     * to file.
+     *
+     * @param gpx
      * @param preferredInstrNum
      * @return a list of gpx files
      */
-    public abstract List<Document> buildSplitGpx(int preferredInstrNum);
+    public abstract List<GpxType> buildSplitGpx(GpxType gpx, int preferredInstrNum);
 
     /**
-     * The method create gpx template creates the start elements and
-     * heading of a gpx document.
+     * The method create gpx template creates the start elements and heading of
+     * a gpx document.
+     *
      * @return a gpx document.
      */
-    protected Document createGpxTemplate()
-    {
-        Document newGpxDocument = new Document(new Element("gpx"));
-        Element newGpx = newGpxDocument.getRootElement();
-        newGpx.setAttribute("version", gpx.getVersion());
-        newGpx.setAttribute("creator", UI.GPX_SPLITTER);
-        return newGpxDocument;
+    protected GpxType createGpxTemplate() {
+        GpxType newGpx = new GpxType();
+        newGpx.setVersion(GPX_VERSION);
+        newGpx.setCreator(UI.GPX_SPLITTER);
+        return newGpx;
     }
 
     /**
      * This method is to be overriden in Unit tests.
+     *
      * @param file
      * @param gpx document to write to the file
      * @throws IOException
      */
-    void saveFile(File file, Document newGpxDocument) throws IOException
-    {
-        new XMLOutputter().output(newGpxDocument, new FileWriter(file));
+    void saveFile(File file, GpxType newGpxDocument) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        JAXBElement jaxbElement = new JAXBElement(new QName("ROOT"), GpxType.class, newGpxDocument);
+        jaxbMarshaller.marshal(jaxbElement, file);
     }
 
     /**
      * This method cleans the filename of the extension if it is there.
+     *
      * @param file
      * @return the filename stripped of the extension
      */
-    String stripExtension(String fileName, String extension)
-    {
-        if (fileName.endsWith(extension))
-        {
+    String stripExtension(String fileName, String extension) {
+        if (fileName.endsWith(extension)) {
             return fileName.substring(0, (fileName.length() - extension.length()));
-        }
-        else
-        {
+        } else {
             return fileName;
         }
     }
@@ -100,26 +96,24 @@ public abstract class GpxFileBuilder implements GpxBuilder
     /**
      * This method calculates how many files have to be created when splitting
      * the GPX to the wanted number of instructions.
+     *
      * @param currNumOfInstr
      * @param desiredNumOfInstr
      * @return
      */
-    static int howManyFiles(int currNumOfInstr, int desiredNumOfInstr)
-    {
-        try
-        {
+    int howManyFiles(int currNumOfInstr, int desiredNumOfInstr) {
+        try {
             int numOfFiles = (currNumOfInstr / desiredNumOfInstr);
-            /***
-             * If there are any points left out one more file is going to be created.
+            /**
+             * *
+             * If there are any points left out one more file is going to be
+             * created.
              */
-            if ((currNumOfInstr % desiredNumOfInstr) > 0)
-            {
+            if ((currNumOfInstr % desiredNumOfInstr) > 0) {
                 numOfFiles++;
             }
             return numOfFiles;
-        }
-        catch (ArithmeticException e)
-        { //No instructions or invalid instructions output number
+        } catch (ArithmeticException e) { //No instructions or invalid instructions output number
             return 0;
         }
     }

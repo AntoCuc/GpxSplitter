@@ -5,65 +5,60 @@
  */
 package gpxsplitter.tools.builders;
 
-import gpxsplitter.model.Gpx;
-import gpxsplitter.model.Itinerary;
-import gpxsplitter.model.Waypoint;
+import gpxsplitter.model.GpxType;
+import gpxsplitter.model.TrkType;
+import gpxsplitter.model.TrksegType;
+import gpxsplitter.model.WptType;
 import java.util.ArrayList;
 import java.util.List;
-import org.jdom.Document;
-import org.jdom.Element;
 
-public final class SingleTrackGpxFileBuilder extends GpxFileBuilder
-{
-
-    public SingleTrackGpxFileBuilder(Gpx gpx)
-    {
-        super(gpx);
-    }
+public final class SingleTrackGpxFileBuilder extends GpxFileBuilder {
 
     /**
-     * Builds a split gpx not cosidering the instructions number but focusing
-     * on having a single track per gpx.
-     * @param preferredInstrNum Ignored
+     * Builds a split gpx not considering the instructions number but focusing
+     * on having a single track per gpx. TODO: API Abstraction problem here.
+     *
+     * @param gpx
+     * @param preferredInstrNum
      * @return a list of single tracked gpx files
      */
     @Override
-    public List<Document> buildSplitGpx(int preferredInstrNum)
-    {
-        List<Document> gpxDocumentsList = new ArrayList<Document>();
-        List<Itinerary> itineraries = gpx.getItineraries();
+    public List<GpxType> buildSplitGpx(GpxType gpx, int preferredInstrNum) {
+        List<GpxType> gpxList = new ArrayList<>();
+        List<TrkType> tracks = gpx.getTrk();
+        tracks.stream().forEach((track) -> {
+            track.getTrkseg().forEach((trackSegment) -> {
+                int splitFiles = howManyFiles(trackSegment.getTrkpt().size(), preferredInstrNum);
 
-        for (Itinerary currentItinerary : itineraries)
-        {
-            Document newGpxDocument = createGpxTemplate();
-            Element track = new Element(Gpx.TRK_TAG);
-            Element trackSegment = new Element(Gpx.TRACKSEGMENT_TAG);
-            track.setContent(trackSegment);
+                int currentWaypoint = 0;
+                int fileNum = 1;
+                while (fileNum <= splitFiles) {
 
-            List<Waypoint> waypoints = currentItinerary.getWaypoints();
+                    GpxType newGpx = createGpxTemplate();
+                    TrkType newTrack = new TrkType();
+                    newTrack.setName(track.getName() + fileNum);
+                    TrksegType newTrackSegment = new TrksegType();
+                    newTrack.getTrkseg().add(newTrackSegment);
 
-            for (int j = 0; j < waypoints.size(); j++)
-            {
-                try
-                {
-                    Waypoint currentInstruction = waypoints.get(j);
-                    Element trackPoint = new Element(Gpx.TRACKPOINT);
-                    trackPoint.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
-                    trackPoint.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
-                    Element ele = new Element(Gpx.ELEMENT_TAG);
-                    ele.setText(currentInstruction.getElement());
-                    trackPoint.setContent(ele);
-                    trackSegment.addContent(trackPoint);
+                    List<TrkType> newTrackList = newGpx.getTrk();
+
+                    int waypointsInTrackSegment = trackSegment.getTrkpt().size();
+                    if (waypointsInTrackSegment < preferredInstrNum) {
+                        newTrackList.add(track);
+                    } else {
+                        for (int i = 0; i < preferredInstrNum; i++) {
+                            WptType oldWaypoint = trackSegment.getTrkpt().get(currentWaypoint);
+                            newTrackSegment.getTrkpt().add(oldWaypoint);
+                            currentWaypoint++;
+                        }
+                        newTrackList.add(newTrack);
+                    }
+                    gpxList.add(newGpx);
+                    fileNum++;
                 }
-                catch (IndexOutOfBoundsException e)
-                {
-                    //Break the loop, the file does not have any further instructions.
-                    break;
-                }
-            }
-            newGpxDocument.getRootElement().setContent(track);
-            gpxDocumentsList.add(newGpxDocument);
-        }
-        return gpxDocumentsList;
+            });
+        });
+        return gpxList;
     }
+
 }

@@ -10,217 +10,153 @@ import gpxsplitter.tools.builders.GpxFileBuilder;
 import gpxsplitter.tools.builders.GpxRouteFileBuilder;
 import gpxsplitter.tools.builders.GpxTrackFileBuilder;
 import gpxsplitter.model.GpxType;
-import gpxsplitter.model.Gpx;
 import gpxsplitter.tools.builders.SingleTrackGpxFileBuilder;
 import gpxsplitter.tools.loaders.GpxFileLoader;
-import gpxsplitter.tools.loaders.GpxMultiTrackFileLoader;
-import gpxsplitter.tools.loaders.GpxRouteFileLoader;
-import gpxsplitter.tools.loaders.GpxTrackFileLoader;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
-import org.jdom.Document;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.xml.bind.JAXBException;
 
-public class Controller
-{
+public class Controller {
 
     private UI view;
-    private Gpx loadedGpx;
+    private GpxType loadedGpx;
 
-    public static void main(String[] args)
-    {
-        try
-        {
+    public static void main(String[] args) {
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e)
-        {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             System.out.println("Error setting native LAF: " + e);
         }
 
         final UI view = new UI();
-        new Controller(view);
-        view.setVisible(true);
+        final Controller controller = new Controller(view);
+        controller.initialise();
     }
 
-    private Controller(UI view)
-    {
+    private Controller(UI view) {
         this.view = view;
-        this.view.getBrowseButton().addMouseListener(new MouseAdapter()
-        {
+        this.view.getBrowseButton().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e)
-            {
-                try
-                {
+            public void mousePressed(MouseEvent e) {
+                try {
                     loadGpxFile();
-                }
-                catch (FileNotValidException ex)
-                {
+                } catch (FileNotValidException ex) {
                     Controller.this.view.showMessage(ex.getMessage());
                 }
             }
         });
-        this.view.getSaveFileButton().addMouseListener(new MouseAdapter()
-        {
+        this.view.getSaveFileButton().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e)
-            {
+            public void mousePressed(MouseEvent e) {
                 saveGpxFile();
             }
         });
-        this.view.getExitMenuItem().addMouseListener(new MouseAdapter()
-        {
+        this.view.getExitMenuItem().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e)
-            {
+            public void mousePressed(MouseEvent e) {
                 System.exit(0);
             }
         });
-        this.view.getAboutMenuItem().addMouseListener(new MouseAdapter()
-        {
+        this.view.getAboutMenuItem().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseReleased(MouseEvent e)
-            {
+            public void mouseReleased(MouseEvent e) {
                 Controller.this.view.showAboutPane();
             }
         });
-        this.view.getHelpMenuItem().addMouseListener(new MouseAdapter()
-        {
+        this.view.getHelpMenuItem().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e)
-            {
+            public void mousePressed(MouseEvent e) {
                 Controller.this.view.browseHelpSystem();
             }
         });
-        this.view.getSeparateTracksRadioButton().addMouseListener(new MouseAdapter()
-        {
+        this.view.getSeparateTracksRadioButton().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e)
-            {
+            public void mousePressed(MouseEvent e) {
                 Controller.this.view.setSplittingEnabled(false);
             }
         });
-        this.view.getJoinTracksRadioButton().addMouseListener(new MouseAdapter()
-        {
+        this.view.getJoinTracksRadioButton().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e)
-            {
+            public void mousePressed(MouseEvent e) {
                 Controller.this.view.setSplittingEnabled(true);
             }
         });
     }
 
-    private void loadGpxFile() throws FileNotValidException
-    {
+    private void loadGpxFile() throws FileNotValidException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new GpxFileFilter());
         fileChooser.showOpenDialog(view);
         File selectedFile = fileChooser.getSelectedFile();
-        if (selectedFile != null)
-        {
-            try
-            {
+        if (selectedFile != null) {
+            try {
                 loadGpxFile(selectedFile);
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 view.showMessage("A problem occured when loading the file." + UI.LINE_SEPARATOR + "Do you have the rights to read from that location?");
-            }
-            catch (JDOMException ex)
-            {
+            } catch (JAXBException ex) {
                 view.showMessage("The file you tried to load is not a valid GPX.");
             }
         }
     }
 
-    void loadGpxFile(File gpxFile) throws IOException, JDOMException, FileNotValidException
-    {
-        GpxFileLoader gpxLoader;
+    void loadGpxFile(File gpxFile) throws JAXBException, FileNotFoundException, FileNotValidException, IOException {
+        final GpxFileLoader gpxLoader = new GpxFileLoader();
+        loadedGpx = gpxLoader.load(new FileInputStream(gpxFile));
 
-        final SAXBuilder builder = new SAXBuilder();
-        final Document gpxDocument = builder.build(new FileInputStream(gpxFile));
-
-        if (GpxFileLoader.getType(gpxDocument) == GpxType.Route)
-        {
-            gpxLoader = new GpxRouteFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
+        if (GpxFileLoader.isGpxMultitrack(loadedGpx)) {
+            view.setTracksNumValue(String.valueOf(GpxFileLoader.getTracksNum(loadedGpx)));
+            view.setMultiTrackEnabled(true);
+        } else {
             view.setMultiTrackEnabled(false);
+        }
 
-        }
-        else if ((GpxFileLoader.getType(gpxDocument) == GpxType.Track))
-        {
-            if (GpxFileLoader.isGpxMultitrack(gpxDocument))
-            {
-                gpxLoader = new GpxMultiTrackFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
-                view.setTracksNumValue(String.valueOf(GpxFileLoader.getTracksNum(gpxDocument)));
-                view.setMultiTrackEnabled(true);
-            }
-            else
-            {
-                gpxLoader = new GpxTrackFileLoader(new FileInputStream(gpxFile), gpxFile.getAbsolutePath());
-                view.setMultiTrackEnabled(false);
-            }
-        }
-        else
-        {
-            throw new FileNotValidException("The file you are trying to load is not route nor track.");
-        }
-        loadedGpx = gpxLoader.load();
-
-        String fileType = "Gpx " + loadedGpx.getType() + " " + loadedGpx.getVersion();
-        fileType += " (" + loadedGpx.getNumOfInstructions() + " instructions)";
-        view.setOpenFileField(loadedGpx.getFilePath());
+        String fileType = "Gpx " + loadedGpx.getVersion();
+        fileType += " (" + loadedGpx.getTrk().size() + " tracks, )" + loadedGpx.getRte().size() + " routes.";
+        view.setOpenFileField(gpxFile.getAbsolutePath());
         view.setFileTypeValue(fileType);
     }
 
-    private void saveGpxFile()
-    {
+    private void saveGpxFile() {
         String numOfInstructions = view.getInstructionsNumber();
-        if (!isAValidInteger(numOfInstructions))
-        {
+        if (!isAValidInteger(numOfInstructions)) {
             view.showMessage("Instructions number not valid");
             return;
         }
         int instNum = Integer.parseInt(numOfInstructions);
         String gpxType = view.getHighlightedGpxType();
         String fileName = view.getNewGpxFileName();
-        if (fileName.isEmpty())
-        {
+        if (fileName.isEmpty()) {
             view.showMessage("File name cannot be empty");
             return;
         }
-        try
-        {
+        try {
             JFileChooser saveFileChooser = new JFileChooser();
             saveFileChooser.setSelectedFile(new File(fileName));
             saveFileChooser.setFileFilter(new GpxFileFilter());
             saveFileChooser.showSaveDialog(view);
             saveGpxFile(instNum, gpxType, saveFileChooser.getSelectedFile());
 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException | JAXBException e) {
             view.showMessage("Problem whilst saving the file." + UI.LINE_SEPARATOR + "Do you have the rights to write to that location?");
         }
     }
 
-    void saveGpxFile(int desiredInstrNum, String gpxType, File file) throws IOException
-    {
-        if (loadedGpx == null)
-        {
+    void saveGpxFile(int desiredInstrNum, String gpxType, File file) throws IOException, JAXBException {
+        if (loadedGpx == null) {
             view.showMessage("A GPX to split has to be selected");
             return;
         }
@@ -228,33 +164,28 @@ public class Controller
         view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + gpxType);
 
         GpxFileBuilder gpxBuilder;
-        if (view.getSeparateTracksRadioButton().isSelected())
-        {
-            gpxBuilder = new SingleTrackGpxFileBuilder(loadedGpx);
-        }
-        else if (view.getSelectedGpxType() == GpxType.Track)
-        {
-            gpxBuilder = new GpxTrackFileBuilder(loadedGpx);
-        }
-        else
-        {
-            gpxBuilder = new GpxRouteFileBuilder(loadedGpx);
+        if (view.getSeparateTracksRadioButton().isSelected()) {
+            gpxBuilder = new SingleTrackGpxFileBuilder();
+        } else if ("Track".equals(view.getSelectedGpxType())) {
+            gpxBuilder = new GpxTrackFileBuilder();
+        } else {
+            gpxBuilder = new GpxRouteFileBuilder();
         }
 
-        gpxBuilder.build(file, desiredInstrNum);
+        gpxBuilder.build(file, loadedGpx, desiredInstrNum);
         view.showMessage("Split GPX successfully saved.");
     }
 
-    private boolean isAValidInteger(String intAsStr)
-    {
-        try
-        {
+    private boolean isAValidInteger(String intAsStr) {
+        try {
             Integer.parseInt(intAsStr);
             return true;
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public void initialise() {
+        this.view.setVisible(true);
     }
 }

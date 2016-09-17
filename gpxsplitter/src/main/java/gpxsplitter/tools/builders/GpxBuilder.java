@@ -6,9 +6,10 @@
 
 package gpxsplitter.tools.builders;
 
+import gpxsplitter.model.GpxType;
 import java.io.File;
-import java.io.IOException;
+import javax.xml.bind.JAXBException;
 
 interface GpxBuilder {
-    public void build(File fileName, int preferedInstrNum) throws IOException;
+    public void build(File file, GpxType gpx, int preferedInstrNum) throws JAXBException;
 }

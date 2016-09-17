@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<gpx version="1.1"
+creator="Bikely - http://www.bikely.com"
+xmlns="http://www.topografix.com/GPX/1/1"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<trk>
+<desc>Patrick's Track</desc>
+<trkseg>
+			<trkpt lat="53.59883" lon="-2.54164">
+			<ele>141</ele>
+			</trkpt>
+			<trkpt lat="53.59891" lon="-2.54271">
+			<ele>139</ele>
+			</trkpt>
+			<trkpt lat="53.5992" lon="-2.54516">
+			<ele>131</ele>
+			</trkpt>
+			<trkpt lat="53.60064" lon="-2.547">
+			<ele>131</ele>
+			</trkpt>
+</trkseg></trk></gpx>

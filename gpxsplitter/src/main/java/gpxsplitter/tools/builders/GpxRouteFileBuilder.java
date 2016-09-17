@@ -3,66 +3,45 @@
  *
  * @author Antonino Cucchiara
  */
-
 package gpxsplitter.tools.builders;
 
-import gpxsplitter.model.Gpx;
-import gpxsplitter.model.Waypoint;
+import gpxsplitter.model.GpxType;
+import gpxsplitter.model.RteType;
 import java.util.ArrayList;
 import java.util.List;
-import org.jdom.Document;
-import org.jdom.Element;
 
-public final class GpxRouteFileBuilder extends GpxFileBuilder{
-
-    public GpxRouteFileBuilder(Gpx gpx) {
-        super(gpx);
-    }
+public final class GpxRouteFileBuilder extends GpxFileBuilder {
 
     @Override
-    public List<Document> buildSplitGpx(int preferredInstrNum)
-    {
-        List<Document> gpxList = new ArrayList<Document>();
-        List<Waypoint> waypoints = gpx.getItineraries().get(0).getWaypoints();
-        int splitFiles = howManyFiles(waypoints.size(), preferredInstrNum);
+    public List<GpxType> buildSplitGpx(GpxType inputGpx, int preferredInstrNum) {
+        List<GpxType> outputGpxList = new ArrayList<>();
+        List<RteType> inputRoutes = inputGpx.getRte();
+        inputRoutes.stream().forEach((inputRoute) -> {
+            int outputFilesNum = howManyFiles(inputRoute.getRtept().size(), preferredInstrNum);
 
-        int currInstr = 0;
-        int fileNum = 1;
-        while (fileNum <= splitFiles)
-        {
-            Document newGpxDocument = createGpxTemplate();
+            int currentWaypoint = 0;
 
-            Element route = new Element(Gpx.RTE_TAG);
+            int currentFile = 1;
 
-            for(int i=0; i<preferredInstrNum; i++)
-            {
-                try
-                {
-                    Waypoint currentInstruction = waypoints.get(currInstr);
-                    Element routePt = new Element(Gpx.RTEPT_TAG);
-                    routePt.setAttribute(Gpx.LATITUDE_TAG, currentInstruction.getLatitude());
-                    routePt.setAttribute(Gpx.LONGITUDE_TAG, currentInstruction.getLongitude());
-                    Element ele = new Element(Gpx.ELEMENT_TAG);
-                    ele.setText(currentInstruction.getElement());
-                    routePt.setContent(ele);
-                    //For now the name is the same as the Element
-                    Element name = new Element(Gpx.ELEMENT_TAG);
-                    name.setText(currentInstruction.getElement());
-                    routePt.setContent(name);
-                    route.addContent(routePt);
-                    currInstr++;
+            while (currentFile <= outputFilesNum) {
+                GpxType newGpx = createGpxTemplate();
+                List<RteType> newRouteList = newGpx.getRte();
+
+                int waypointsInRoute = inputRoute.getRtept().size();
+                if (waypointsInRoute <= preferredInstrNum) {
+                    newRouteList.add(inputRoute);
+                } else {
+                    RteType newRoute = new RteType();
+                    for (int i = 0; i < preferredInstrNum; i++) {
+                        newRoute.getRtept().add(inputRoute.getRtept().get(currentWaypoint));
+                        currentWaypoint++;
+                    }
+                    newRouteList.add(newRoute);
                 }
-                catch(IndexOutOfBoundsException e)
-                {
-                    //Break the loop, the file does not have any further instructions.
-                    break;
-                }
+                outputGpxList.add(newGpx);
+                currentFile++; // Proceed to next file
             }
-            newGpxDocument.getRootElement().setContent(route);
-            gpxList.add(newGpxDocument);
-            fileNum++; // Proceed to next file
-        }
-        return gpxList;
-
+        });
+        return outputGpxList;
     }
 }

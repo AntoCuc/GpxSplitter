@@ -9,17 +9,17 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class GpxTrackFileBuilderTest {
+public class SingleGpxTrackFileBuilderTest {
 
     private static final BigDecimal LONG1 = BigDecimal.valueOf(-0.1724553109);
     private static final BigDecimal LAT1 = BigDecimal.valueOf(51.2404704333);
     private static final BigDecimal LONG2 = BigDecimal.valueOf(-0.1);
     private static final BigDecimal LAT2 = BigDecimal.valueOf(51.3);
 
-    private final GpxTrackFileBuilder fileBuilder;
+    private final SingleTrackGpxFileBuilder fileBuilder;
 
-    public GpxTrackFileBuilderTest() {
-        fileBuilder = new GpxTrackFileBuilder();
+    public SingleGpxTrackFileBuilderTest() {
+        fileBuilder = new SingleTrackGpxFileBuilder();
     }
 
     @Test

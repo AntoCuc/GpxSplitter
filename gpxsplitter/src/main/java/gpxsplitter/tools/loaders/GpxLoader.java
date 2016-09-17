@@ -6,11 +6,10 @@
 
 package gpxsplitter.tools.loaders;
 
-import gpxsplitter.model.Gpx;
-import gpxsplitter.tools.FileNotValidException;
-import java.io.IOException;
-import org.jdom.JDOMException;
+import gpxsplitter.model.GpxType;
+import java.io.InputStream;
+import javax.xml.bind.JAXBException;
 
 public interface GpxLoader {
-    public Gpx load()  throws FileNotValidException, IOException, JDOMException;
+    public GpxType load(InputStream inputStream) throws JAXBException;
 }
