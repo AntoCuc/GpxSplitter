@@ -6,7 +6,6 @@
 package gpxsplitter;
 
 import java.awt.Toolkit;
-import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -45,9 +44,6 @@ public class UI extends javax.swing.JFrame {
         javax.swing.JLabel gpxTypeLabel = new javax.swing.JLabel();
         gpxTypeComboBox = new javax.swing.JComboBox();
         javax.swing.JPanel outputFilePanel = new javax.swing.JPanel();
-        javax.swing.JLabel fileNameLabel = new javax.swing.JLabel();
-        fileNameField = new javax.swing.JTextField();
-        javax.swing.JLabel emptyLabel = new javax.swing.JLabel();
         saveFileButton = new javax.swing.JButton();
         javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
@@ -124,12 +120,7 @@ public class UI extends javax.swing.JFrame {
         getContentPane().add(ouputConfigurationPanel);
 
         outputFilePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Save Gpx files"));
-        outputFilePanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
-
-        fileNameLabel.setText("File's name:");
-        outputFilePanel.add(fileNameLabel);
-        outputFilePanel.add(fileNameField);
-        outputFilePanel.add(emptyLabel);
+        outputFilePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         saveFileButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         saveFileButton.setText("Save");
@@ -156,14 +147,13 @@ public class UI extends javax.swing.JFrame {
 
         setJMenuBar(menuBar);
 
-        setSize(new java.awt.Dimension(430, 460));
+        setSize(new java.awt.Dimension(430, 380));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton browseButton;
     private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JTextField fileNameField;
     private javax.swing.JLabel fileTypeValue;
     private javax.swing.JComboBox gpxTypeComboBox;
     private javax.swing.JMenuItem helpMenuItem;
@@ -211,10 +201,6 @@ public class UI extends javax.swing.JFrame {
 
     String getHighlightedGpxType() {
         return gpxTypeComboBox.getSelectedItem().toString();
-    }
-
-    String getNewGpxFileName() {
-        return fileNameField.getText();
     }
 
     JRadioButton getSeparateTracksRadioButton() {

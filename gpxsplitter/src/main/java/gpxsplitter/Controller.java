@@ -27,6 +27,7 @@ public class Controller {
 
     private UI view;
     private GpxType loadedGpx;
+    private File loadedGpxFile;
 
     public static void main(String[] args) {
         try {
@@ -104,6 +105,7 @@ public class Controller {
         File selectedFile = fileChooser.getSelectedFile();
         if (selectedFile != null) {
             try {
+                loadedGpxFile = selectedFile;
                 loadGpxFile(selectedFile);
             } catch (IOException ex) {
                 view.showMessage("A problem occured when loading the file." + UI.LINE_SEPARATOR + "Do you have the rights to read from that location?");
@@ -138,14 +140,9 @@ public class Controller {
         }
         int instNum = Integer.parseInt(numOfInstructions);
         String gpxType = view.getHighlightedGpxType();
-        String fileName = view.getNewGpxFileName();
-        if (fileName.isEmpty()) {
-            view.showMessage("File name cannot be empty");
-            return;
-        }
         try {
             JFileChooser saveFileChooser = new JFileChooser();
-            saveFileChooser.setSelectedFile(new File(fileName));
+            saveFileChooser.setSelectedFile(new File("split-" + loadedGpxFile.getName()));
             saveFileChooser.setFileFilter(new GpxFileFilter());
             saveFileChooser.showSaveDialog(view);
             saveGpxFile(instNum, gpxType, saveFileChooser.getSelectedFile());
