@@ -5,6 +5,7 @@
  */
 package gpxsplitter.tools.loaders;
 
+import gpxsplitter.GpxDescriptor;
 import gpxsplitter.tools.*;
 import gpxsplitter.model.GpxType;
 import java.io.InputStream;
@@ -15,13 +16,13 @@ import javax.xml.bind.Unmarshaller;
 
 public class GpxFileLoader implements GpxLoader {
 
-    public static String getType(GpxType gpxType) throws FileNotValidException {
+    public static GpxDescriptor getType(GpxType gpxType) throws FileNotValidException {
         if (gpxType.getTrk().size() > 0) {
-            return "Track";
-        } else if (gpxType.getRte().size() > 1) {
-            return "Route";
+            return GpxDescriptor.Track;
+        } else if (gpxType.getRte().size() > 0) {
+            return GpxDescriptor.Route;
         } else {
-            throw new FileNotValidException("The file you are trying to load is not route nor track.");
+            throw new FileNotValidException();
         }
     }
 

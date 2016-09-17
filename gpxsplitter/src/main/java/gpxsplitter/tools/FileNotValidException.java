@@ -6,11 +6,13 @@
 
 package gpxsplitter.tools;
 
-public class FileNotValidException extends Exception{
+public class FileNotValidException extends Exception {
+    
+    public static final String ERROR_MSG = "The file you are trying to load is not supported.";
 
-    public FileNotValidException(String message)
+    public FileNotValidException()
     {
-        super(message);
+        super(ERROR_MSG);
     }
 
 }

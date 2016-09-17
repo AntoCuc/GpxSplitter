@@ -126,8 +126,7 @@ public class Controller {
             view.setMultiTrackEnabled(false);
         }
 
-        String fileType = "Gpx " + loadedGpx.getVersion();
-        fileType += " (" + loadedGpx.getTrk().size() + " tracks, )" + loadedGpx.getRte().size() + " routes.";
+        String fileType = "Gpx " + GpxFileLoader.getType(loadedGpx) + " version " + loadedGpx.getVersion();
         view.setOpenFileField(gpxFile.getAbsolutePath());
         view.setFileTypeValue(fileType);
     }
