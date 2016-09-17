@@ -138,34 +138,36 @@ public class Controller {
             return;
         }
         int instNum = Integer.parseInt(numOfInstructions);
-        String gpxType = view.getHighlightedGpxType();
         try {
+            GpxDescriptor gpxType = GpxFileLoader.getType(loadedGpx);
             JFileChooser saveFileChooser = new JFileChooser();
             saveFileChooser.setSelectedFile(new File("split-" + loadedGpxFile.getName()));
             saveFileChooser.setFileFilter(new GpxFileFilter());
             saveFileChooser.showSaveDialog(view);
             saveGpxFile(instNum, gpxType, saveFileChooser.getSelectedFile());
 
-        } catch (IOException | JAXBException e) {
+        } catch (IOException | JAXBException | FileNotValidException e) {
             view.showMessage("Problem whilst saving the file." + UI.LINE_SEPARATOR + "Do you have the rights to write to that location?");
         }
     }
 
-    void saveGpxFile(int desiredInstrNum, String gpxType, File file) throws IOException, JAXBException {
+    void saveGpxFile(int desiredInstrNum, GpxDescriptor descriptor, File file) throws IOException, JAXBException, FileNotValidException {
         if (loadedGpx == null) {
             view.showMessage("A GPX to split has to be selected");
             return;
         }
 
-        view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + gpxType);
+        view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + descriptor);
 
         GpxFileBuilder gpxBuilder;
         if (view.getSeparateTracksRadioButton().isSelected()) {
             gpxBuilder = new SingleTrackGpxFileBuilder();
-        } else if ("Track".equals(view.getSelectedGpxType())) {
+        } else if (descriptor == GpxDescriptor.Track) {
             gpxBuilder = new GpxTrackFileBuilder();
-        } else {
+        } else if (descriptor == GpxDescriptor.Route) {
             gpxBuilder = new GpxRouteFileBuilder();
+        } else {
+            throw new FileNotValidException();
         }
 
         gpxBuilder.build(file, loadedGpx, desiredInstrNum);

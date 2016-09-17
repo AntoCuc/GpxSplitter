@@ -18,7 +18,6 @@ public class UI extends javax.swing.JFrame {
 
     public UI() {
         initComponents();
-        populateOutputGpxFormats();
     }
 
     @SuppressWarnings("unchecked")
@@ -41,8 +40,8 @@ public class UI extends javax.swing.JFrame {
         javax.swing.JPanel ouputConfigurationPanel = new javax.swing.JPanel();
         javax.swing.JLabel instrNumLabel = new javax.swing.JLabel();
         instrNumField = new javax.swing.JTextField();
-        javax.swing.JLabel gpxTypeLabel = new javax.swing.JLabel();
-        gpxTypeComboBox = new javax.swing.JComboBox();
+        javax.swing.JLabel emptyLabel = new javax.swing.JLabel();
+        javax.swing.JLabel emptyLabel1 = new javax.swing.JLabel();
         javax.swing.JPanel outputFilePanel = new javax.swing.JPanel();
         saveFileButton = new javax.swing.JButton();
         javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
@@ -110,12 +109,8 @@ public class UI extends javax.swing.JFrame {
 
         instrNumField.setText("125");
         ouputConfigurationPanel.add(instrNumField);
-
-        gpxTypeLabel.setText("Gpx type:");
-        ouputConfigurationPanel.add(gpxTypeLabel);
-
-        gpxTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Track", "Route" }));
-        ouputConfigurationPanel.add(gpxTypeComboBox);
+        ouputConfigurationPanel.add(emptyLabel);
+        ouputConfigurationPanel.add(emptyLabel1);
 
         getContentPane().add(ouputConfigurationPanel);
 
@@ -155,7 +150,6 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JButton browseButton;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JLabel fileTypeValue;
-    private javax.swing.JComboBox gpxTypeComboBox;
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JTextField instrNumField;
     private javax.swing.JRadioButton joinTracksRadioButton;
@@ -164,16 +158,6 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JRadioButton separateTracksRadioButton;
     private javax.swing.JLabel tracksNumValue;
     // End of variables declaration//GEN-END:variables
-
-    String getSelectedGpxType() {
-        return (String) gpxTypeComboBox.getSelectedItem();
-    }
-
-    private void populateOutputGpxFormats() {
-        gpxTypeComboBox.removeAllItems(); // Clear and repopulate from the enum
-        gpxTypeComboBox.addItem("Track");
-        gpxTypeComboBox.addItem("Route");
-    }
 
     JButton getBrowseButton() {
         return browseButton;
@@ -199,10 +183,6 @@ public class UI extends javax.swing.JFrame {
         return instrNumField.getText();
     }
 
-    String getHighlightedGpxType() {
-        return gpxTypeComboBox.getSelectedItem().toString();
-    }
-
     JRadioButton getSeparateTracksRadioButton() {
         return separateTracksRadioButton;
     }
@@ -221,7 +201,6 @@ public class UI extends javax.swing.JFrame {
 
     void setSplittingEnabled(boolean enabled) {
         instrNumField.setEnabled(enabled);
-        gpxTypeComboBox.setEnabled(enabled);
     }
 
     void setMultiTrackEnabled(boolean enabled) {
