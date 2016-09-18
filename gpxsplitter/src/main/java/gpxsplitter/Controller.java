@@ -12,7 +12,6 @@ import gpxsplitter.tools.builders.GpxFileBuilder;
 import gpxsplitter.tools.builders.GpxRouteFileBuilder;
 import gpxsplitter.tools.builders.GpxTrackFileBuilder;
 import gpxsplitter.model.Gpx;
-import gpxsplitter.tools.builders.SingleTrackGpxFileBuilder;
 import gpxsplitter.tools.loaders.GpxFileLoader;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -84,20 +83,6 @@ public class Controller {
                 Controller.this.view.browseHelpSystem();
             }
         });
-        this.view.getSeparateTracksRadioButton().addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Controller.this.view.setSplittingEnabled(false);
-            }
-        });
-        this.view.getJoinTracksRadioButton().addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Controller.this.view.setSplittingEnabled(true);
-            }
-        });
     }
 
     private void loadGpxFile() throws FileNotValidException {
@@ -120,13 +105,6 @@ public class Controller {
     void loadGpxFile(File gpxFile) throws JAXBException, FileNotFoundException, FileNotValidException, IOException {
         final GpxFileLoader gpxLoader = new GpxFileLoader();
         loadedGpx = gpxLoader.load(new FileInputStream(gpxFile));
-
-        if (loadedGpx.isMultitrack()) {
-            view.setTracksNumValue(String.valueOf(loadedGpx.getTracksNum()));
-            view.setMultiTrackEnabled(true);
-        } else {
-            view.setMultiTrackEnabled(false);
-        }
 
         String fileType = "Gpx " + loadedGpx.getDescriptor() + " version " + loadedGpx.getVersion();
         view.setOpenFileField(gpxFile.getAbsolutePath());
@@ -162,9 +140,7 @@ public class Controller {
         view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + descriptor);
 
         GpxFileBuilder gpxBuilder;
-        if (view.getSeparateTracksRadioButton().isSelected()) {
-            gpxBuilder = new SingleTrackGpxFileBuilder();
-        } else if (descriptor == GpxDescriptor.Track) {
+        if (descriptor == GpxDescriptor.Track) {
             gpxBuilder = new GpxTrackFileBuilder();
         } else if (descriptor == GpxDescriptor.Route) {
             gpxBuilder = new GpxRouteFileBuilder();

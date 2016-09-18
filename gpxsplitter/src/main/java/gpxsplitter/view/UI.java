@@ -11,7 +11,6 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 
 public class UI extends javax.swing.JFrame {
 
@@ -26,25 +25,17 @@ public class UI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.ButtonGroup multiTrackOperationButtonGroup = new javax.swing.ButtonGroup();
         javax.swing.JPanel inputFilePanel = new javax.swing.JPanel();
         openFileField = new javax.swing.JTextField();
         browseButton = new javax.swing.JButton();
+        javax.swing.JPanel inputFileFeaturesPanel = new javax.swing.JPanel();
         javax.swing.JLabel fileTypeLabel = new javax.swing.JLabel();
         fileTypeValue = new javax.swing.JLabel();
-        javax.swing.JPanel inputConfigurationPanel = new javax.swing.JPanel();
-        javax.swing.JLabel tracksNumLabel = new javax.swing.JLabel();
-        tracksNumValue = new javax.swing.JLabel();
-        javax.swing.JLabel operationLabel = new javax.swing.JLabel();
-        javax.swing.JPanel operationsPanel = new javax.swing.JPanel();
-        joinTracksRadioButton = new javax.swing.JRadioButton();
-        separateTracksRadioButton = new javax.swing.JRadioButton();
         javax.swing.JPanel ouputConfigurationPanel = new javax.swing.JPanel();
         javax.swing.JLabel instrNumLabel = new javax.swing.JLabel();
         instrNumField = new javax.swing.JTextField();
-        javax.swing.JLabel emptyLabel = new javax.swing.JLabel();
-        javax.swing.JLabel emptyLabel1 = new javax.swing.JLabel();
         javax.swing.JPanel outputFilePanel = new javax.swing.JPanel();
+        javax.swing.JLabel emptyLabel = new javax.swing.JLabel();
         saveFileButton = new javax.swing.JButton();
         javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
@@ -60,7 +51,7 @@ public class UI extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.GridLayout(4, 1, 10, 10));
 
         inputFilePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Open Gpx file"));
-        inputFilePanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+        inputFilePanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
 
         openFileField.setEnabled(false);
         inputFilePanel.add(openFileField);
@@ -68,56 +59,33 @@ public class UI extends javax.swing.JFrame {
         browseButton.setText("Browse...");
         inputFilePanel.add(browseButton);
 
-        fileTypeLabel.setText("Loaded gpx:");
-        inputFilePanel.add(fileTypeLabel);
-
-        fileTypeValue.setText("N/A");
-        inputFilePanel.add(fileTypeValue);
-
         getContentPane().add(inputFilePanel);
 
-        inputConfigurationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Multi track settings"));
-        inputConfigurationPanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+        inputFileFeaturesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Gpx features"));
+        inputFileFeaturesPanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
 
-        tracksNumLabel.setText("Tracks on the gpx:");
-        inputConfigurationPanel.add(tracksNumLabel);
+        fileTypeLabel.setText("Loaded gpx:");
+        inputFileFeaturesPanel.add(fileTypeLabel);
 
-        tracksNumValue.setText("N/A");
-        inputConfigurationPanel.add(tracksNumValue);
+        fileTypeValue.setText("N/A");
+        inputFileFeaturesPanel.add(fileTypeValue);
 
-        operationLabel.setText("Operation:");
-        inputConfigurationPanel.add(operationLabel);
+        getContentPane().add(inputFileFeaturesPanel);
 
-        operationsPanel.setLayout(new java.awt.GridLayout(1, 2));
-
-        multiTrackOperationButtonGroup.add(joinTracksRadioButton);
-        joinTracksRadioButton.setSelected(true);
-        joinTracksRadioButton.setText("Join tracks");
-        operationsPanel.add(joinTracksRadioButton);
-
-        multiTrackOperationButtonGroup.add(separateTracksRadioButton);
-        separateTracksRadioButton.setText("Separate");
-        operationsPanel.add(separateTracksRadioButton);
-
-        inputConfigurationPanel.add(operationsPanel);
-
-        getContentPane().add(inputConfigurationPanel);
-
-        ouputConfigurationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Single track settings"));
-        ouputConfigurationPanel.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+        ouputConfigurationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Output configuration"));
+        ouputConfigurationPanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
 
         instrNumLabel.setText("Instructions / file:");
         ouputConfigurationPanel.add(instrNumLabel);
 
         instrNumField.setText("125");
         ouputConfigurationPanel.add(instrNumField);
-        ouputConfigurationPanel.add(emptyLabel);
-        ouputConfigurationPanel.add(emptyLabel1);
 
         getContentPane().add(ouputConfigurationPanel);
 
         outputFilePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Save Gpx files"));
-        outputFilePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        outputFilePanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
+        outputFilePanel.add(emptyLabel);
 
         saveFileButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         saveFileButton.setText("Save");
@@ -144,8 +112,7 @@ public class UI extends javax.swing.JFrame {
 
         setJMenuBar(menuBar);
 
-        setSize(new java.awt.Dimension(430, 380));
-        setLocationRelativeTo(null);
+        setBounds(0, 0, 366, 289);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -154,11 +121,8 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel fileTypeValue;
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JTextField instrNumField;
-    private javax.swing.JRadioButton joinTracksRadioButton;
     private javax.swing.JTextField openFileField;
     private javax.swing.JButton saveFileButton;
-    private javax.swing.JRadioButton separateTracksRadioButton;
-    private javax.swing.JLabel tracksNumValue;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBrowseButton() {
@@ -185,14 +149,6 @@ public class UI extends javax.swing.JFrame {
         return instrNumField.getText();
     }
 
-    public JRadioButton getSeparateTracksRadioButton() {
-        return separateTracksRadioButton;
-    }
-
-    public JRadioButton getJoinTracksRadioButton() {
-        return joinTracksRadioButton;
-    }
-
     public void setFileTypeValue(String fileType) {
         fileTypeValue.setText(fileType);
     }
@@ -203,16 +159,6 @@ public class UI extends javax.swing.JFrame {
 
     public void setSplittingEnabled(boolean enabled) {
         instrNumField.setEnabled(enabled);
-    }
-
-    public void setMultiTrackEnabled(boolean enabled) {
-        joinTracksRadioButton.setEnabled(enabled);
-        separateTracksRadioButton.setEnabled(enabled);
-        tracksNumValue.setEnabled(enabled);
-    }
-
-    public void setTracksNumValue(String tracksNum) {
-        this.tracksNumValue.setText(tracksNum);
     }
 
     public void showMessage(String message) {
