@@ -16,7 +16,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
-public abstract class GpxFileBuilder implements GpxBuilder {
+public abstract class GpxFileBuilder {
 
     public static final String GPX_EXTENSION = ".gpx";
     static final String GPX_VERSION = "1.1";
@@ -30,7 +30,6 @@ public abstract class GpxFileBuilder implements GpxBuilder {
      * @param preferedInstrNum
      * @throws javax.xml.bind.JAXBException
      */
-    @Override
     public void build(File file, GpxType gpx, int preferedInstrNum) throws JAXBException {
         int fileNum = 1;
         List<GpxType> newGpxList = buildSplitGpx(gpx, preferedInstrNum);
