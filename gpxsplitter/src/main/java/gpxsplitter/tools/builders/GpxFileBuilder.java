@@ -5,8 +5,8 @@
  */
 package gpxsplitter.tools.builders;
 
-import gpxsplitter.UI;
 import gpxsplitter.model.GpxType;
+import gpxsplitter.view.UI;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

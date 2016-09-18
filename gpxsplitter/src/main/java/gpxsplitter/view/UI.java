@@ -1,9 +1,11 @@
+package gpxsplitter.view;
+
 /**
  * The GpxSplitter user interface.
  *
  * @author Antonino Cucchiara
  */
-package gpxsplitter;
+
 
 import java.awt.Toolkit;
 import javax.swing.JButton;
@@ -159,35 +161,35 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel tracksNumValue;
     // End of variables declaration//GEN-END:variables
 
-    JButton getBrowseButton() {
+    public JButton getBrowseButton() {
         return browseButton;
     }
 
-    JButton getSaveFileButton() {
+    public JButton getSaveFileButton() {
         return saveFileButton;
     }
 
-    JMenuItem getExitMenuItem() {
+    public JMenuItem getExitMenuItem() {
         return exitMenuItem;
     }
 
-    JMenuItem getHelpMenuItem() {
+    public JMenuItem getHelpMenuItem() {
         return helpMenuItem;
     }
 
-    JMenuItem getAboutMenuItem() {
+    public JMenuItem getAboutMenuItem() {
         return aboutMenuItem;
     }
 
-    String getInstructionsNumber() {
+    public String getInstructionsNumber() {
         return instrNumField.getText();
     }
 
-    JRadioButton getSeparateTracksRadioButton() {
+    public JRadioButton getSeparateTracksRadioButton() {
         return separateTracksRadioButton;
     }
 
-    JRadioButton getJoinTracksRadioButton() {
+    public JRadioButton getJoinTracksRadioButton() {
         return joinTracksRadioButton;
     }
 
@@ -199,11 +201,11 @@ public class UI extends javax.swing.JFrame {
         openFileField.setText(openedFile);
     }
 
-    void setSplittingEnabled(boolean enabled) {
+    public void setSplittingEnabled(boolean enabled) {
         instrNumField.setEnabled(enabled);
     }
 
-    void setMultiTrackEnabled(boolean enabled) {
+    public void setMultiTrackEnabled(boolean enabled) {
         joinTracksRadioButton.setEnabled(enabled);
         separateTracksRadioButton.setEnabled(enabled);
         tracksNumValue.setEnabled(enabled);
@@ -217,11 +219,11 @@ public class UI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, message);
     }
 
-    int showConfirmDialog(String message) {
+    public int showConfirmDialog(String message) {
         return JOptionPane.showConfirmDialog(this, message);
     }
 
-    void showAboutPane() {
+    public void showAboutPane() {
         JOptionPane.showMessageDialog(
                 this,
                 "<html><h3>GPX Splitter vHEAD</h3>"
@@ -236,7 +238,7 @@ public class UI extends javax.swing.JFrame {
 
     }
 
-    void browseHelpSystem() {
+    public void browseHelpSystem() {
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         if (!desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
             showMessage("Desktop doesn't support the browse action the online help cannot be open.");

@@ -5,7 +5,7 @@
  */
 package gpxsplitter.tools.builders;
 
-import gpxsplitter.UI;
+import gpxsplitter.view.UI;
 import gpxsplitter.model.GpxType;
 import java.util.List;
 import org.junit.Test;
@@ -112,6 +112,7 @@ public class GpxFileBuilderTest {
 
     public class GpxFileBuilderImpl extends GpxFileBuilder {
 
+        @Override
         public List<GpxType> buildSplitGpx(GpxType gpx, int preferredInstrNum) {
             return null;
         }
