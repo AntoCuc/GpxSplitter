@@ -1,6 +1,5 @@
 package gpxsplitter.model;
 
-import gpxsplitter.GpxDescriptor;
 import gpxsplitter.tools.FileNotValidException;
 import org.junit.Test;
 import static org.junit.Assert.*;

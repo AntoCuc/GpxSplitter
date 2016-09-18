@@ -5,6 +5,7 @@
  */
 package gpxsplitter;
 
+import gpxsplitter.model.GpxDescriptor;
 import gpxsplitter.tools.FileNotValidException;
 import gpxsplitter.tools.builders.GpxFileBuilder;
 import gpxsplitter.tools.builders.GpxRouteFileBuilder;
