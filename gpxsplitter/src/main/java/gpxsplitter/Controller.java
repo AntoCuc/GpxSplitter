@@ -9,7 +9,7 @@ import gpxsplitter.tools.FileNotValidException;
 import gpxsplitter.tools.builders.GpxFileBuilder;
 import gpxsplitter.tools.builders.GpxRouteFileBuilder;
 import gpxsplitter.tools.builders.GpxTrackFileBuilder;
-import gpxsplitter.model.GpxType;
+import gpxsplitter.model.Gpx;
 import gpxsplitter.tools.builders.SingleTrackGpxFileBuilder;
 import gpxsplitter.tools.loaders.GpxFileLoader;
 import java.awt.event.MouseAdapter;
@@ -26,7 +26,7 @@ import javax.xml.bind.JAXBException;
 public class Controller {
 
     private UI view;
-    private GpxType loadedGpx;
+    private Gpx loadedGpx;
     private File loadedGpxFile;
 
     public static void main(String[] args) {
@@ -119,14 +119,14 @@ public class Controller {
         final GpxFileLoader gpxLoader = new GpxFileLoader();
         loadedGpx = gpxLoader.load(new FileInputStream(gpxFile));
 
-        if (GpxFileLoader.isGpxMultitrack(loadedGpx)) {
-            view.setTracksNumValue(String.valueOf(GpxFileLoader.getTracksNum(loadedGpx)));
+        if (loadedGpx.isMultitrack()) {
+            view.setTracksNumValue(String.valueOf(loadedGpx.getTracksNum()));
             view.setMultiTrackEnabled(true);
         } else {
             view.setMultiTrackEnabled(false);
         }
 
-        String fileType = "Gpx " + GpxFileLoader.getType(loadedGpx) + " version " + loadedGpx.getVersion();
+        String fileType = "Gpx " + loadedGpx.getDescriptor() + " version " + loadedGpx.getVersion();
         view.setOpenFileField(gpxFile.getAbsolutePath());
         view.setFileTypeValue(fileType);
     }
@@ -139,7 +139,7 @@ public class Controller {
         }
         int instNum = Integer.parseInt(numOfInstructions);
         try {
-            GpxDescriptor gpxType = GpxFileLoader.getType(loadedGpx);
+            GpxDescriptor gpxType = loadedGpx.getDescriptor();
             JFileChooser saveFileChooser = new JFileChooser();
             saveFileChooser.setSelectedFile(new File("split-" + loadedGpxFile.getName()));
             saveFileChooser.setFileFilter(new GpxFileFilter());
@@ -170,7 +170,7 @@ public class Controller {
             throw new FileNotValidException();
         }
 
-        gpxBuilder.build(file, loadedGpx, desiredInstrNum);
+        gpxBuilder.build(file, loadedGpx.getUnderlying(), desiredInstrNum);
         view.showMessage("Split GPX successfully saved.");
     }
 

@@ -6,10 +6,10 @@
 
 package gpxsplitter.tools.loaders;
 
-import gpxsplitter.model.GpxType;
+import gpxsplitter.model.Gpx;
 import java.io.InputStream;
 import javax.xml.bind.JAXBException;
 
 public interface GpxLoader {
-    public GpxType load(InputStream inputStream) throws JAXBException;
+    public Gpx load(InputStream inputStream) throws JAXBException;
 }
