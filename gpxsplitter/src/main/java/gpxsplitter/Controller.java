@@ -158,12 +158,16 @@ public class Controller {
         view.showMessage("Saving Gpx file(s) \n Instructions number: " + desiredInstrNum + "\n Gpx Type: " + descriptor);
 
         GpxFileBuilder gpxBuilder;
-        if (descriptor == GpxDescriptor.Track) {
-            gpxBuilder = new GpxTrackFileBuilder();
-        } else if (descriptor == GpxDescriptor.Route) {
-            gpxBuilder = new GpxRouteFileBuilder();
-        } else {
-            throw new FileNotValidException();
+
+        switch (descriptor) {
+            case Track:
+                gpxBuilder = new GpxTrackFileBuilder();
+                break;
+            case Route:
+                gpxBuilder = new GpxRouteFileBuilder();
+                break;
+            default:
+                throw new FileNotValidException();
         }
 
         gpxBuilder.build(file, loadedGpx.getUnderlying(), desiredInstrNum);
