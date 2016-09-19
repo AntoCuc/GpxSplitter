@@ -31,18 +31,32 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.xml.bind.JAXBException;
 
-public class Controller {
+/**
+ * Coordinates data flows between Model and View.
+ *
+ * @author Antonino Cucchiara
+ */
+public final class Controller {
 
+    /**
+     * The GpxSplitter model.
+     */
     private final Model model;
+    /**
+     * The GpxSplitter view.
+     */
     private final View view;
 
-    public static void main(String[] args) {
+    /**
+     * GpxSplitter bootstrapping method.
+     * @param args GpcSplitter arguments
+     */
+    public static void main(final String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+        } catch (Exception e) {
             System.out.println("Error setting native LAF: " + e);
         }
 
@@ -52,47 +66,55 @@ public class Controller {
         controller.initialise();
     }
 
-    private Controller(Model model, View view) {
-        this.model = model;
-        this.view = view;
+    /**
+     * Initialise the Controller with references to the model and view.
+     * @param newModel GpxSplitter Business Logic
+     * @param newView GpxSplitter Frontend
+     */
+    private Controller(final Model newModel, final View newView) {
+        this.model = newModel;
+        this.view = newView;
 
         this.view.getBrowseButton().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(final MouseEvent e) {
                 Controller.this.loadGpxFile();
             }
         });
         this.view.getSaveFileButton().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(final MouseEvent e) {
                 Controller.this.saveGpxFile();
             }
         });
         this.view.getExitMenuItem().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(final MouseEvent e) {
                 System.exit(0);
             }
         });
         this.view.getAboutMenuItem().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseReleased(MouseEvent e) {
+            public void mouseReleased(final MouseEvent e) {
                 Controller.this.view.showAboutPane();
             }
         });
         this.view.getHelpMenuItem().addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(final MouseEvent e) {
                 Controller.this.view.browseHelpSystem();
             }
         });
     }
 
+    /**
+     * Coordinate the loading of a Gpx file.
+     */
     private void loadGpxFile() {
         try {
             File selectedFile = view.openGpxFile();
@@ -100,12 +122,17 @@ public class Controller {
                 try {
                     model.loadGpxFile(selectedFile);
                     view.setOpenFileField(selectedFile.getAbsolutePath());
-                    String loadedFileDescription = "Gpx " + model.getSourceGpx().getDescriptor() + " version " + model.getSourceGpx().getVersion();
+                    String loadedFileDescription = "Gpx "
+                            + model.getSourceGpx().getDescriptor()
+                            + " version " + model.getSourceGpx().getVersion();
                     view.setFileTypeValue(loadedFileDescription);
                 } catch (IOException ex) {
-                    view.showMessage("A problem occured when loading the file." + View.LINE_SEPARATOR + "Do you have the rights to read from that location?");
+                    view.showMessage("A problem occured loading the file."
+                            + View.LINE_SEPARATOR
+                            + "Do you have the rights to read from that "
+                            + "location?");
                 } catch (JAXBException ex) {
-                    view.showMessage("The file you tried to load is not a valid GPX.");
+                    view.showMessage("Not a valid GPX.");
                 }
             }
         } catch (FileNotValidException ex) {
@@ -113,36 +140,55 @@ public class Controller {
         }
     }
 
+    /**
+     * Coordinate the saving of a Gpx file.
+     */
     private void saveGpxFile() {
-        String instructionsNumberFieldText = view.getInstructionsNumberFieldText();
+        String instructionsNumberFieldText =
+                view.getInstructionsNumberFieldText();
         if (!isValidInteger(instructionsNumberFieldText)) {
             view.showMessage("Instructions number not valid");
             return;
         }
         int instructionsNumber = Integer.parseInt(instructionsNumberFieldText);
         try {
-            File saveFile = view.saveGpxFile(new File("split-" + model.getSourceFile().getName()));
+            final File selectedFile =
+                    new File("split-" + model.getSourceFile().getName());
+            final File saveFile = view.saveGpxFile(selectedFile);
             if (model.getSourceGpx() == null) {
                 view.showMessage("A GPX to split has to be selected");
                 return;
             }
-            view.showMessage("Saving Gpx file(s) \n Instructions number: " + instructionsNumber + "\n Gpx Type: " + model.getSourceGpx().getDescriptor());
+            view.showMessage("Saving Gpx file(s) \n Instructions number: "
+                    + instructionsNumber
+                    + "\n Gpx Type: "
+                    + model.getSourceGpx().getDescriptor());
             model.saveGpx(saveFile, instructionsNumber);
             view.showMessage("Split GPX successfully saved.");
         } catch (JAXBException | FileNotValidException e) {
-            view.showMessage("Problem whilst saving the file." + View.LINE_SEPARATOR + "Do you have the rights to write to that location?");
+            view.showMessage("Problem whilst saving the file."
+                    + View.LINE_SEPARATOR
+                    + "Do you have the rights to write to that location?");
         }
     }
 
-    private boolean isValidInteger(String intAsStr) {
+    /**
+     * Determines whether the string can be parsed as an integer.
+     * @param input the unsecured input
+     * @return true if the input is an integer
+     */
+    private boolean isValidInteger(final String input) {
         try {
-            Integer.parseInt(intAsStr);
+            Integer.parseInt(input);
             return true;
         } catch (NumberFormatException e) {
             return false;
         }
     }
 
+    /**
+     * Initialise GpxSplitter.
+     */
     public void initialise() {
         this.view.setVisible(true);
     }
