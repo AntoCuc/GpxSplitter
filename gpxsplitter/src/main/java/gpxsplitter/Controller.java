@@ -137,12 +137,12 @@ public class Controller {
         }
         int instNum = Integer.parseInt(numOfInstructions);
         try {
-            GpxDescriptor gpxType = loadedGpx.getDescriptor();
+            GpxDescriptor gpxDescriptor = loadedGpx.getDescriptor();
             JFileChooser saveFileChooser = new JFileChooser();
             saveFileChooser.setSelectedFile(new File("split-" + loadedGpxFile.getName()));
             saveFileChooser.setFileFilter(new GpxFileFilter());
             saveFileChooser.showSaveDialog(view);
-            saveGpxFile(instNum, gpxType, saveFileChooser.getSelectedFile());
+            saveGpxFile(instNum, gpxDescriptor, saveFileChooser.getSelectedFile());
 
         } catch (IOException | JAXBException | FileNotValidException e) {
             view.showMessage("Problem whilst saving the file." + UI.LINE_SEPARATOR + "Do you have the rights to write to that location?");
