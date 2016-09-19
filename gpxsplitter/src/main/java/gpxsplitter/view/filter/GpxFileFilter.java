@@ -21,33 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package gpxsplitter;
+package gpxsplitter.view.filter;
 
+import gpxsplitter.tools.builders.GpxFileBuilder;
 import java.io.File;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import javax.swing.filechooser.FileFilter;
 
-public class GpxFileFilterTest {
+public class GpxFileFilter extends FileFilter
+{
+    static final String GPX_FILE_DESCRIPTION = "Gpx files (*.gpx)";
 
-    private final GpxFileFilter fileFilter;
-
-    public GpxFileFilterTest() {
-        this.fileFilter = new GpxFileFilter();
+    @Override
+    public boolean accept(File pathname)
+    {
+        return pathname.isDirectory() || pathname.getName().endsWith(GpxFileBuilder.GPX_EXTENSION);
     }
 
-    @Test
-    public void testAcceptPositive() {
-        assertTrue(fileFilter.accept(new File("dummy.gpx")));
+    @Override
+    public String getDescription()
+    {
+        return GPX_FILE_DESCRIPTION;
     }
-
-    @Test
-    public void testAcceptNegative() {
-        assertFalse(fileFilter.accept(new File("dummy.txt")));
-    }
-
-    @Test
-    public void testGetDescription() {
-        assertEquals(GpxFileFilter.GPX_FILE_DESCRIPTION, fileFilter.getDescription());
-    }
-
 }

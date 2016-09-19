@@ -23,7 +23,7 @@
  */
 package gpxsplitter.tools.builders;
 
-import gpxsplitter.view.UI;
+import gpxsplitter.view.View;
 import gpxsplitter.model.GpxType;
 import java.util.List;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class GpxFileBuilderTest {
         GpxFileBuilder instance = new GpxFileBuilderImpl();
         GpxType result = instance.createGpxTemplate();
         assertEquals(GpxFileBuilder.GPX_VERSION, result.getVersion());
-        assertEquals(UI.GPX_SPLITTER, result.getCreator());
+        assertEquals(View.GPX_SPLITTER, result.getCreator());
     }
 
     @Test

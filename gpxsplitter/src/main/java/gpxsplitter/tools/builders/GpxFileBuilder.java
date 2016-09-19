@@ -24,7 +24,7 @@
 package gpxsplitter.tools.builders;
 
 import gpxsplitter.model.GpxType;
-import gpxsplitter.view.UI;
+import gpxsplitter.view.View;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -77,7 +77,7 @@ public abstract class GpxFileBuilder {
     protected GpxType createGpxTemplate() {
         GpxType newGpx = new GpxType();
         newGpx.setVersion(GPX_VERSION);
-        newGpx.setCreator(UI.GPX_SPLITTER);
+        newGpx.setCreator(View.GPX_SPLITTER);
         return newGpx;
     }
 

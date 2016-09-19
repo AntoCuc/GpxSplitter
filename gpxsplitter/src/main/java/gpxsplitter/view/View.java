@@ -23,17 +23,21 @@
  */
 package gpxsplitter.view;
 
+import gpxsplitter.model.Model;
+import gpxsplitter.view.filter.GpxFileFilter;
 import java.awt.Toolkit;
+import java.io.File;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-public class UI extends javax.swing.JFrame {
+public class View extends javax.swing.JFrame {
 
     public static final String GPX_SPLITTER = "Gpx Splitter";
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
-    public UI() {
+    public View(Model model) {
         initComponents();
     }
 
@@ -48,8 +52,8 @@ public class UI extends javax.swing.JFrame {
         javax.swing.JLabel fileTypeLabel = new javax.swing.JLabel();
         fileTypeValue = new javax.swing.JLabel();
         javax.swing.JPanel ouputConfigurationPanel = new javax.swing.JPanel();
-        javax.swing.JLabel instrNumLabel = new javax.swing.JLabel();
-        instrNumField = new javax.swing.JTextField();
+        javax.swing.JLabel instructionsNumberLabel = new javax.swing.JLabel();
+        instructionsNumberField = new javax.swing.JTextField();
         javax.swing.JPanel outputFilePanel = new javax.swing.JPanel();
         javax.swing.JLabel emptyLabel = new javax.swing.JLabel();
         saveFileButton = new javax.swing.JButton();
@@ -62,7 +66,7 @@ public class UI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(GPX_SPLITTER);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(UI.class.getResource("/gpxsplitter/media/map.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(View.class.getResource("/gpxsplitter/media/map.png")));
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridLayout(4, 1, 10, 10));
 
@@ -91,11 +95,11 @@ public class UI extends javax.swing.JFrame {
         ouputConfigurationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Output configuration"));
         ouputConfigurationPanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
 
-        instrNumLabel.setText("Instructions / file:");
-        ouputConfigurationPanel.add(instrNumLabel);
+        instructionsNumberLabel.setText("Instructions / file:");
+        ouputConfigurationPanel.add(instructionsNumberLabel);
 
-        instrNumField.setText("125");
-        ouputConfigurationPanel.add(instrNumField);
+        instructionsNumberField.setText("125");
+        ouputConfigurationPanel.add(instructionsNumberField);
 
         getContentPane().add(ouputConfigurationPanel);
 
@@ -136,7 +140,7 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JLabel fileTypeValue;
     private javax.swing.JMenuItem helpMenuItem;
-    private javax.swing.JTextField instrNumField;
+    private javax.swing.JTextField instructionsNumberField;
     private javax.swing.JTextField openFileField;
     private javax.swing.JButton saveFileButton;
     // End of variables declaration//GEN-END:variables
@@ -161,8 +165,8 @@ public class UI extends javax.swing.JFrame {
         return aboutMenuItem;
     }
 
-    public String getInstructionsNumber() {
-        return instrNumField.getText();
+    public String getInstructionsNumberFieldText() {
+        return instructionsNumberField.getText();
     }
 
     public void setFileTypeValue(String fileType) {
@@ -174,7 +178,7 @@ public class UI extends javax.swing.JFrame {
     }
 
     public void setSplittingEnabled(boolean enabled) {
-        instrNumField.setEnabled(enabled);
+        instructionsNumberField.setEnabled(enabled);
     }
 
     public void showMessage(String message) {
@@ -211,5 +215,24 @@ public class UI extends javax.swing.JFrame {
         } catch (Exception e) {
             showMessage("Problem reaching the website.");
         }
+    }
+
+    private JFileChooser buildGpxFileChooser() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new GpxFileFilter());
+        return fileChooser;
+    }
+
+    public final File openGpxFile() {
+        JFileChooser fileChooser = buildGpxFileChooser();
+        fileChooser.showOpenDialog(this);
+        return fileChooser.getSelectedFile();
+    }
+
+    public final File saveGpxFile(File selectedFile) {
+        JFileChooser fileChooser = buildGpxFileChooser();
+        fileChooser.setSelectedFile(selectedFile);
+        fileChooser.showSaveDialog(this);
+        return fileChooser.getSelectedFile();
     }
 }
