@@ -4,22 +4,43 @@ Gpx Splitter
 Split GPX files too large to fit in GPS handheld devices into multiple files that do.
 
 This software is meant to be used to generate files to be used on Handheld GPS devices used for hicking, trakking and mountain/road biking.
-GPS handheld devices have historically had limited features so to minimise power consumption as they are powered with consumer grade cells.
+
+GPS handheld devices have historically had limited features so to minimise power consumption as some of them are powered with consumer grade cells.
 Some of the more recent GPS devices have better-performing built-in rechargeable cells. However, their feature sets are still limited.
 
 Why split Gpx files
 -------------------
 
-In 2011 I purchased a Garmin Etrex Legend for my Sunday road bike training and to load Audax routes.
-As the milage went up the amount of waypoints in the routes also grew.
-The eTrex Legend has a limit of 125 waypoints for GPX route files so soon I needed to start "splitting" Gpx files.
-
+In 2011 I purchased a Garmin Etrex Legend for road bike training and to load Audax routes.
+As the milage I could ride went up the amount of waypoints in the routes also grew.
+The eTrex Legend has a limit of 125 waypoints per route file so soon I needed to start "splitting" Gpx long files.
 
 Issues
 ------
 
 Have you found a problem with the software? [Please let me know](https://github.com/AntoCuc/GpxSplitter/issues). I will get it fixed as soon as I can.
 
+Getting started (technical)
+---------------------------
+
+### Dependencies ###
+
+To build the software:
+ - Oracle JDK 8 or greater
+ - Apache Maven 3.3 or greater
+ 
+To run the software:
+ - Oracle Java Runtime 8 or greater
+
+### Building the code ###
+
+After cloning the github repository building the GpxSplitter source consists of running the Apache Maven goal "install".
+The "install" goal will generate a "target" directory containing the GpxSplitter JAR file.
+
+### Running the software ###
+
+On Microsoft Windows the GpxSplitter<version>.jar file can be double-clicked to run the software.
+On Linux and Mac running the command "java -jar GpxSplitter<version>.jar" will run the software.
 
 Software Builds
 ---------------
