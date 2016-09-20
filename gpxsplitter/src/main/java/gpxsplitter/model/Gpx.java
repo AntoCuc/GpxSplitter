@@ -25,23 +25,52 @@ package gpxsplitter.model;
 
 import gpxsplitter.tools.FileNotValidException;
 
+/**
+ * Wrapper class abstracting the GPX file.
+ *
+ * @author Antonino Cucchiara
+ */
 public class Gpx {
 
+    /**
+     * The Java Binding Gpx Object.
+     */
     private final GpxType gpxType;
 
-    public Gpx(GpxType gpxType) {
-        this.gpxType = gpxType;
+    /**
+     * Initialise the Gpx with the binding type.
+     *
+     * @param newGpxType the underlying object.
+     */
+    public Gpx(final GpxType newGpxType) {
+        this.gpxType = newGpxType;
     }
 
-    public String getVersion() {
+    /**
+     * Delegate the retrieval of the version to the binding object.
+     *
+     * @return the Gpx loaded version
+     */
+    public final String getVersion() {
         return this.gpxType.getVersion();
     }
 
-    public GpxType getUnderlying() {
+    /**
+     * Retrieve the underlying binding object.
+     *
+     * @return the binding object
+     */
+    public final GpxType getUnderlying() {
         return this.gpxType;
     }
 
-    public GpxDescriptor getDescriptor() throws FileNotValidException {
+    /**
+     * Evaluate the Gpx loaded and return its descriptor.
+     *
+     * @return the GpxDescriptor
+     * @throws FileNotValidException in the event a file is not supported
+     */
+    public final GpxDescriptor getDescriptor() throws FileNotValidException {
         if (gpxType.getTrk().size() > 0) {
             return GpxDescriptor.Track;
         } else if (gpxType.getRte().size() > 0) {
@@ -51,11 +80,21 @@ public class Gpx {
         }
     }
 
-    public boolean isMultitrack() {
+    /**
+     * Evaluate whether the Gpx is multi track-segment.
+     *
+     * @return true if multi-segment
+     */
+    public final boolean isMultitrack() {
         return getTracksNum() > 1;
     }
 
-    public int getTracksNum() {
+    /**
+     * Retrieve the number of track segments in the GPX.
+     *
+     * @return the number of segments
+     */
+    public final int getTracksNum() {
         return gpxType.getTrk().size();
     }
 }
