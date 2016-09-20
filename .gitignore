@@ -1,3 +1,4 @@
-GpxSplitter-Source/dist
-GpxSplitter-Source/build
-GpxSplitter-Source/.cvsignore
+target/
+nbproject/
+nb-configuration.xml
+nbactions.xml
