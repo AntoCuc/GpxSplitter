@@ -26,7 +26,6 @@ package gpxsplitter.model.builder;
 import gpxsplitter.model.GpxType;
 import gpxsplitter.view.View;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -34,25 +33,41 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
+/**
+ * Builds Gpx files given a binding object.
+ *
+ * @author Antonino Cucchiara
+ */
 public abstract class GpxFileBuilder {
 
+    /**
+     * The GPX file extension.
+     */
     public static final String GPX_EXTENSION = ".gpx";
+
+    /**
+     * The supported GPX file version.
+     */
     static final String GPX_VERSION = "1.1";
 
     /**
      * This method will build a set of GPX files given the file name, number of
      * GPX instructions per file and the number of files to be built.
      *
-     * @param file
-     * @param gpx
-     * @param preferedInstrNum
-     * @throws javax.xml.bind.JAXBException
+     * @param file to write to
+     * @param gpx binding object
+     * @param preferedInstrNum for each file
+     * @throws JAXBException if cannot bind file
      */
-    public void build(File file, GpxType gpx, int preferedInstrNum) throws JAXBException {
+    public final void build(final File file, final GpxType gpx,
+            final int preferedInstrNum) throws JAXBException {
         int fileNum = 1;
         List<GpxType> newGpxList = buildSplitGpx(gpx, preferedInstrNum);
         for (GpxType newGpx : newGpxList) {
-            saveFile(new File(stripExtension(file.getAbsolutePath(), GPX_EXTENSION) + "-" + fileNum + GPX_EXTENSION), newGpx);
+            String oldFileName = file.getAbsolutePath();
+            String seedFileName = stripExtension(oldFileName, GPX_EXTENSION);
+            String newName = seedFileName + "-" + fileNum + GPX_EXTENSION;
+            saveFile(new File(newName), newGpx);
             fileNum++;
         }
     }
@@ -62,11 +77,12 @@ public abstract class GpxFileBuilder {
      * number of instructions to build a list of Gpx files ready to be written
      * to file.
      *
-     * @param gpx
-     * @param preferredInstrNum
+     * @param gpx is the bound file
+     * @param preferredInstrNum is the number of instructions per file
      * @return a list of gpx files
      */
-    public abstract List<GpxType> buildSplitGpx(GpxType gpx, int preferredInstrNum);
+    public abstract List<GpxType> buildSplitGpx(
+            GpxType gpx, int preferredInstrNum);
 
     /**
      * The method create gpx template creates the start elements and heading of
@@ -74,7 +90,7 @@ public abstract class GpxFileBuilder {
      *
      * @return a gpx document.
      */
-    protected GpxType createGpxTemplate() {
+    protected final GpxType createGpxTemplate() {
         GpxType newGpx = new GpxType();
         newGpx.setVersion(GPX_VERSION);
         newGpx.setCreator(View.GPX_SPLITTER);
@@ -84,29 +100,33 @@ public abstract class GpxFileBuilder {
     /**
      * This method is to be overriden in Unit tests.
      *
-     * @param file
-     * @param gpx document to write to the file
-     * @throws IOException
+     * @param file to save
+     * @param newGpxDocument is the document to write to the file
+     * @throws JAXBException if cannot write
      */
-    void saveFile(File file, GpxType newGpxDocument) throws JAXBException {
+    final void saveFile(final File file, final GpxType newGpxDocument)
+            throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        JAXBElement jaxbElement = new JAXBElement(new QName("ROOT"), GpxType.class, newGpxDocument);
+        QName rootNode = new QName("ROOT");
+        JAXBElement jaxbElement =
+                new JAXBElement(rootNode, GpxType.class, newGpxDocument);
         jaxbMarshaller.marshal(jaxbElement, file);
     }
 
     /**
      * This method cleans the filename of the extension if it is there.
      *
-     * @param file
+     * @param name of the file
+     * @param extension to strip
      * @return the filename stripped of the extension
      */
-    String stripExtension(String fileName, String extension) {
-        if (fileName.endsWith(extension)) {
-            return fileName.substring(0, (fileName.length() - extension.length()));
+    final String stripExtension(final String name, final String extension) {
+        if (name.endsWith(extension)) {
+            return name.substring(0, (name.length() - extension.length()));
         } else {
-            return fileName;
+            return name;
         }
     }
 
@@ -114,11 +134,12 @@ public abstract class GpxFileBuilder {
      * This method calculates how many files have to be created when splitting
      * the GPX to the wanted number of instructions.
      *
-     * @param currNumOfInstr
-     * @param desiredNumOfInstr
-     * @return
+     * @param currNumOfInstr in each GPX file
+     * @param desiredNumOfInstr each file should contain
+     * @return how many files should be generated
      */
-    int howManyFiles(int currNumOfInstr, int desiredNumOfInstr) {
+    final int howManyFiles(
+            final int currNumOfInstr, final int desiredNumOfInstr) {
         try {
             int numOfFiles = (currNumOfInstr / desiredNumOfInstr);
             /**
@@ -130,7 +151,7 @@ public abstract class GpxFileBuilder {
                 numOfFiles++;
             }
             return numOfFiles;
-        } catch (ArithmeticException e) { //No instructions or invalid instructions output number
+        } catch (ArithmeticException e) {
             return 0;
         }
     }
