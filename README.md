@@ -34,7 +34,7 @@ To run the software:
 
 ### Building the code ###
 
-After cloning the github repository building the GpxSplitter source consists of running the Apache Maven goal "install".
+After cloning the github repository building the GpxSplitter source consists of moving to the clone directory and running the Apache Maven goal "install".
 The "install" goal will generate a "target" directory containing the GpxSplitter JAR file.
 
 ### Running the software ###
