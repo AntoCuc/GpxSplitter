@@ -23,7 +23,7 @@
  */
 package gpxsplitter.view.filter;
 
-import gpxsplitter.tools.builders.GpxFileBuilder;
+import gpxsplitter.model.builder.GpxFileBuilder;
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 

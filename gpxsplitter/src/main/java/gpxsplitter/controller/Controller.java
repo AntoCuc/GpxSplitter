@@ -24,7 +24,7 @@
 package gpxsplitter.controller;
 
 import gpxsplitter.view.View;
-import gpxsplitter.tools.FileNotValidException;
+import gpxsplitter.model.exception.FileNotValidException;
 import gpxsplitter.model.Model;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

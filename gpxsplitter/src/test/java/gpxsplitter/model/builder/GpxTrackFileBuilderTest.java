@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package gpxsplitter.tools.builders;
+package gpxsplitter.model.builder;
 
+import gpxsplitter.model.builder.GpxTrackFileBuilder;
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.TrkType;
 import gpxsplitter.model.TrksegType;

@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package gpxsplitter.tools.builders;
+package gpxsplitter.model.builder;
 
+import gpxsplitter.model.builder.GpxFileBuilder;
 import gpxsplitter.view.View;
 import gpxsplitter.model.GpxType;
 import java.util.List;

@@ -23,7 +23,7 @@
  */
 package gpxsplitter.model;
 
-import gpxsplitter.tools.FileNotValidException;
+import gpxsplitter.model.exception.FileNotValidException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

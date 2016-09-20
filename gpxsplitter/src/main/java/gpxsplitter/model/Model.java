@@ -23,11 +23,11 @@
  */
 package gpxsplitter.model;
 
-import gpxsplitter.tools.FileNotValidException;
-import gpxsplitter.tools.builders.GpxFileBuilder;
-import gpxsplitter.tools.builders.GpxRouteFileBuilder;
-import gpxsplitter.tools.builders.GpxTrackFileBuilder;
-import gpxsplitter.tools.loaders.GpxFileLoader;
+import gpxsplitter.model.exception.FileNotValidException;
+import gpxsplitter.model.builder.GpxFileBuilder;
+import gpxsplitter.model.builder.GpxRouteFileBuilder;
+import gpxsplitter.model.builder.GpxTrackFileBuilder;
+import gpxsplitter.model.loader.GpxFileLoader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

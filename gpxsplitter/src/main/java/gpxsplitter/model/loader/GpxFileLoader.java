@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package gpxsplitter.tools.loaders;
+package gpxsplitter.model.loader;
 
 import gpxsplitter.model.Gpx;
 import gpxsplitter.model.GpxType;
