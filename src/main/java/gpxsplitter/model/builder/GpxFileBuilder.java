@@ -67,7 +67,7 @@ public abstract class GpxFileBuilder {
             String oldFileName = file.getAbsolutePath();
             String seedFileName = stripExtension(oldFileName, GPX_EXTENSION);
             String newName = seedFileName + "-" + fileNum + GPX_EXTENSION;
-            saveFile(new File(newName), newGpx);
+            saveFile(newName, newGpx);
             fileNum++;
         }
     }
@@ -104,15 +104,15 @@ public abstract class GpxFileBuilder {
      * @param newGpxDocument is the document to write to the file
      * @throws JAXBException if cannot write
      */
-    final void saveFile(final File file, final GpxType newGpxDocument)
+    final void saveFile(final String fileName, final GpxType newGpxDocument)
             throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        QName rootNode = new QName("ROOT");
+        QName rootNode = new QName("ns2:gpx");
         JAXBElement jaxbElement =
                 new JAXBElement(rootNode, GpxType.class, newGpxDocument);
-        jaxbMarshaller.marshal(jaxbElement, file);
+        jaxbMarshaller.marshal(jaxbElement, new File(fileName));
     }
 
     /**

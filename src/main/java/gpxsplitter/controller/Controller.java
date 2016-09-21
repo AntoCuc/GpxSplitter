@@ -30,6 +30,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
 
@@ -39,6 +40,12 @@ import javax.xml.bind.JAXBException;
  * @author Antonino Cucchiara
  */
 public final class Controller {
+    
+    /**
+     * Logger facility
+     */
+    private static final Logger LOGGER = 
+            Logger.getLogger(Controller.class.getName());
 
     /**
      * The GpxSplitter model.
@@ -133,6 +140,7 @@ public final class Controller {
                             + "location?");
                 } catch (JAXBException ex) {
                     view.showMessage("Not a valid GPX.");
+                    LOGGER.severe(ex.getMessage());
                 }
             }
         } catch (FileNotValidException ex) {

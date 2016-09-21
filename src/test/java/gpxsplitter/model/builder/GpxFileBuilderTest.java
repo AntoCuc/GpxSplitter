@@ -58,7 +58,7 @@ public class GpxFileBuilderTest {
         String result = instance.stripExtension(fileName, extension);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testStripExtensionDifferentExtension() {
         String fileName = "abc.txt";
@@ -78,6 +78,7 @@ public class GpxFileBuilderTest {
         int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
         assertEquals(expResult, result);
     }
+
     @Test
     public void testHowManyFilesOneFileOneInstruction() {
         int currNumOfInstr = 1;
@@ -87,7 +88,7 @@ public class GpxFileBuilderTest {
         int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testHowManyFilesOneFileTwoInstructions() {
         int currNumOfInstr = 2;
@@ -97,7 +98,7 @@ public class GpxFileBuilderTest {
         int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testHowManyFilesTwoFilesOneInstruction() {
         int currNumOfInstr = 2;
@@ -107,7 +108,7 @@ public class GpxFileBuilderTest {
         int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testHowManyFilesTwoFilesTwoInstruction() {
         int currNumOfInstr = 4;
@@ -117,13 +118,33 @@ public class GpxFileBuilderTest {
         int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testHowManyFilesTwoFilesTwoInstructionOdd() {
         int currNumOfInstr = 3;
         int desiredNumOfInstr = 2;
         GpxFileBuilder instance = new GpxFileBuilderImpl();
         int expResult = 2;
+        int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testHowManyFilesException() {
+        int currNumOfInstr = 0;
+        int desiredNumOfInstr = 2;
+        GpxFileBuilder instance = new GpxFileBuilderImpl();
+        int expResult = 0;
+        int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testHowManyFilesException1() {
+        int currNumOfInstr = 2;
+        int desiredNumOfInstr = 0;
+        GpxFileBuilder instance = new GpxFileBuilderImpl();
+        int expResult = 0;
         int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
         assertEquals(expResult, result);
     }
