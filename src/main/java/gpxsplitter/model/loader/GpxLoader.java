@@ -27,6 +27,16 @@ import gpxsplitter.model.Gpx;
 import java.io.InputStream;
 import javax.xml.bind.JAXBException;
 
+/**
+ * Abstracts the loading of GPX files for processing.
+ * @author Antonino Cucchiara
+ */
 public interface GpxLoader {
-    public Gpx load(InputStream inputStream) throws JAXBException;
+    /**
+     * Load content from an Input Stream and populate a Gpx Model.
+     * @param inputStream to be bound to the domain
+     * @return the populated model object
+     * @throws JAXBException thrown if in error
+     */
+    Gpx load(InputStream inputStream) throws JAXBException;
 }

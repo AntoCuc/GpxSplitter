@@ -35,21 +35,42 @@ import java.io.IOException;
 import javax.xml.bind.JAXBException;
 
 /**
- *
- * @author antonio
+ * Encapsulates GpxSplitter business logic.
+ * @author Antonino Cucchiara
  */
 public class Model {
 
+    /**
+     * The file used to source GPX content.
+     */
     private File sourceFile;
+    /**
+     * The bound GPX content.
+     */
     private Gpx sourceGpx;
 
-    public void loadGpxFile(File gpxFile) throws JAXBException, FileNotFoundException, FileNotValidException, IOException {
+    /**
+     * Load and Cache a GPX file.
+     * @param gpxFile to load
+     * @throws JAXBException if unable to load
+     * @throws FileNotFoundException if unable to read the file path
+     * @throws FileNotValidException if not a GPX file
+     * @throws IOException if no rights to read the file
+     */
+    public final void loadGpxFile(final File gpxFile)
+            throws JAXBException, FileNotFoundException,
+            FileNotValidException, IOException {
         this.sourceFile = gpxFile;
         final GpxFileLoader gpxLoader = new GpxFileLoader();
         this.sourceGpx = gpxLoader.load(new FileInputStream(gpxFile));
     }
 
-    GpxFileBuilder getGpxBuilder() throws FileNotValidException {
+    /**
+     * Assign a GPX builder based on the GPX descriptor.
+     * @return the appropriate file builder
+     * @throws FileNotValidException if unable to parse
+     */
+    final GpxFileBuilder getGpxBuilder() throws FileNotValidException {
         GpxFileBuilder gpxBuilder;
 
         switch (sourceGpx.getDescriptor()) {
@@ -65,16 +86,32 @@ public class Model {
         return gpxBuilder;
     }
 
-    public void saveGpx(File file, int desiredInstrNum) throws FileNotValidException, JAXBException {
+    /**
+     * Save the GPX resource.
+     * @param file to save
+     * @param desiredInstrNum per file
+     * @throws FileNotValidException if unable to un-bind
+     * @throws JAXBException if faulty file format is detected
+     */
+    public final void saveGpx(final File file, final int desiredInstrNum)
+            throws FileNotValidException, JAXBException {
         GpxFileBuilder gpxBuilder = getGpxBuilder();
         gpxBuilder.build(file, getSourceGpx().getUnderlying(), desiredInstrNum);
     }
 
-    public File getSourceFile() {
+    /**
+     * Provides the source file.
+     * @return the source file
+     */
+    public final File getSourceFile() {
         return sourceFile;
     }
 
-    public Gpx getSourceGpx() {
+    /**
+     * Provides the source bound GPX.
+     * @return the Gpx
+     */
+    public final Gpx getSourceGpx() {
         return sourceGpx;
     }
 

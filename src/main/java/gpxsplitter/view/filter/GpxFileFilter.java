@@ -27,19 +27,24 @@ import gpxsplitter.model.builder.GpxFileBuilder;
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 
-public class GpxFileFilter extends FileFilter
-{
+/**
+ * Filters GPX files and directories for navigation.
+ * @author Antonino Cucchiara
+ */
+public final class GpxFileFilter extends FileFilter {
+    /**
+     * Readable acceptable files description.
+     */
     static final String GPX_FILE_DESCRIPTION = "Gpx files (*.gpx)";
 
     @Override
-    public boolean accept(File pathname)
-    {
-        return pathname.isDirectory() || pathname.getName().endsWith(GpxFileBuilder.GPX_EXTENSION);
+    public boolean accept(final File pathname) {
+        return pathname.isDirectory()
+                || pathname.getName().endsWith(GpxFileBuilder.GPX_EXTENSION);
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return GPX_FILE_DESCRIPTION;
     }
 }
