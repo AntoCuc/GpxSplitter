@@ -23,6 +23,17 @@
  */
 package gpxsplitter.model;
 
+/**
+ * GPX file type descriptor.
+ * @author Antonino Cucchiara
+ */
 public enum GpxDescriptor {
-    Route, Track;    
+    /**
+     * Used to define GPX containing route waypoints.
+     */
+    Route,
+    /**
+     * Used to define GPX containing track segments and waypoints.
+     */
+    Track;
 }
