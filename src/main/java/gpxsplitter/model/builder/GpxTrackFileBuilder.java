@@ -30,15 +30,21 @@ import gpxsplitter.model.WptType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Builds GPX track files.
+ * @author Antonino Cucchiara
+ */
 public final class GpxTrackFileBuilder extends GpxFileBuilder {
 
     @Override
-    public List<GpxType> buildSplitGpx(GpxType gpx, int preferredInstrNum) {
+    public List<GpxType> buildSplitGpx(
+            final GpxType gpx, final int preferredInstrNum) {
         List<GpxType> gpxList = new ArrayList<>();
         List<TrkType> tracks = gpx.getTrk();
         tracks.stream().forEach((track) -> {
-            track.getTrkseg().forEach((trackSegment) -> {
-                int splitFiles = howManyFiles(trackSegment.getTrkpt().size(), preferredInstrNum);
+            track.getTrkseg().forEach((trackSeg) -> {
+                final int trackSegNum = trackSeg.getTrkpt().size();
+                int splitFiles = howManyFiles(trackSegNum, preferredInstrNum);
 
                 int currentWaypoint = 0;
                 int fileNum = 1;
@@ -52,12 +58,13 @@ public final class GpxTrackFileBuilder extends GpxFileBuilder {
 
                     List<TrkType> newTrackList = newGpx.getTrk();
 
-                    int waypointsInTrackSegment = trackSegment.getTrkpt().size();
+                    int waypointsInTrackSegment = trackSeg.getTrkpt().size();
                     if (waypointsInTrackSegment < preferredInstrNum) {
                         newTrackList.add(track);
                     } else {
                         for (int i = 0; i < preferredInstrNum; i++) {
-                            WptType oldWaypoint = trackSegment.getTrkpt().get(currentWaypoint);
+                            final List<WptType> waypoint = trackSeg.getTrkpt();
+                            WptType oldWaypoint = waypoint.get(currentWaypoint);
                             newTrackSegment.getTrkpt().add(oldWaypoint);
                             currentWaypoint++;
                         }
