@@ -25,33 +25,41 @@ package gpxsplitter.model.builder;
 
 import gpxsplitter.model.GpxType;
 import gpxsplitter.model.RteType;
+import gpxsplitter.model.WptType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Builds Gpx Route files.
+ * @author Antonino Cucchiara
+ */
 public final class GpxRouteFileBuilder extends GpxFileBuilder {
 
     @Override
-    public List<GpxType> buildSplitGpx(GpxType inputGpx, int preferredInstrNum) {
+    public List<GpxType> buildSplitGpx(
+            final GpxType inputGpx, final int preferredInstrNum) {
         List<GpxType> outputGpxList = new ArrayList<>();
         List<RteType> inputRoutes = inputGpx.getRte();
         inputRoutes.stream().forEach((inputRoute) -> {
-            int outputFilesNum = howManyFiles(inputRoute.getRtept().size(), preferredInstrNum);
+            int waypointsNum = inputRoute.getRtept().size();
+            int outputFilesNum = howManyFiles(waypointsNum, preferredInstrNum);
 
             int currentWaypoint = 0;
 
             int currentFile = 1;
 
             while (currentFile <= outputFilesNum) {
-                GpxType newGpx = createGpxTemplate();
-                List<RteType> newRouteList = newGpx.getRte();
+                final GpxType newGpx = createGpxTemplate();
+                final List<RteType> newRouteList = newGpx.getRte();
 
                 int waypointsInRoute = inputRoute.getRtept().size();
                 if (waypointsInRoute <= preferredInstrNum) {
                     newRouteList.add(inputRoute);
                 } else {
-                    RteType newRoute = new RteType();
+                    final RteType newRoute = new RteType();
                     for (int i = 0; i < preferredInstrNum; i++) {
-                        newRoute.getRtept().add(inputRoute.getRtept().get(currentWaypoint));
+                        final List<WptType> waypoint = inputRoute.getRtept();
+                        newRoute.getRtept().add(waypoint.get(currentWaypoint));
                         currentWaypoint++;
                     }
                     newRouteList.add(newRoute);
