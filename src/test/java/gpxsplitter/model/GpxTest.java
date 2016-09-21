@@ -72,4 +72,41 @@ public class GpxTest {
             assertEquals(FileNotValidException.ERROR_MSG, ex.getMessage());
         }
     }
+
+    @Test
+    public void testGetVersion() {
+        GpxType gpx = new GpxType();
+        String actual = new Gpx(gpx).getVersion();
+        assertEquals("1.1", actual);
+    }
+
+    @Test
+    public void testGetUnderlying() {
+        GpxType expected = new GpxType();
+        GpxType actual = new Gpx(expected).getUnderlying();
+        assertSame(expected, actual);
+    }
+
+    @Test
+    public void testIsMultitrackNegative() {
+        GpxType gpx = new GpxType();
+        gpx.getTrk().add(new TrkType());
+        assertFalse(new Gpx(gpx).isMultitrack());
+    }
+
+    @Test
+    public void testIsMultitrackPositive() {
+        GpxType gpx = new GpxType();
+        gpx.getTrk().add(new TrkType());
+        gpx.getTrk().add(new TrkType());
+        assertTrue(new Gpx(gpx).isMultitrack());
+    }
+
+    @Test
+    public void testGetTracksNum() {
+        GpxType gpx = new GpxType();
+        gpx.getTrk().add(new TrkType());
+        gpx.getTrk().add(new TrkType());
+        assertEquals(2, new Gpx(gpx).getTracksNum());
+    }
 }
