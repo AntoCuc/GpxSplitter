@@ -23,12 +23,22 @@
  */
 package gpxsplitter.model.exception;
 
+/**
+ * Thrown when attempting to load a non-GPX file.
+ * @author Antonino Cucchiara
+ */
 public class FileNotValidException extends Exception {
-    
-    public static final String ERROR_MSG = "The file you are trying to load is not supported.";
 
-    public FileNotValidException()
-    {
+    /**
+     * The message thrown.
+     */
+    public static final String ERROR_MSG = "The file you are trying to load "
+            + "is not supported.";
+
+    /**
+     * Construct the exception with the constant message.
+     */
+    public FileNotValidException() {
         super(ERROR_MSG);
     }
 
