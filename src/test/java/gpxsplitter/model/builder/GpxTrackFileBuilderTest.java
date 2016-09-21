@@ -23,11 +23,10 @@
  */
 package gpxsplitter.model.builder;
 
-import gpxsplitter.model.builder.GpxTrackFileBuilder;
-import gpxsplitter.model.GpxType;
-import gpxsplitter.model.TrkType;
-import gpxsplitter.model.TrksegType;
-import gpxsplitter.model.WptType;
+import gpxsplitter.model.generated.GpxType;
+import gpxsplitter.model.generated.TrkType;
+import gpxsplitter.model.generated.TrksegType;
+import gpxsplitter.model.generated.WptType;
 import java.math.BigDecimal;
 import java.util.List;
 import org.junit.Test;
@@ -71,7 +70,7 @@ public class GpxTrackFileBuilderTest {
         assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().get(0).getTrkpt().get(0).getLat() == LAT1);
         assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().get(0).getTrkpt().get(0).getLon() == LONG1);
     }
-
+    
     @Test
     public void testBuildSplitGpxOneRouteTwoInstructionsOneFile() {
         GpxType gpx = new GpxType();
@@ -97,6 +96,26 @@ public class GpxTrackFileBuilderTest {
         assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().size() == 1);
         assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().get(0).getTrkpt().get(1).getLat() == LAT2);
         assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().get(0).getTrkpt().get(1).getLon() == LONG2);
+    }
+
+    @Test
+    public void testBuildSplitGpxOneRouteOneInstructionsOneFile() {
+        GpxType gpx = new GpxType();
+        TrksegType trackSegment = new TrksegType();
+        WptType waypoint1 = new WptType();
+        waypoint1.setLat(LAT1);
+        waypoint1.setLon(LONG1);
+        trackSegment.getTrkpt().add(waypoint1);
+        TrkType track = new TrkType();
+        track.getTrkseg().add(trackSegment);
+        gpx.getTrk().add(track);
+        List<GpxType> gpxFiles = fileBuilder.buildSplitGpx(gpx, 2);
+        assertTrue(gpxFiles.size() == 1);
+        assertTrue(gpxFiles.get(0).getTrk().size() == 1);
+        assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().size() == 1);
+        assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().get(0).getTrkpt().size() == 1);
+        assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().get(0).getTrkpt().get(0).getLat() == LAT1);
+        assertTrue(gpxFiles.get(0).getTrk().get(0).getTrkseg().get(0).getTrkpt().get(0).getLon() == LONG1);
     }
 
     @Test

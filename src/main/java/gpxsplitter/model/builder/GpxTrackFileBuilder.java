@@ -23,10 +23,10 @@
  */
 package gpxsplitter.model.builder;
 
-import gpxsplitter.model.GpxType;
-import gpxsplitter.model.TrkType;
-import gpxsplitter.model.TrksegType;
-import gpxsplitter.model.WptType;
+import gpxsplitter.model.generated.GpxType;
+import gpxsplitter.model.generated.TrkType;
+import gpxsplitter.model.generated.TrksegType;
+import gpxsplitter.model.generated.WptType;
 import java.util.ArrayList;
 import java.util.List;
 

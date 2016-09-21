@@ -23,9 +23,9 @@
  */
 package gpxsplitter.model.builder;
 
-import gpxsplitter.model.GpxType;
-import gpxsplitter.model.RteType;
-import gpxsplitter.model.WptType;
+import gpxsplitter.model.generated.GpxType;
+import gpxsplitter.model.generated.RteType;
+import gpxsplitter.model.generated.WptType;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -24,6 +24,10 @@
 package gpxsplitter.model;
 
 import gpxsplitter.model.exception.FileNotValidException;
+import gpxsplitter.model.generated.GpxType;
+import gpxsplitter.model.generated.RteType;
+import gpxsplitter.model.generated.TrkType;
+import gpxsplitter.model.generated.WptType;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

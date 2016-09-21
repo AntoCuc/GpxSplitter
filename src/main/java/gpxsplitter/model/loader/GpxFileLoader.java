@@ -24,7 +24,7 @@
 package gpxsplitter.model.loader;
 
 import gpxsplitter.model.Gpx;
-import gpxsplitter.model.GpxType;
+import gpxsplitter.model.generated.GpxType;
 import java.io.InputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;

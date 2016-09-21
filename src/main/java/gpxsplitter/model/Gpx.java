@@ -24,6 +24,7 @@
 package gpxsplitter.model;
 
 import gpxsplitter.model.exception.FileNotValidException;
+import gpxsplitter.model.generated.GpxType;
 
 /**
  * Wrapper class abstracting the GPX file.

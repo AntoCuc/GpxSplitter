@@ -23,7 +23,7 @@
  */
 package gpxsplitter.model.builder;
 
-import gpxsplitter.model.GpxType;
+import gpxsplitter.model.generated.GpxType;
 import gpxsplitter.view.View;
 import java.io.File;
 import java.util.List;

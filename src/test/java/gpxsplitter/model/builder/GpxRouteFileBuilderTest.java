@@ -23,10 +23,9 @@
  */
 package gpxsplitter.model.builder;
 
-import gpxsplitter.model.builder.GpxRouteFileBuilder;
-import gpxsplitter.model.GpxType;
-import gpxsplitter.model.RteType;
-import gpxsplitter.model.WptType;
+import gpxsplitter.model.generated.GpxType;
+import gpxsplitter.model.generated.RteType;
+import gpxsplitter.model.generated.WptType;
 import java.math.BigDecimal;
 import java.util.List;
 import org.junit.Test;
