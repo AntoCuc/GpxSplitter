@@ -31,13 +31,18 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-public class GpxFileLoader implements GpxLoader {
+/**
+ * Loads GPX files for splitting.
+ * @author Antonino Cucchiara
+ */
+public final class GpxFileLoader implements GpxLoader {
 
     @Override
-    public Gpx load(InputStream inputStream) throws JAXBException {
+    public Gpx load(final InputStream inputStream) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        JAXBElement<GpxType> gpxRoot = (JAXBElement<GpxType>) jaxbUnmarshaller.unmarshal(inputStream);
+        JAXBElement<GpxType> gpxRoot =
+                (JAXBElement<GpxType>) jaxbUnmarshaller.unmarshal(inputStream);
         return new Gpx(gpxRoot.getValue());
     }
 }
