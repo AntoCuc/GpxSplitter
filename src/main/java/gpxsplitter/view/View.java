@@ -229,10 +229,10 @@ public class View extends javax.swing.JFrame {
         return fileChooser.getSelectedFile();
     }
 
-    public final File saveGpxFile(File selectedFile) {
+    public final String saveGpxFile(String selectedFile) {
         JFileChooser fileChooser = buildGpxFileChooser();
-        fileChooser.setSelectedFile(selectedFile);
+        fileChooser.setSelectedFile(new File(selectedFile));
         fileChooser.showSaveDialog(this);
-        return fileChooser.getSelectedFile();
+        return fileChooser.getSelectedFile().getAbsolutePath();
     }
 }

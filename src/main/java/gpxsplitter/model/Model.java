@@ -88,15 +88,15 @@ public class Model {
 
     /**
      * Save the GPX resource.
-     * @param file to save
+     * @param filePath to save to
      * @param desiredInstrNum per file
      * @throws FileNotValidException if unable to un-bind
      * @throws JAXBException if faulty file format is detected
      */
-    public final void saveGpx(final File file, final int desiredInstrNum)
+    public final void saveGpx(final String filePath, final int desiredInstrNum)
             throws FileNotValidException, JAXBException {
         GpxFileBuilder gpxBuilder = getGpxBuilder();
-        gpxBuilder.build(file, getSourceGpx().getUnderlying(), desiredInstrNum);
+        gpxBuilder.build(filePath, getSourceGpx().getUnderlying(), desiredInstrNum);
     }
 
     /**

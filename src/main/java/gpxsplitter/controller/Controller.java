@@ -160,9 +160,9 @@ public final class Controller {
         }
         int instructionsNumber = Integer.parseInt(instructionsNumberFieldText);
         try {
-            final File selectedFile =
-                    new File("split-" + model.getSourceFile().getName());
-            final File saveFile = view.saveGpxFile(selectedFile);
+            final String selectedFileName = "split-"
+                    + model.getSourceFile().getName();
+            final String saveFilePath = view.saveGpxFile(selectedFileName);
             if (model.getSourceGpx() == null) {
                 view.showMessage("A GPX to split has to be selected");
                 return;
@@ -171,7 +171,7 @@ public final class Controller {
                     + instructionsNumber
                     + "\n Gpx Type: "
                     + model.getSourceGpx().getDescriptor());
-            model.saveGpx(saveFile, instructionsNumber);
+            model.saveGpx(saveFilePath, instructionsNumber);
             view.showMessage("Split GPX successfully saved.");
         } catch (JAXBException | FileNotValidException e) {
             view.showMessage("Problem whilst saving the file."

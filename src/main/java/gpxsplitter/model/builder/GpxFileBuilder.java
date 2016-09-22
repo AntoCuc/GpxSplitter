@@ -54,20 +54,19 @@ public abstract class GpxFileBuilder {
      * This method will build a set of GPX files given the file name, number of
      * GPX instructions per file and the number of files to be built.
      *
-     * @param file to write to
+     * @param filePath to write to
      * @param gpx binding object
      * @param preferedInstrNum for each file
      * @throws JAXBException if cannot bind file
      */
-    public final void build(final File file, final GpxType gpx,
+    public final void build(final String filePath, final GpxType gpx,
             final int preferedInstrNum) throws JAXBException {
         int fileNum = 1;
         List<GpxType> newGpxList = buildSplitGpx(gpx, preferedInstrNum);
         for (GpxType newGpx : newGpxList) {
-            String oldFileName = file.getAbsolutePath();
-            String seedFileName = stripExtension(oldFileName, GPX_EXTENSION);
-            String newName = seedFileName + "-" + fileNum + GPX_EXTENSION;
-            saveFile(newName, newGpx);
+            String seedFilePath = stripExtension(filePath, GPX_EXTENSION);
+            String newFilePath = seedFilePath + "-" + fileNum + GPX_EXTENSION;
+            saveFile(newFilePath, newGpx);
             fileNum++;
         }
     }
