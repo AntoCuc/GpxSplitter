@@ -33,7 +33,7 @@ import javax.xml.bind.JAXBException;
  */
 public interface GpxLoader {
     /**
-     * Load content from an Input Stream and populate a Gpx Model.
+     * Load content from an Input Stream and populate and bind to a GPX.
      * @param inputStream to be bound to the domain
      * @return the populated model object
      * @throws JAXBException thrown if in error

@@ -29,11 +29,11 @@ package gpxsplitter.model;
  */
 public enum GpxDescriptor {
     /**
-     * Used to define GPX containing route waypoints.
+     * Used to define a GPX containing route waypoints.
      */
     Route,
     /**
-     * Used to define GPX containing track segments and waypoints.
+     * Used to define a GPX containing track segments and waypoints.
      */
     Track;
 }

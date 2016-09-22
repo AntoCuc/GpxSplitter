@@ -65,7 +65,7 @@ public final class GpxRouteFileBuilder extends GpxFileBuilder {
                     newRouteList.add(newRoute);
                 }
                 outputGpxList.add(newGpx);
-                currentFile++; // Proceed to next file
+                currentFile++;
             }
         });
         return outputGpxList;

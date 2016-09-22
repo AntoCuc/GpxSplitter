@@ -40,11 +40,11 @@ import javax.xml.bind.JAXBException;
  * @author Antonino Cucchiara
  */
 public final class Controller {
-    
+
     /**
-     * Logger facility
+     * Logger facility.
      */
-    private static final Logger LOGGER = 
+    private static final Logger LOGGER =
             Logger.getLogger(Controller.class.getName());
 
     /**
@@ -195,7 +195,7 @@ public final class Controller {
     }
 
     /**
-     * Initialise GpxSplitter.
+     * Initialise the GpxSplitter UI.
      */
     public void initialise() {
         this.view.setVisible(true);

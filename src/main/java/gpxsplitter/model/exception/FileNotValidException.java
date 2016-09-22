@@ -33,7 +33,7 @@ public class FileNotValidException extends Exception {
      * The message thrown.
      */
     public static final String ERROR_MSG = "The file you are trying to load "
-            + "is not supported.";
+            + "is not supported. Are you trying to load a GPX 1.1?";
 
     /**
      * Construct the exception with the constant message.

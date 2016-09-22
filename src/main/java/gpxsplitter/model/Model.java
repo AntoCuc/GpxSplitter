@@ -53,7 +53,7 @@ public class Model {
      * Load and Cache a GPX file.
      * @param gpxFile to load
      * @throws JAXBException if unable to load
-     * @throws FileNotFoundException if unable to read the file path
+     * @throws FileNotFoundException if the file path is not valid
      * @throws FileNotValidException if not a GPX file
      * @throws IOException if no rights to read the file
      */
@@ -96,7 +96,8 @@ public class Model {
     public final void saveGpx(final String filePath, final int desiredInstrNum)
             throws FileNotValidException, JAXBException {
         GpxFileBuilder gpxBuilder = getGpxBuilder();
-        gpxBuilder.build(filePath, getSourceGpx().getUnderlying(), desiredInstrNum);
+        gpxBuilder.build(filePath,
+                getSourceGpx().getUnderlying(), desiredInstrNum);
     }
 
     /**

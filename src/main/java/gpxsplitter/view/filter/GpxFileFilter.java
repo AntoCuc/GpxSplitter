@@ -33,7 +33,7 @@ import javax.swing.filechooser.FileFilter;
  */
 public final class GpxFileFilter extends FileFilter {
     /**
-     * Readable acceptable files description.
+     * Acceptable files description.
      */
     static final String GPX_FILE_DESCRIPTION = "Gpx files (*.gpx)";
 

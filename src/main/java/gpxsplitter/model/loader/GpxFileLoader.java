@@ -32,7 +32,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 /**
- * Loads GPX files for splitting.
+ * Loads GPX file to split.
  * @author Antonino Cucchiara
  */
 public final class GpxFileLoader implements GpxLoader {

@@ -99,7 +99,7 @@ public abstract class GpxFileBuilder {
     /**
      * This method is to be overriden in Unit tests.
      *
-     * @param file to save
+     * @param fileName to use for the new GPX files
      * @param newGpxDocument is the document to write to the file
      * @throws JAXBException if cannot write
      */
@@ -109,8 +109,8 @@ public abstract class GpxFileBuilder {
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         QName rootNode = new QName("ns2:gpx");
-        JAXBElement jaxbElement =
-                new JAXBElement(rootNode, GpxType.class, newGpxDocument);
+        JAXBElement jaxbElement
+                = new JAXBElement(rootNode, GpxType.class, newGpxDocument);
         jaxbMarshaller.marshal(jaxbElement, new File(fileName));
     }
 
@@ -131,7 +131,7 @@ public abstract class GpxFileBuilder {
 
     /**
      * This method calculates how many files have to be created when splitting
-     * the GPX to the wanted number of instructions.
+     * the GPX to the wished number of instructions.
      *
      * @param currNumOfInstr in each GPX file
      * @param desiredNumOfInstr each file should contain
