@@ -4,11 +4,11 @@ Gpx Splitter
 Split GPX files too large to fit in GPS handheld devices into multiple files 
 that do.
 
-This software is meant to be used to generate files to be used on Handheld GPS 
-devices used for hicking, trakking and mountain/road biking.
+This software is meant to be used to generate files to be inported on Handheld 
+GPS devices used for hicking, trekking and mountain/road biking.
 
 GPS handheld devices have historically had limited features to minimise power 
-consumption as some are powered with consumer grade cells.
+consumption as some are powered with consumer-grade cells.
 More recent GPS devices have better-performing built-in rechargeable cells. 
 However, feature sets are still limited.
 
@@ -20,7 +20,7 @@ Audax routes.
 As the milage I could ride went up the amount of waypoints in the routes also 
 grew.
 The eTrex Legend has a limit of 125 waypoints per route file so I needed to 
-start "splitting" Gpx long files.
+start "splitting" Gpx files to long to be imported.
 That is when development of GPX Splitter started.
 
 Release Notes
@@ -46,6 +46,7 @@ Release Notes
    - Migrated from JDOM to JaxB
    - Added checkstyle rules
    - Added Unit test coverage checks
+   - Added manifest (Maven build)
 
 Monthly updates
 ---------------
@@ -70,7 +71,7 @@ To build the software:
  - Apache Maven 3.3 or greater
  
 To run the software:
- - Oracle Java Runtime 8 or greater
+ - Oracle/Open Java Runtime 8 or greater
 
 ### Building the code ###
 
