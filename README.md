@@ -26,12 +26,12 @@ That is when development of GPX Splitter started.
 Release Notes
 -------------
 
-0.1 ()
+0.1 (16/06/2011)
 
  - First release
  - Basic splitting support for routes and tracks
 
-0.2 ()
+0.2 (23/06/2011)
 
  - Addressed issues with speed when splitting large GPX files
  - Introduced manual support for splitting of multi-segment track files
