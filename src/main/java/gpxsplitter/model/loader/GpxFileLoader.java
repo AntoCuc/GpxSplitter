@@ -23,7 +23,6 @@
  */
 package gpxsplitter.model.loader;
 
-import gpxsplitter.model.Gpx;
 import gpxsplitter.model.generated.GpxType;
 import java.io.InputStream;
 import javax.xml.bind.JAXBContext;
@@ -33,16 +32,23 @@ import javax.xml.bind.Unmarshaller;
 
 /**
  * Loads GPX file to split.
+ *
  * @author Antonino Cucchiara
  */
-public final class GpxFileLoader implements GpxLoader {
+public final class GpxFileLoader {
 
-    @Override
-    public Gpx load(final InputStream inputStream) throws JAXBException {
+    /**
+     * Load content from an Input Stream and populate and bind to a GPX.
+     *
+     * @param input to be bound to the domain
+     * @return the populated model object
+     * @throws JAXBException thrown if in error
+     */
+    public GpxType load(final InputStream input) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        JAXBElement<GpxType> gpxRoot =
-                (JAXBElement<GpxType>) jaxbUnmarshaller.unmarshal(inputStream);
-        return new Gpx(gpxRoot.getValue());
+        JAXBElement<GpxType> gpxRoot
+                = (JAXBElement<GpxType>) jaxbUnmarshaller.unmarshal(input);
+        return gpxRoot.getValue();
     }
 }

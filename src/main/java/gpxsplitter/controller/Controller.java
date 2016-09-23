@@ -92,14 +92,14 @@ public final class Controller {
 
             @Override
             public void mousePressed(final MouseEvent e) {
-                Controller.this.loadGpxFile();
+                Controller.this.loadFile();
             }
         });
         this.view.getSaveFileButton().addMouseListener(new MouseAdapter() {
 
             @Override
             public void mousePressed(final MouseEvent e) {
-                Controller.this.saveGpxFile();
+                Controller.this.saveFile();
             }
         });
         this.view.getExitMenuItem().addMouseListener(new MouseAdapter() {
@@ -128,7 +128,7 @@ public final class Controller {
     /**
      * Coordinate the loading of a Gpx file.
      */
-    private void loadGpxFile() {
+    private void loadFile() {
         try {
             final String loadFilePath = view.openGpxFile();
             if (loadFilePath != null) {
@@ -136,7 +136,6 @@ public final class Controller {
                     model.loadGpxFile(loadFilePath);
                     view.setOpenFileField(loadFilePath);
                     String loadedFileDescription = "Gpx "
-                            + model.getSourceGpx().getDescriptor()
                             + " version " + model.getSourceGpx().getVersion();
                     view.setFileTypeValue(loadedFileDescription);
                 } catch (IOException ex) {
@@ -157,10 +156,10 @@ public final class Controller {
     /**
      * Coordinate the saving of a Gpx file.
      */
-    private void saveGpxFile() {
+    private void saveFile() {
         String instructionsNumberFieldText
                 = view.getInstructionsNumberFieldText();
-        if (!isValidInteger(instructionsNumberFieldText)) {
+        if (!model.isValidInteger(instructionsNumberFieldText)) {
             view.showMessage("Instructions number not valid");
             return;
         }
@@ -174,9 +173,7 @@ public final class Controller {
                 return;
             }
             view.showMessage("Saving Gpx file(s) \n Instructions number: "
-                    + waypointsNumber
-                    + "\n Gpx Type: "
-                    + model.getSourceGpx().getDescriptor());
+                    + waypointsNumber);
             List<GpxType> gpx = model.splitGpx(saveFilePath, waypointsNumber);
             int fileNum = 1;
             for (GpxType newGpx : gpx) {
@@ -191,21 +188,6 @@ public final class Controller {
             view.showMessage("Problem whilst saving the file."
                     + View.LINE_SEPARATOR
                     + "Do you have the rights to write to that location?");
-        }
-    }
-
-    /**
-     * Determines whether the string can be parsed as an integer.
-     *
-     * @param input the unsecured input
-     * @return true if the input is an integer
-     */
-    private boolean isValidInteger(final String input) {
-        try {
-            Integer.parseInt(input);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
         }
     }
 

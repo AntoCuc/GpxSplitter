@@ -41,36 +41,6 @@ public class GpxFileBuilderTest {
     }
 
     @Test
-    public void testStripGpxExtension() {
-        String fileName = "abc.gpx";
-        String extension = ".gpx";
-        GpxFileBuilder instance = new GpxFileBuilderImpl();
-        String expResult = "abc";
-        String result = instance.stripExtension(fileName, extension);
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testStripExtensionNoExtension() {
-        String fileName = "abc";
-        String extension = ".gpx";
-        GpxFileBuilder instance = new GpxFileBuilderImpl();
-        String expResult = "abc";
-        String result = instance.stripExtension(fileName, extension);
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testStripExtensionDifferentExtension() {
-        String fileName = "abc.txt";
-        String extension = ".gpx";
-        GpxFileBuilder instance = new GpxFileBuilderImpl();
-        String expResult = "abc.txt";
-        String result = instance.stripExtension(fileName, extension);
-        assertEquals(expResult, result);
-    }
-
-    @Test
     public void testHowManyFilesOneFileNoInstructions() {
         int currNumOfInstr = 0;
         int desiredNumOfInstr = 1;
@@ -148,12 +118,6 @@ public class GpxFileBuilderTest {
         int expResult = 0;
         int result = instance.howManyFiles(currNumOfInstr, desiredNumOfInstr);
         assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testBuild() throws Exception {
-        GpxFileBuilder instance = new GpxFileBuilderImpl();
-        instance.build("", new GpxType(), 1);
     }
 
     public class GpxFileBuilderImpl extends GpxFileBuilder {

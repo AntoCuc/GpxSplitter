@@ -26,7 +26,6 @@ package gpxsplitter.model.builder;
 import gpxsplitter.model.generated.GpxType;
 import gpxsplitter.view.View;
 import java.util.List;
-import javax.xml.bind.JAXBException;
 
 /**
  * Builds Gpx files given a binding object.
@@ -44,22 +43,6 @@ public abstract class GpxFileBuilder {
      * The supported GPX file version.
      */
     static final String GPX_VERSION = "1.1";
-
-    /**
-     * This method will build a set of GPX files given the file name, number of
-     * GPX instructions per file and the number of files to be built.
-     *
-     * @param filePath to write to
-     * @param gpx binding object
-     * @param preferedInstrNum for each file
-     * @return the list of gpx files
-     * @throws JAXBException if cannot bind file
-     */
-    public final List<GpxType> build(final String filePath, final GpxType gpx,
-            final int preferedInstrNum) throws JAXBException {
-        List<GpxType> newGpxList = buildSplitGpx(gpx, preferedInstrNum);
-        return newGpxList;
-    }
 
     /**
      * The method build split gpx uses the gpx document loaded and the preferred
@@ -84,21 +67,6 @@ public abstract class GpxFileBuilder {
         newGpx.setVersion(GPX_VERSION);
         newGpx.setCreator(View.GPX_SPLITTER);
         return newGpx;
-    }
-
-    /**
-     * This method cleans the filename of the extension if it is there.
-     *
-     * @param name of the file
-     * @param extension to strip
-     * @return the filename stripped of the extension
-     */
-    final String stripExtension(final String name, final String extension) {
-        if (name.endsWith(extension)) {
-            return name.substring(0, (name.length() - extension.length()));
-        } else {
-            return name;
-        }
     }
 
     /**

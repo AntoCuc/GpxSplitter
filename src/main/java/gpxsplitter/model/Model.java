@@ -54,7 +54,7 @@ public class Model {
     /**
      * The bound GPX content.
      */
-    private Gpx sourceGpx;
+    private GpxType sourceGpx;
 
     /**
      * Load and Cache a GPX file.
@@ -81,9 +81,10 @@ public class Model {
      */
     final GpxFileBuilder getGpxBuilder() throws FileNotValidException {
         GpxFileBuilder gpxBuilder = null;
-        if (sourceGpx.getDescriptor() == GpxDescriptor.Track) {
+        final GpxDescriptor gpxDescriptor = getDescriptor(sourceGpx);
+        if (gpxDescriptor == GpxDescriptor.Track) {
             gpxBuilder = new GpxTrackFileBuilder();
-        } else if (sourceGpx.getDescriptor() == GpxDescriptor.Route) {
+        } else if (gpxDescriptor == GpxDescriptor.Route) {
             gpxBuilder = new GpxRouteFileBuilder();
         }
         return gpxBuilder;
@@ -102,8 +103,7 @@ public class Model {
             final int desiredInstrNum)
             throws FileNotValidException, JAXBException {
         final GpxFileBuilder gpxBuilder = getGpxBuilder();
-        return gpxBuilder.build(filePath,
-                getSourceGpx().getUnderlying(), desiredInstrNum);
+        return gpxBuilder.buildSplitGpx(sourceGpx, desiredInstrNum);
     }
 
     /**
@@ -113,14 +113,14 @@ public class Model {
      * @param newGpxDocument is the document to write to the file
      * @throws JAXBException if cannot write
      */
-    public void saveGpx(final OutputStream outputStream,
+    public final void saveGpx(final OutputStream outputStream,
             final GpxType newGpxDocument)
             throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
-        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        final JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
+        final Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        QName rootNode = new QName("ns2:gpx");
-        JAXBElement jaxbElement
+        final QName rootNode = new QName("ns2:gpx");
+        final JAXBElement jaxbElement
                 = new JAXBElement(rootNode, GpxType.class, newGpxDocument);
         jaxbMarshaller.marshal(jaxbElement, outputStream);
     }
@@ -131,7 +131,7 @@ public class Model {
      * @return the source file name
      */
     public final String getSourceFilePath() {
-        return sourceFilePath;
+        return stripExtension(sourceFilePath, GpxFileBuilder.GPX_EXTENSION);
     }
 
     /**
@@ -139,8 +139,56 @@ public class Model {
      *
      * @return the Gpx
      */
-    public final Gpx getSourceGpx() {
+    public final GpxType getSourceGpx() {
         return sourceGpx;
     }
 
+    /**
+     * Evaluate the Gpx loaded and return its descriptor.
+     *
+     * @param gpxType to evaluate
+     * @return the GpxDescriptor
+     * @throws FileNotValidException in the event a file is not supported
+     */
+    public final GpxDescriptor getDescriptor(final GpxType gpxType)
+            throws FileNotValidException {
+        if (gpxType.getTrk().size() > 0) {
+            return GpxDescriptor.Track;
+        } else if (gpxType.getRte().size() > 0) {
+            return GpxDescriptor.Route;
+        } else {
+            throw new FileNotValidException();
+        }
+    }
+
+    /**
+     * Determines whether the string can be parsed as an integer.
+     *
+     * @param input the unsecured input
+     * @return true if the input is an integer
+     */
+    public final boolean isValidInteger(final String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * This method cleans the filename of the extension if it is there.
+     *
+     * @param name of the file
+     * @param extension to strip
+     * @return the filename stripped of the extension
+     */
+    public final String stripExtension(final String name,
+            final String extension) {
+        if (name.endsWith(extension)) {
+            return name.substring(0, (name.length() - extension.length()));
+        } else {
+            return name;
+        }
+    }
 }
