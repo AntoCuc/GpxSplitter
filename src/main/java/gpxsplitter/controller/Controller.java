@@ -26,9 +26,14 @@ package gpxsplitter.controller;
 import gpxsplitter.view.View;
 import gpxsplitter.model.exception.FileNotValidException;
 import gpxsplitter.model.Model;
+import static gpxsplitter.model.builder.GpxFileBuilder.GPX_EXTENSION;
+import gpxsplitter.model.generated.GpxType;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
@@ -43,8 +48,8 @@ public final class Controller {
     /**
      * Logger facility.
      */
-    private static final Logger LOGGER =
-            Logger.getLogger(Controller.class.getName());
+    private static final Logger LOGGER
+            = Logger.getLogger(Controller.class.getName());
 
     /**
      * The GpxSplitter model.
@@ -57,6 +62,7 @@ public final class Controller {
 
     /**
      * GpxSplitter bootstrapping method.
+     *
      * @param args GpcSplitter arguments
      */
     public static void main(final String[] args) {
@@ -74,6 +80,7 @@ public final class Controller {
 
     /**
      * Initialise the Controller with references to the model and view.
+     *
      * @param newModel GpxSplitter Business Logic
      * @param newView GpxSplitter Frontend
      */
@@ -151,13 +158,13 @@ public final class Controller {
      * Coordinate the saving of a Gpx file.
      */
     private void saveGpxFile() {
-        String instructionsNumberFieldText =
-                view.getInstructionsNumberFieldText();
+        String instructionsNumberFieldText
+                = view.getInstructionsNumberFieldText();
         if (!isValidInteger(instructionsNumberFieldText)) {
             view.showMessage("Instructions number not valid");
             return;
         }
-        int instructionsNumber = Integer.parseInt(instructionsNumberFieldText);
+        int waypointsNumber = Integer.parseInt(instructionsNumberFieldText);
         try {
             final String selectedFileName = "split-"
                     + model.getSourceFilePath();
@@ -167,12 +174,20 @@ public final class Controller {
                 return;
             }
             view.showMessage("Saving Gpx file(s) \n Instructions number: "
-                    + instructionsNumber
+                    + waypointsNumber
                     + "\n Gpx Type: "
                     + model.getSourceGpx().getDescriptor());
-            model.saveGpx(saveFilePath, instructionsNumber);
+            List<GpxType> gpx = model.splitGpx(saveFilePath, waypointsNumber);
+            int fileNum = 1;
+            for (GpxType newGpx : gpx) {
+                String newFilePath = saveFilePath + "-"
+                        + fileNum + GPX_EXTENSION;
+                model.saveGpx(new FileOutputStream(newFilePath), newGpx);
+                fileNum++;
+            }
             view.showMessage("Split GPX successfully saved.");
-        } catch (JAXBException | FileNotValidException e) {
+        } catch (JAXBException
+                | FileNotValidException | FileNotFoundException e) {
             view.showMessage("Problem whilst saving the file."
                     + View.LINE_SEPARATOR
                     + "Do you have the rights to write to that location?");
@@ -181,6 +196,7 @@ public final class Controller {
 
     /**
      * Determines whether the string can be parsed as an integer.
+     *
      * @param input the unsecured input
      * @return true if the input is an integer
      */

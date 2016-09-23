@@ -27,11 +27,18 @@ import gpxsplitter.model.exception.FileNotValidException;
 import gpxsplitter.model.builder.GpxFileBuilder;
 import gpxsplitter.model.builder.GpxRouteFileBuilder;
 import gpxsplitter.model.builder.GpxTrackFileBuilder;
+import gpxsplitter.model.generated.GpxType;
 import gpxsplitter.model.loader.GpxFileLoader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
 
 /**
  * Encapsulates GpxSplitter business logic.
@@ -87,14 +94,35 @@ public class Model {
      *
      * @param filePath to save to
      * @param desiredInstrNum per file
+     * @return the list of bound GPX
      * @throws FileNotValidException if unable to un-bind
      * @throws JAXBException if faulty file format is detected
      */
-    public final void saveGpx(final String filePath, final int desiredInstrNum)
+    public final List<GpxType> splitGpx(final String filePath,
+            final int desiredInstrNum)
             throws FileNotValidException, JAXBException {
-        GpxFileBuilder gpxBuilder = getGpxBuilder();
-        gpxBuilder.build(filePath,
+        final GpxFileBuilder gpxBuilder = getGpxBuilder();
+        return gpxBuilder.build(filePath,
                 getSourceGpx().getUnderlying(), desiredInstrNum);
+    }
+
+    /**
+     * This method is to be overriden in Unit tests.
+     *
+     * @param outputStream to use for the new GPX files
+     * @param newGpxDocument is the document to write to the file
+     * @throws JAXBException if cannot write
+     */
+    public void saveGpx(final OutputStream outputStream,
+            final GpxType newGpxDocument)
+            throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        QName rootNode = new QName("ns2:gpx");
+        JAXBElement jaxbElement
+                = new JAXBElement(rootNode, GpxType.class, newGpxDocument);
+        jaxbMarshaller.marshal(jaxbElement, outputStream);
     }
 
     /**
