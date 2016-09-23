@@ -55,8 +55,12 @@
                 <version>0.7.7.201606060606</version>
                 <configuration>
                     <excludes>
+                        <!-- JAXB generated classes are "trusted" -->
                         <exclude>gpxsplitter/model/generated/*.class</exclude>
+                        <!-- Matisse generated classes are "trusted" -->
                         <exclude>gpxsplitter/view/View.class</exclude>
+                        <!-- The controller contains no business logic -->
+                        <exclude>gpxsplitter/controller/Controller.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -72,20 +76,51 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>jacoco-check</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule implementation="org.jacoco.maven.RuleConfiguration">
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit implementation="org.jacoco.report.check.Limit">
+                                            <counter>INSTRUCTION</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.8</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
-        </plugins>
-    </build>
-    <reporting>
-        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.17</version>
                 <configuration>
-                    <configLocation>config/sun_checks.xml</configLocation>
+                    <!-- Matisse generated classes are "trusted" -->
+                    <excludes>**/gpxsplitter/view/View.java</excludes>
+                    <configLocation>src/test/resources/gpxsplitter_checks.xml</configLocation>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>checkstyle</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <failOnViolation>true</failOnViolation>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
-    </reporting>
+    </build>
 </project>
