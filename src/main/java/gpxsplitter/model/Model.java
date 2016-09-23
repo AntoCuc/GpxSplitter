@@ -28,7 +28,6 @@ import gpxsplitter.model.builder.GpxFileBuilder;
 import gpxsplitter.model.builder.GpxRouteFileBuilder;
 import gpxsplitter.model.builder.GpxTrackFileBuilder;
 import gpxsplitter.model.loader.GpxFileLoader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,14 +35,15 @@ import javax.xml.bind.JAXBException;
 
 /**
  * Encapsulates GpxSplitter business logic.
+ *
  * @author Antonino Cucchiara
  */
 public class Model {
 
     /**
-     * The file used to source GPX content.
+     * File path used to source GPX content.
      */
-    private File sourceFile;
+    private String sourceFilePath;
     /**
      * The bound GPX content.
      */
@@ -51,43 +51,40 @@ public class Model {
 
     /**
      * Load and Cache a GPX file.
-     * @param gpxFile to load
+     *
+     * @param gpxFileName to load
      * @throws JAXBException if unable to load
      * @throws FileNotFoundException if the file path is not valid
      * @throws FileNotValidException if not a GPX file
      * @throws IOException if no rights to read the file
      */
-    public final void loadGpxFile(final File gpxFile)
+    public final void loadGpxFile(final String gpxFileName)
             throws JAXBException, FileNotFoundException,
             FileNotValidException, IOException {
-        this.sourceFile = gpxFile;
+        this.sourceFilePath = gpxFileName;
         final GpxFileLoader gpxLoader = new GpxFileLoader();
-        this.sourceGpx = gpxLoader.load(new FileInputStream(gpxFile));
+        this.sourceGpx = gpxLoader.load(new FileInputStream(gpxFileName));
     }
 
     /**
      * Assign a GPX builder based on the GPX descriptor.
+     *
      * @return the appropriate file builder
      * @throws FileNotValidException if unable to parse
      */
     final GpxFileBuilder getGpxBuilder() throws FileNotValidException {
-        GpxFileBuilder gpxBuilder;
-
-        switch (sourceGpx.getDescriptor()) {
-            case Track:
-                gpxBuilder = new GpxTrackFileBuilder();
-                break;
-            case Route:
-                gpxBuilder = new GpxRouteFileBuilder();
-                break;
-            default:
-                throw new FileNotValidException();
+        GpxFileBuilder gpxBuilder = null;
+        if (sourceGpx.getDescriptor() == GpxDescriptor.Track) {
+            gpxBuilder = new GpxTrackFileBuilder();
+        } else if (sourceGpx.getDescriptor() == GpxDescriptor.Route) {
+            gpxBuilder = new GpxRouteFileBuilder();
         }
         return gpxBuilder;
     }
 
     /**
      * Save the GPX resource.
+     *
      * @param filePath to save to
      * @param desiredInstrNum per file
      * @throws FileNotValidException if unable to un-bind
@@ -102,14 +99,16 @@ public class Model {
 
     /**
      * Provides the source file.
-     * @return the source file
+     *
+     * @return the source file name
      */
-    public final File getSourceFile() {
-        return sourceFile;
+    public final String getSourceFilePath() {
+        return sourceFilePath;
     }
 
     /**
      * Provides the source bound GPX.
+     *
      * @return the Gpx
      */
     public final Gpx getSourceGpx() {

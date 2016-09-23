@@ -28,7 +28,6 @@ import gpxsplitter.model.exception.FileNotValidException;
 import gpxsplitter.model.Model;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -124,11 +123,11 @@ public final class Controller {
      */
     private void loadGpxFile() {
         try {
-            File selectedFile = view.openGpxFile();
-            if (selectedFile != null) {
+            final String loadFilePath = view.openGpxFile();
+            if (loadFilePath != null) {
                 try {
-                    model.loadGpxFile(selectedFile);
-                    view.setOpenFileField(selectedFile.getAbsolutePath());
+                    model.loadGpxFile(loadFilePath);
+                    view.setOpenFileField(loadFilePath);
                     String loadedFileDescription = "Gpx "
                             + model.getSourceGpx().getDescriptor()
                             + " version " + model.getSourceGpx().getVersion();
@@ -161,7 +160,7 @@ public final class Controller {
         int instructionsNumber = Integer.parseInt(instructionsNumberFieldText);
         try {
             final String selectedFileName = "split-"
-                    + model.getSourceFile().getName();
+                    + model.getSourceFilePath();
             final String saveFilePath = view.saveGpxFile(selectedFileName);
             if (model.getSourceGpx() == null) {
                 view.showMessage("A GPX to split has to be selected");

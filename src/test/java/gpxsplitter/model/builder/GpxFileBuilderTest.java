@@ -25,7 +25,9 @@ package gpxsplitter.model.builder;
 
 import gpxsplitter.view.View;
 import gpxsplitter.model.generated.GpxType;
+import java.util.Arrays;
 import java.util.List;
+import javax.xml.bind.JAXBException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -149,12 +151,23 @@ public class GpxFileBuilderTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    public void testBuild() throws Exception {
+        GpxFileBuilder instance = new GpxFileBuilderImpl();
+        instance.build("", new GpxType(), 1);
+    }
+
     public class GpxFileBuilderImpl extends GpxFileBuilder {
 
         @Override
         public List<GpxType> buildSplitGpx(GpxType gpx, int preferredInstrNum) {
-            return null;
+            return Arrays.asList(new GpxType());
+        }
+
+        @Override
+        void saveFile(final String fileName, final GpxType newGpxDocument)
+                throws JAXBException {
+
         }
     }
-
 }

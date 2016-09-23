@@ -103,7 +103,7 @@ public abstract class GpxFileBuilder {
      * @param newGpxDocument is the document to write to the file
      * @throws JAXBException if cannot write
      */
-    final void saveFile(final String fileName, final GpxType newGpxDocument)
+    void saveFile(final String fileName, final GpxType newGpxDocument)
             throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
