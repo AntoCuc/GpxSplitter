@@ -95,6 +95,11 @@ The master branch of the Gpx Splitter is a set of code in its most mature state.
 
 [![Build Status](https://travis-ci.org/AntoCuc/GpxSplitter.svg)](https://travis-ci.org/AntoCuc/GpxSplitter)
 
+What does the "Build Passing" mean:
+
+ - The code complies with Sun Microsystems' style checks (only exception is EOL)
+ - At least 80% of the code's business logic is unit tested
+
 License
 -------
 
