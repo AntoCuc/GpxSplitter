@@ -1,24 +1,64 @@
 Gpx Splitter
 ============
 
-Split GPX files too large to fit in GPS handheld devices into multiple files that do.
+Split GPX files too large to fit in GPS handheld devices into multiple files 
+that do.
 
-This software is meant to be used to generate files to be used on Handheld GPS devices used for hicking, trakking and mountain/road biking.
+This software is meant to be used to generate files to be used on Handheld GPS 
+devices used for hicking, trakking and mountain/road biking.
 
-GPS handheld devices have historically had limited features so to minimise power consumption as some of them are powered with consumer grade cells.
-Some of the more recent GPS devices have better-performing built-in rechargeable cells. However, their feature sets are still limited.
+GPS handheld devices have historically had limited features to minimise power 
+consumption as some are powered with consumer grade cells.
+More recent GPS devices have better-performing built-in rechargeable cells. 
+However, feature sets are still limited.
 
 Why split Gpx files
 -------------------
 
-In 2011 I purchased a Garmin Etrex Legend for road bike training and to load Audax routes.
-As the milage I could ride went up the amount of waypoints in the routes also grew.
-The eTrex Legend has a limit of 125 waypoints per route file so soon I needed to start "splitting" Gpx long files.
+In 2011 I purchased a Garmin Etrex Legend for road bike training and to load 
+Audax routes.
+As the milage I could ride went up the amount of waypoints in the routes also 
+grew.
+The eTrex Legend has a limit of 125 waypoints per route file so I needed to 
+start "splitting" Gpx long files.
+That is when development of GPX Splitter started.
+
+Release Notes
+-------------
+
+0.1 ()
+
+ - First release
+ - Basic splitting support for routes and tracks
+
+0.2 ()
+
+ - Addressed issues with speed when splitting large GPX files
+ - Introduced manual support for splitting of multi-segment track files
+
+0.3(30/09/2016)
+
+ - Dropped the facility to convert routes to tracks and viceversa
+ - Further addressed performance issues
+ - Automated support for splitting of multi-segment track files
+ - Technical
+   - Migrated from Ant to Maven
+   - Migrated from JDOM to JaxB
+   - Added checkstyle rules
+   - Added Unit test coverage checks
+
+Monthly updates
+---------------
+
+If no features are developed a monthly review of dependencies and plugins is 
+performed.
 
 Issues
 ------
 
-Have you found a problem with the software? [Please let me know](https://github.com/AntoCuc/GpxSplitter/issues). I will get it fixed as soon as I can.
+Have you found a problem with the software? 
+[Please let us know](https://github.com/AntoCuc/GpxSplitter/issues).
+We will fix it ASAP.
 
 Getting started (technical)
 ---------------------------
@@ -34,13 +74,17 @@ To run the software:
 
 ### Building the code ###
 
-After cloning the github repository building the GpxSplitter source consists of moving to the clone directory and running the Apache Maven goal "install".
-The "install" goal will generate a "target" directory containing the GpxSplitter JAR file.
+After cloning the github repository building the GpxSplitter source consists of
+moving to the clone directory and running the Apache Maven goal "install".
+The "install" goal will generate a "target" directory containing the GpxSplitter
+JAR file.
 
 ### Running the software ###
 
-On Microsoft Windows the GpxSplitter<version>.jar file can be double-clicked to run the software.
-On Linux and Mac running the command "java -jar GpxSplitter<version>.jar" will run the software.
+On Microsoft Windows the GpxSplitter<version>.jar file can be double-clicked to 
+run the software.
+On Linux and Mac running the command "java -jar GpxSplitter<version>.jar" will 
+run the software.
 
 Software Builds
 ---------------
@@ -53,7 +97,9 @@ The master branch of the Gpx Splitter is a set of code in its most mature state.
 
 License
 -------
-The Gpx Splitter software is free and released under The MIT License. Details below.
+
+The Gpx Splitter software is free and released under The MIT License. 
+Details below.
 
 The MIT License 
 
