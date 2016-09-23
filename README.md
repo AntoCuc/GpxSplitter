@@ -47,6 +47,7 @@ Release Notes
    - Added checkstyle rules
    - Added Unit test coverage checks
    - Added manifest (Maven build)
+   - Added Windows executable goal (Maven build)
 
 Monthly updates
 ---------------
@@ -82,8 +83,11 @@ JAR file.
 
 ### Running the software ###
 
-On Microsoft Windows the GpxSplitter<version>.jar file can be double-clicked to 
-run the software.
+On Microsoft Windows (Required Java 8)
+
+ - Double click the GpxSplitter<version>.jar executable jar
+ - Double click the gpxsplitter.exe native executable
+
 On Linux and Mac running the command "java -jar GpxSplitter<version>.jar" will 
 run the software.
 
@@ -100,6 +104,7 @@ What does the "Build Passing" mean:
 
  - The code complies with Sun Microsystems' style checks (only exception is EOL)
  - At least 80% of the code's business logic is unit tested
+ - A windows executable can be successfully generated
 
 License
 -------
