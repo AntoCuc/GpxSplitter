@@ -4,5 +4,5 @@ jdk:
 sudo: required
 before_script:
   - sudo apt-get update
-  - sudo apt-get install lib32z1 lib32ncurses5
-script: mvn clean verify
+  - sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0
+cript: mvn clean verify
