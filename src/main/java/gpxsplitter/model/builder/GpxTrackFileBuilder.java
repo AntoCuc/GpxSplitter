@@ -31,8 +31,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Builds GPX track files.
+ * The class {@code GpxTrackBuilder} class builds split GPX track files.
+ *
+ * <p>Treats each Track Segment as if it was a file on its own right. This
+ * ensures that when splitting multi-segmented track files Gpx Splitter
+ * maintains data consistency.
+ * <p>An approach treating the entire Track as one GPX would, on some Garmin
+ * devices using segments to separate day rides, "squash" the entire history
+ * as if it was one big blob of Waypoints corrupting the data set.
+ * <p>Such behavior may result in a number of split GPX files larger than
+ * initially thought.
+ *
  * @author Antonino Cucchiara
+ * @see TrksegType
+ * @see TrkType
+ * @see WptType
+ * @since GpxSplitter 0.1
  */
 public final class GpxTrackFileBuilder extends GpxFileBuilder {
 
