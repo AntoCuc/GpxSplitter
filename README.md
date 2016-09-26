@@ -26,16 +26,6 @@ That is when development of GPX Splitter started.
 Release Notes
 -------------
 
-0.1 (16/06/2011)
-
- - First release
- - Basic splitting support for routes and tracks
-
-0.2 (23/06/2011)
-
- - Addressed issues with speed when splitting large GPX files
- - Introduced manual support for splitting of multi-segment track files
-
 0.3(30/09/2016)
 
  - Dropped the facility to convert routes to tracks and viceversa
@@ -48,22 +38,23 @@ Release Notes
    - Added Unit test coverage checks
    - Added manifest (Maven build)
    - Added Windows executable goal (Maven build)
+   - Added Mac executable goal (Maven build)
 
-Monthly updates
----------------
+0.2 (23/06/2011)
 
-If no features are developed a monthly review of dependencies and plugins is 
-performed.
+ - Addressed issues with speed when splitting large GPX files
+ - Introduced manual support for splitting of multi-segment track files
 
-Issues
-------
+0.1 (16/06/2011)
 
-Have you found a problem with the software? 
-[Please let us know](https://github.com/AntoCuc/GpxSplitter/issues).
-We will fix it ASAP.
+ - First release
+ - Basic splitting support for routes and tracks
 
-Getting started (technical)
----------------------------
+Build GpxSplitter
+-----------------
+
+If you are not particularly interested in building the software yourself skip to
+"Running the software".
 
 ### Dependencies ###
 
@@ -81,15 +72,24 @@ moving to the clone directory and running the Apache Maven goal "install".
 The "install" goal will generate a "target" directory containing the GpxSplitter
 JAR file.
 
-### Running the software ###
+### Run GpxSplitter###
 
-On Microsoft Windows (Required Java 8)
+Running GpxSplitter on any platform requires Java 8 or Open JDK.
+
+Microsoft Windows
 
  - Double click the GpxSplitter<version>.jar executable jar
  - Double click the gpxsplitter.exe native executable
 
-On Linux and Mac running the command "java -jar GpxSplitter<version>.jar" will 
-run the software.
+Mac OSX
+
+ - Download the executable (OSX automatically unzips the App)
+ - Drag the App to your "Applications" folder and/or to your Dock
+ - Run via Finder or clicking the icon on the dock
+
+Linux (any recent distro)
+
+ - Run the command `java -jar GpxSplitter<version>.jar`
 
 Software Builds
 ---------------
@@ -105,6 +105,23 @@ What does the "Build Passing" mean:
  - The code complies with Sun Microsystems' style checks (only exception is EOL)
  - At least 80% of the code's business logic is unit tested
  - A windows executable can be successfully generated
+
+Note: To build a Mac executable we require an artefact found only on Mac
+computers. Our Travis uses Linux Ubuntu to perform the builds so the creation
+of Mac applications is not part of the above Continous Delivery Job.
+
+Monthly updates
+---------------
+
+If no features are developed a monthly review of dependencies and plugins is 
+performed.
+
+Issues
+------
+
+Have you found a problem with the software? 
+[Please let us know](https://github.com/AntoCuc/GpxSplitter/issues).
+We will fix it ASAP.
 
 License
 -------
