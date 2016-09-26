@@ -4,7 +4,7 @@ Gpx Splitter
 Split GPX files too large to fit in GPS handheld devices into multiple files 
 that do.
 
-This software is meant to be used to generate files to be inported on Handheld 
+This software is meant to be used to generate files to be imported on Handheld 
 GPS devices used for hicking, trekking and mountain/road biking.
 
 GPS handheld devices have historically had limited features to minimise power 
@@ -79,9 +79,16 @@ Running GpxSplitter on any platform requires Java 8 or Open JDK.
 Microsoft Windows
 
  - Double click the GpxSplitter<version>.jar executable jar
+ 
+Or
+ 
  - Double click the gpxsplitter.exe native executable
 
 Mac OSX
+
+ - Double click the GpxSplitter<version>.jar executable jar
+
+Or
 
  - Download the executable (OSX automatically unzips the App)
  - Drag the App to your "Applications" folder and/or to your Dock
