@@ -1,10 +1,10 @@
-Gpx Splitter
+GpxSplitter
 ============
 
 Split GPX files too large to fit in GPS handheld devices into multiple files 
 that do.
 
-This software is meant to be used to generate files to be imported on Handheld 
+GpxSplitter is meant to be used to generate files to be imported on Handheld 
 GPS devices used for hicking, trekking and mountain/road biking.
 
 GPS handheld devices have historically had limited features to minimise power 
@@ -21,7 +21,7 @@ As the milage I could ride went up the amount of waypoints in the routes also
 grew.
 The eTrex Legend has a limit of 125 waypoints per route file so I needed to 
 start "splitting" Gpx files too long to be imported.
-That is when development of GPX Splitter started.
+That is when development of GpxSplitter started.
 
 Release Notes
 -------------
@@ -53,19 +53,19 @@ Release Notes
 Building from source
 --------------------
 
-If you are not particularly interested in building the software yourself
-download one of the executables and go to "Running the software".
+If you are not particularly interested in building GpxSplitter yourself
+download one of the executables and jump to "Running the software".
 
 ### Dependencies ###
 
-To clone the software from Github:
+To clone GpxSplitter from Github:
  - git 2.7.0 or greater
 
-To build the software:
+To build the source code:
  - Oracle JDK 8 or greater
  - Apache Maven 3.3 or greater
  
-To run the downloaded software:
+To run the downloaded GpxSplitter executable:
  - Oracle/Open Java Runtime 8 or greater
 
 ### Building ###
@@ -114,11 +114,11 @@ Software Builds
 
 ### Master ###
 
-The master branch of the Gpx Splitter is a set of code in its most mature state.
+The master branch of the GpxSplitter is a set of code in its most mature state.
 
 [![Build Status](https://travis-ci.org/AntoCuc/GpxSplitter.svg)](https://travis-ci.org/AntoCuc/GpxSplitter)
 
-What does the "Build Passing" mean:
+What does "Build Passing" mean:
 
  - The code complies with Sun Microsystems' style checks (only exception is EOL)
  - At least 80% of the code's business logic is unit tested
@@ -126,7 +126,7 @@ What does the "Build Passing" mean:
 
 Note: To build a Mac executable we require an artefact found only on Mac
 computers. Our Travis uses Linux Ubuntu to perform the builds so the creation
-of Mac applications is not part of the above Continous Delivery Job.
+of Mac applications is not part of the above Continuous Delivery Job.
 
 Monthly updates
 ---------------
@@ -137,14 +137,14 @@ performed.
 Issues
 ------
 
-Have you found a problem with the software? 
+Have you found a problem with GpxSplitter? 
 [Please let us know](https://github.com/AntoCuc/GpxSplitter/issues).
 We will fix it ASAP.
 
 License
 -------
 
-The Gpx Splitter software is free and released under The MIT License. 
+The GpxSplitter software is free and released under The MIT License. 
 Details below.
 
 The MIT License 
