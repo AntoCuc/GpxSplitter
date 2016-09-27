@@ -20,7 +20,7 @@ Audax routes.
 As the milage I could ride went up the amount of waypoints in the routes also 
 grew.
 The eTrex Legend has a limit of 125 waypoints per route file so I needed to 
-start "splitting" Gpx files to long to be imported.
+start "splitting" Gpx files too long to be imported.
 That is when development of GPX Splitter started.
 
 Release Notes
@@ -34,9 +34,9 @@ Release Notes
  - Technical
    - Migrated from Ant to Maven
    - Migrated from JDOM to JaxB
-   - Added checkstyle rules
+   - Added checkstyle rule checks
    - Added Unit test coverage checks
-   - Added manifest (Maven build)
+   - Added manifest for executable Jar (Maven build)
    - Added Windows executable goal (Maven build)
    - Added Mac executable goal (Maven build)
 
@@ -50,43 +50,54 @@ Release Notes
  - First release
  - Basic splitting support for routes and tracks
 
-Build GpxSplitter
------------------
+Building from source
+--------------------
 
-If you are not particularly interested in building the software yourself skip to
-"Running the software".
+If you are not particularly interested in building the software yourself
+download one of the executables and go to "Running the software".
 
 ### Dependencies ###
+
+To clone the software from Github:
+ - git 2.7.0 or greater
 
 To build the software:
  - Oracle JDK 8 or greater
  - Apache Maven 3.3 or greater
  
-To run the software:
+To run the downloaded software:
  - Oracle/Open Java Runtime 8 or greater
 
-### Building the code ###
+### Building ###
 
 After cloning the github repository building the GpxSplitter source consists of
 moving to the clone directory and running the Apache Maven goal "install".
 The "install" goal will generate a "target" directory containing the GpxSplitter
-JAR file.
+JAR file (`gpxsplitter-<version>.jar`).
 
-### Run GpxSplitter###
+The commands to obtain the above would be:
+
+ 1. Clone the repository - `git clone <repository_path>`
+ 2. Move to the cloned directory - `cd GpxSplitter`
+ 3. Invoke maven install - `mvn install`
+ 4. Move in the artefacts directory generated - `cd target`
+ 5. Run the generated executable - `java -jar gpxsplitter-<version>.jar`
+
+### Running ###
 
 Running GpxSplitter on any platform requires Java 8 or Open JDK.
 
 Microsoft Windows
 
- - Double click the GpxSplitter<version>.jar executable jar
+ - Double-click the `gpxsplitter-<version>.jar` executable jar
  
 Or
  
- - Double click the gpxsplitter.exe native executable
+ - Double-click the `gpxsplitter.exe` native executable
 
 Mac OSX
 
- - Double click the GpxSplitter<version>.jar executable jar
+ - Double-click the `gpxsplitter-<version>.jar` executable jar
 
 Or
 
@@ -96,7 +107,7 @@ Or
 
 Linux (any recent distro)
 
- - Run the command `java -jar GpxSplitter<version>.jar`
+ - Run the command `java -jar gpxsplitter-<version>.jar`
 
 Software Builds
 ---------------
@@ -111,7 +122,7 @@ What does the "Build Passing" mean:
 
  - The code complies with Sun Microsystems' style checks (only exception is EOL)
  - At least 80% of the code's business logic is unit tested
- - A windows executable can be successfully generated
+ - A Microsoft Windows executable can be successfully generated
 
 Note: To build a Mac executable we require an artefact found only on Mac
 computers. Our Travis uses Linux Ubuntu to perform the builds so the creation
@@ -138,7 +149,7 @@ Details below.
 
 The MIT License 
 
-Copyright 2016 Antonino Cucchiara. 
+Copyright 2011-2016 Antonino Cucchiara. 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
