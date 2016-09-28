@@ -4,7 +4,7 @@
     <groupId>co.cucchiara</groupId>
     <artifactId>gpxsplitter</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.3</version>
     <name>gpxsplitter</name>
     <description>
         Split GPX files too large to fit in GPS handheld devices into multiple 
