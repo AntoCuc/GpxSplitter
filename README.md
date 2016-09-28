@@ -23,6 +23,11 @@ The eTrex Legend has a limit of 125 waypoints per route file so I needed to
 start "splitting" Gpx files too long to be imported.
 That is when development of GpxSplitter started.
 
+Downloads
+---------
+
+Downloadable artefacts for all platforms are published as [GpxSplitter Github releases](https://github.com/AntoCuc/GpxSplitter/releases).
+
 Release Notes
 -------------
 
