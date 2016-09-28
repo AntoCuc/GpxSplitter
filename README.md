@@ -127,6 +127,7 @@ What does "Build Passing" mean:
 
  - The code complies with Sun Microsystems' style checks (only exception is EOL)
  - At least 80% of the code's business logic is unit tested
+ - A cross-platform executable JAR can be successfully generated
  - A Microsoft Windows executable can be successfully generated
 
 Note: To build a Mac executable we require an artefact found only on Mac
