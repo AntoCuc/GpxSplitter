@@ -106,7 +106,7 @@ Mac OSX
 
 Or
 
- - Download the executable (OSX automatically unzips the App)
+ - Download the DMG image (OSX verifies and opens GpxSplitter's directory)
  - Drag the App to your "Applications" folder and/or to your Dock
  - Run via Finder or clicking the icon on the dock
 
@@ -129,10 +129,7 @@ What does "Build Passing" mean:
  - At least 80% of the code's business logic is unit tested
  - A cross-platform executable JAR can be successfully generated
  - A Microsoft Windows executable can be successfully generated
-
-Note: To build a Mac executable we require an artefact found only on Mac
-computers. Our Travis uses Linux Ubuntu to perform the builds so the creation
-of Mac applications is not part of the above Continuous Delivery Job.
+ - An OSX DMG disk image and executable can be successfully generated
 
 Monthly updates
 ---------------
