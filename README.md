@@ -1,5 +1,4 @@
-GpxSplitter
-============
+# GpxSplitter #
 
 Split GPX files too large to fit in GPS handheld devices into multiple files 
 that do.
@@ -12,8 +11,7 @@ consumption as some are powered with consumer-grade cells.
 More recent GPS devices have better-performing built-in rechargeable cells. 
 However, feature sets are still limited.
 
-Why split Gpx files
--------------------
+## Why split Gpx files ##
 
 In 2011 I purchased a Garmin Etrex Legend for road bike training and to load 
 Audax routes.
@@ -23,40 +21,11 @@ The eTrex Legend has a limit of 125 waypoints per route file so I needed to
 start "splitting" Gpx files too long to be imported.
 That is when development of GpxSplitter started.
 
-Downloads
----------
+## Downloads ##
 
 Downloadable artefacts for all platforms are published as [GpxSplitter Github releases](https://github.com/AntoCuc/GpxSplitter/releases).
 
-Release Notes
--------------
-
-0.3(30/09/2016)
-
- - Dropped the facility to convert routes to tracks and viceversa
- - Further addressed performance issues
- - Automated support for splitting of multi-segment track files
- - Technical
-   - Migrated from Ant to Maven
-   - Migrated from JDOM to JaxB
-   - Added checkstyle rule checks
-   - Added Unit test coverage checks
-   - Added manifest for executable Jar (Maven build)
-   - Added Windows executable goal (Maven build)
-   - Added Mac executable goal (Maven build)
-
-0.2 (23/06/2011)
-
- - Addressed issues with speed when splitting large GPX files
- - Introduced manual support for splitting of multi-segment track files
-
-0.1 (16/06/2011)
-
- - First release
- - Basic splitting support for routes and tracks
-
-Building from source
---------------------
+## Building from source ##
 
 If you are not particularly interested in building GpxSplitter yourself
 download one of the executables and jump to "Running the software".
@@ -80,7 +49,7 @@ moving to the clone directory and running the Apache Maven goal "install".
 The "install" goal will generate a "target" directory containing the GpxSplitter
 JAR file (`gpxsplitter-<version>.jar`).
 
-The commands to obtain the above would be:
+#### Commands ####
 
  1. Clone the repository - `git clone <repository_path>`
  2. Move to the cloned directory - `cd GpxSplitter`
@@ -92,7 +61,7 @@ The commands to obtain the above would be:
 
 Running GpxSplitter on any platform requires Java 8 or Open JDK.
 
-Microsoft Windows
+__Microsoft Windows__
 
  - Double-click the `gpxsplitter-<version>.jar` executable jar
  
@@ -100,7 +69,7 @@ Or
  
  - Double-click the `gpxsplitter.exe` native executable
 
-Mac OSX
+__Mac OSX__
 
  - Double-click the `gpxsplitter-<version>.jar` executable jar
 
@@ -110,12 +79,11 @@ Or
  - Drag the App to your "Applications" folder and/or to your Dock
  - Run via Finder or clicking the icon on the dock
 
-Linux (any recent distro)
+__Linux__
 
  - Run the command `java -jar gpxsplitter-<version>.jar`
 
-Software Builds
----------------
+## Software Builds ##
 
 ### Master ###
 
@@ -123,7 +91,7 @@ The master branch of the GpxSplitter is a set of code in its most mature state.
 
 [![Build Status](https://travis-ci.org/AntoCuc/GpxSplitter.svg)](https://travis-ci.org/AntoCuc/GpxSplitter)
 
-What does "Build Passing" mean:
+__What does "Build Passing" mean:__
 
  - The code complies with Sun Microsystems' style checks (only exception is EOL)
  - At least 80% of the code's business logic is unit tested
@@ -131,21 +99,18 @@ What does "Build Passing" mean:
  - A Microsoft Windows executable can be successfully generated
  - An OSX DMG disk image and executable can be successfully generated
 
-Monthly updates
----------------
+## Updates ##
 
 If no features are developed a monthly review of dependencies and plugins is 
 performed.
 
-Issues
-------
+## Issues ##
 
 Have you found a problem with GpxSplitter? 
 [Please let us know](https://github.com/AntoCuc/GpxSplitter/issues).
 We will fix it ASAP.
 
-License
--------
+## License ##
 
 The GpxSplitter software is free and released under The MIT License. 
 Details below.
