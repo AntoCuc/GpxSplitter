@@ -156,6 +156,8 @@ public class Model {
             return GpxDescriptor.Track;
         } else if (gpxType.getRte().size() > 0) {
             return GpxDescriptor.Route;
+        } else if (gpxType.getWpt().size() > 0) {
+            return GpxDescriptor.Waypoint;
         } else {
             throw new FileNotValidException();
         }

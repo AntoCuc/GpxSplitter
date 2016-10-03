@@ -21,23 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package gpxsplitter.model;
+package gpxsplitter.model.builder;
+
+import gpxsplitter.model.generated.GpxType;
+import gpxsplitter.model.generated.WptType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * GPX file type descriptor.
+ * Builds Gpx Waypoint-based files.
+ *
  * @author Antonino Cucchiara
  */
-public enum GpxDescriptor {
-    /**
-     * Used to define a GPX containing route waypoints.
-     */
-    Route,
-    /**
-     * Used to define a GPX containing track segments and waypoints.
-     */
-    Track,
-    /**
-     * Used to define a GPX containing un-grouped waypoints.
-     */
-    Waypoint;
+public final class GpxWaypointsFileBuilder extends GpxFileBuilder {
+
+    @Override
+    public List<GpxType> buildSplitGpx(
+            final GpxType inputGpx, final int preferredInstrNum) {
+        final List<GpxType> outGpxList = new ArrayList<>();
+        final List<WptType> inWptList = inputGpx.getWpt();
+        final int inWptNum = inWptList.size();
+        final int outFilesNum = howManyFiles(inWptNum, preferredInstrNum);
+        int currFile = 1;
+        int currWptNum = 0;
+        while (currFile <= outFilesNum) {
+            final GpxType newGpx = createGpxTemplate();
+            final List<WptType> outWptList = newGpx.getWpt();
+            for (int i = 0; i < preferredInstrNum; i++) {
+                outWptList.add(inWptList.get(currWptNum));
+                currWptNum++;
+            }
+            outGpxList.add(newGpx);
+            currFile++;
+        }
+        return outGpxList;
+    }
 }

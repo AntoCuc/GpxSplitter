@@ -1,7 +1,5 @@
 package gpxsplitter.model;
 
-import gpxsplitter.model.builder.GpxFileBuilder;
-import gpxsplitter.model.builder.GpxFileBuilderTest;
 import gpxsplitter.model.builder.GpxRouteFileBuilder;
 import gpxsplitter.model.builder.GpxTrackFileBuilder;
 import gpxsplitter.model.exception.FileNotValidException;
@@ -78,7 +76,7 @@ public class ModelTest {
         String actual = new String(outputStream.toByteArray());
         assertEquals(expected, actual);
     }
-    
+
     @Test
     public void testGetRouteTypeDescriptor() throws Exception {
         GpxType gpx = new GpxType();
@@ -102,11 +100,7 @@ public class ModelTest {
     public void testGetWaypointTypeDescriptor() throws Exception {
         GpxType gpx = new GpxType();
         gpx.getWpt().add(new WptType());
-        try {
-            new Model().getDescriptor(gpx);
-        } catch (FileNotValidException ex) {
-            assertEquals(FileNotValidException.ERROR_MSG, ex.getMessage());
-        }
+        assertEquals(GpxDescriptor.Waypoint, new Model().getDescriptor(gpx));
     }
 
     @Test
@@ -124,13 +118,13 @@ public class ModelTest {
         Model model = new Model();
         assertTrue(model.isValidInteger("1"));
     }
-    
+
     @Test
     public void testIsValidIntegerFalse() {
         Model model = new Model();
         assertFalse(model.isValidInteger("a"));
     }
-    
+
     @Test
     public void testStripGpxExtension() {
         String fileName = "abc.gpx";
