@@ -91,11 +91,6 @@ public class ModelTest {
         assertEquals(GpxDescriptor.Track, new Model().getDescriptor(gpx));
     }
 
-    /**
-     * TODO: Introduce support for waypoint based GPX files.
-     *
-     * @throws Exception
-     */
     @Test
     public void testGetWaypointTypeDescriptor() throws Exception {
         GpxType gpx = new GpxType();
