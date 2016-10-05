@@ -195,6 +195,6 @@ public final class Controller {
      * Initialise the GpxSplitter UI.
      */
     public void initialise() {
-        this.view.setVisible(true);
+        this.view.setVisible();
     }
 }

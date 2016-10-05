@@ -25,53 +25,144 @@ package gpxsplitter.view;
 
 import gpxsplitter.model.Model;
 import gpxsplitter.view.filter.GpxFileFilter;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.File;
+import java.net.URI;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
 
-public class View extends javax.swing.JFrame {
+/**
+ * GpxSplitter's Swing frontend.
+ *
+ * @author Antonio Cucchiara
+ */
+public class View {
 
+    /**
+     * The Gpx Splitter application name.
+     */
     public static final String GPX_SPLITTER = "Gpx Splitter";
-    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    /**
+     * The cross-platform Line Separator.
+     */
+    public static final String LINE_SEPARATOR
+            = System.getProperty("line.separator");
+    /**
+     * The Link to the online help system.
+     */
+    private static final String HELP_SYSTEM_LINK
+            = "http://antocuc.github.com/GpxSplitterHelp.html";
+    /**
+     * The Link to the application's url.
+     */
+    private static final String GPX_SPLITTER_URL
+            = "http://antocuc.github.com/GpxSplitter.html";
 
-    public View(Model model) {
-        initComponents();
-    }
+    /**
+     * Large panel layout.
+     */
+    private static final GridLayout LARGE_PANE_LAYOUT
+            = new GridLayout(4, 1);
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    /**
+     * Small panel layout.
+     */
+    private static final GridLayout SMALL_PAN_LAYOUT
+            = new GridLayout(1, 2);
 
-        javax.swing.JPanel inputFilePanel = new javax.swing.JPanel();
-        openFileField = new javax.swing.JTextField();
-        browseButton = new javax.swing.JButton();
-        javax.swing.JPanel inputFileFeaturesPanel = new javax.swing.JPanel();
-        javax.swing.JLabel fileTypeLabel = new javax.swing.JLabel();
-        fileTypeValue = new javax.swing.JLabel();
-        javax.swing.JPanel ouputConfigurationPanel = new javax.swing.JPanel();
-        javax.swing.JLabel instructionsNumberLabel = new javax.swing.JLabel();
-        instructionsNumberField = new javax.swing.JTextField();
-        javax.swing.JPanel outputFilePanel = new javax.swing.JPanel();
-        javax.swing.JLabel emptyLabel = new javax.swing.JLabel();
-        saveFileButton = new javax.swing.JButton();
-        javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
-        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
-        exitMenuItem = new javax.swing.JMenuItem();
-        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
-        helpMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+    /**
+     * The UI frame.
+     */
+    private final JFrame frame;
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(GPX_SPLITTER);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(View.class.getResource("/gpxsplitter/media/map.png")));
-        setResizable(false);
-        getContentPane().setLayout(new java.awt.GridLayout(4, 1, 10, 10));
+    /**
+     * The about menu item.
+     */
+    private final JMenuItem aboutMenuItem;
+    /**
+     * The browse gpx button.
+     */
+    private final JButton browseButton;
+    /**
+     * The exit menu item.
+     */
+    private final JMenuItem exitMenuItem;
+    /**
+     * The loaded file type value.
+     */
+    private final JLabel fileTypeValue;
+    /**
+     * The help menu item.
+     */
+    private final JMenuItem helpMenuItem;
+    /**
+     * The field allowing to gather the wished number of instructions.
+     */
+    private final JTextField instructionsNumberField;
+    /**
+     * The field displaying the loaded file path.
+     */
+    private final JTextField openFileField;
+    /**
+     * The button to save the split gpx.
+     */
+    private final JButton saveFileButton;
 
-        inputFilePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Open Gpx file"));
-        inputFilePanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
+    /**
+     * Application positioning bounds.
+     */
+    private static final Rectangle APP_BOUNDS = new Rectangle(0, 0, 350, 250);
+
+    /**
+     * Initialise the Gpx Splitter UI.
+     *
+     * @param model containing the business logic
+     */
+    public View(final Model model) {
+        frame = new JFrame(GPX_SPLITTER);
+        final JPanel inputFilePanel = new JPanel();
+        openFileField = new JTextField();
+        browseButton = new JButton();
+        final JPanel inputFileFeaturesPanel = new JPanel();
+        final JLabel fileTypeLabel = new JLabel();
+        fileTypeValue = new JLabel();
+        final JPanel ouputConfigurationPanel = new JPanel();
+        final JLabel instructionsNumberLabel = new JLabel();
+        instructionsNumberField = new JTextField();
+        final JPanel outputFilePanel = new JPanel();
+        final JLabel emptyLabel = new JLabel();
+        saveFileButton = new JButton();
+        final JMenuBar menuBar = new JMenuBar();
+        final JMenu fileMenu = new JMenu();
+        exitMenuItem = new JMenuItem();
+        final JMenu helpMenu = new JMenu();
+        helpMenuItem = new JMenuItem();
+        aboutMenuItem = new JMenuItem();
+
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
+                View.class.getResource("/gpxsplitter/media/map.png")
+        ));
+        frame.setResizable(false);
+        frame.getContentPane().setLayout(LARGE_PANE_LAYOUT);
+        final TitledBorder openGpxTitledBorder
+                = BorderFactory.createTitledBorder("Open Gpx file");
+
+        inputFilePanel.setBorder(openGpxTitledBorder);
+        inputFilePanel.setLayout(SMALL_PAN_LAYOUT);
 
         openFileField.setEnabled(false);
         inputFilePanel.add(openFileField);
@@ -79,10 +170,12 @@ public class View extends javax.swing.JFrame {
         browseButton.setText("Browse...");
         inputFilePanel.add(browseButton);
 
-        getContentPane().add(inputFilePanel);
+        frame.getContentPane().add(inputFilePanel);
+        final TitledBorder gpxFeaturesTitledBorder
+                = BorderFactory.createTitledBorder("Gpx features");
 
-        inputFileFeaturesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Gpx features"));
-        inputFileFeaturesPanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
+        inputFileFeaturesPanel.setBorder(gpxFeaturesTitledBorder);
+        inputFileFeaturesPanel.setLayout(SMALL_PAN_LAYOUT);
 
         fileTypeLabel.setText("Loaded gpx:");
         inputFileFeaturesPanel.add(fileTypeLabel);
@@ -90,10 +183,12 @@ public class View extends javax.swing.JFrame {
         fileTypeValue.setText("N/A");
         inputFileFeaturesPanel.add(fileTypeValue);
 
-        getContentPane().add(inputFileFeaturesPanel);
+        frame.getContentPane().add(inputFileFeaturesPanel);
+        final TitledBorder outputConfigTitledBorder
+                = BorderFactory.createTitledBorder("Output configuration");
 
-        ouputConfigurationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Output configuration"));
-        ouputConfigurationPanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
+        ouputConfigurationPanel.setBorder(outputConfigTitledBorder);
+        ouputConfigurationPanel.setLayout(SMALL_PAN_LAYOUT);
 
         instructionsNumberLabel.setText("Instructions / file:");
         ouputConfigurationPanel.add(instructionsNumberLabel);
@@ -101,17 +196,18 @@ public class View extends javax.swing.JFrame {
         instructionsNumberField.setText("125");
         ouputConfigurationPanel.add(instructionsNumberField);
 
-        getContentPane().add(ouputConfigurationPanel);
+        frame.getContentPane().add(ouputConfigurationPanel);
+        final TitledBorder saveGpxTitledBorder
+                = BorderFactory.createTitledBorder("Save Gpx files");
 
-        outputFilePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Save Gpx files"));
-        outputFilePanel.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
+        outputFilePanel.setBorder(saveGpxTitledBorder);
+        outputFilePanel.setLayout(SMALL_PAN_LAYOUT);
         outputFilePanel.add(emptyLabel);
 
-        saveFileButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         saveFileButton.setText("Save");
         outputFilePanel.add(saveFileButton);
 
-        getContentPane().add(outputFilePanel);
+        frame.getContentPane().add(outputFilePanel);
 
         fileMenu.setText("File");
 
@@ -130,109 +226,176 @@ public class View extends javax.swing.JFrame {
 
         menuBar.add(helpMenu);
 
-        setJMenuBar(menuBar);
+        frame.setJMenuBar(menuBar);
 
-        setBounds(0, 0, 366, 289);
-    }// </editor-fold>//GEN-END:initComponents
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JButton browseButton;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JLabel fileTypeValue;
-    private javax.swing.JMenuItem helpMenuItem;
-    private javax.swing.JTextField instructionsNumberField;
-    private javax.swing.JTextField openFileField;
-    private javax.swing.JButton saveFileButton;
-    // End of variables declaration//GEN-END:variables
+        frame.setBounds(APP_BOUNDS);
+    }
 
-    public JButton getBrowseButton() {
+    /**
+     * Retrieves the browse button.
+     *
+     * @return the browse button
+     */
+    public final JButton getBrowseButton() {
         return browseButton;
     }
 
-    public JButton getSaveFileButton() {
+    /**
+     * Retrieves the save button.
+     *
+     * @return the save button
+     */
+    public final JButton getSaveFileButton() {
         return saveFileButton;
     }
 
-    public JMenuItem getExitMenuItem() {
+    /**
+     * Retrieves the exit item.
+     *
+     * @return the exit menu item
+     */
+    public final JMenuItem getExitMenuItem() {
         return exitMenuItem;
     }
 
-    public JMenuItem getHelpMenuItem() {
+    /**
+     * Retrieves the help item.
+     *
+     * @return the help menu item
+     */
+    public final JMenuItem getHelpMenuItem() {
         return helpMenuItem;
     }
 
-    public JMenuItem getAboutMenuItem() {
+    /**
+     * Retrieves the about item.
+     *
+     * @return the about menu item
+     */
+    public final JMenuItem getAboutMenuItem() {
         return aboutMenuItem;
     }
 
-    public String getInstructionsNumberFieldText() {
+    /**
+     * Retrieves the number of instructions entered.
+     *
+     * @return the num of instructions
+     */
+    public final String getInstructionsNumberFieldText() {
         return instructionsNumberField.getText();
     }
 
-    public void setFileTypeValue(String fileType) {
-        fileTypeValue.setText(fileType);
-    }
-
-    public void setOpenFileField(String openedFile) {
+    /**
+     * Sets the path of the loaded file.
+     *
+     * @param openedFile to diplay
+     */
+    public final void setOpenFileField(final String openedFile) {
         openFileField.setText(openedFile);
     }
 
-    public void setSplittingEnabled(boolean enabled) {
-        instructionsNumberField.setEnabled(enabled);
+    /**
+     * Displays the file descriptor.
+     * @param loadedFileDescription to display
+     */
+    public final void setFileTypeValue(final String loadedFileDescription) {
+        fileTypeValue.setText(loadedFileDescription);
     }
 
-    public void showMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
+    /**
+     * Displays a controller message.
+     *
+     * @param message to be displayed
+     */
+    public final void showMessage(final String message) {
+        JOptionPane.showMessageDialog(this.frame, message);
     }
 
-    public int showConfirmDialog(String message) {
-        return JOptionPane.showConfirmDialog(this, message);
+    /**
+     * Displays a confirmation dialog with a message.
+     *
+     * @param message to display in the dialog
+     * @return 1 if OK
+     */
+    public final int showConfirmDialog(final String message) {
+        return JOptionPane.showConfirmDialog(this.frame, message);
     }
 
-    public void showAboutPane() {
-        JOptionPane.showMessageDialog(
-                this,
+    /**
+     * DIsplays the about pane.
+     */
+    public final void showAboutPane() {
+        JOptionPane.showMessageDialog(this.frame,
                 "<html><h3>GPX Splitter vHEAD</h3>"
                 + "<p>Author: Antonio Cucchiara <br>"
-                + "Homepage: http://antocuc.github.com/GpxSplitter.html <br>"
+                + "Homepage: "
+                + GPX_SPLITTER_URL
+                + "<br>"
                 + "License:  Creative Commons  3.0"
-                + "<ul><li>Attribution</li><li>Non Commercial</li><li>Share Alike</li></ul>"
+                + "<ul><li>Attribution</li><li>Non Commercial</li>"
+                + "<li>Share Alike</li></ul>"
                 + "</p></html>",
                 "About " + GPX_SPLITTER,
                 JOptionPane.PLAIN_MESSAGE,
-                new javax.swing.ImageIcon(getClass().getResource("/gpxsplitter/media/map.png")));
-
+                new javax.swing.ImageIcon(
+                        getClass().getResource("/gpxsplitter/media/map.png")));
     }
 
-    public void browseHelpSystem() {
+    /**
+     * Uses the default browser to load the help system.
+     */
+    public final void browseHelpSystem() {
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         if (!desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
-            showMessage("Desktop doesn't support the browse action the online help cannot be open.");
+            showMessage("Browse action cannot be opened.");
         }
         try {
-            java.net.URI uri = new java.net.URI("http://antocuc.github.com/GpxSplitterHelp.html");
+            URI uri = new URI(HELP_SYSTEM_LINK);
             desktop.browse(uri);
         } catch (Exception e) {
             showMessage("Problem reaching the website.");
         }
     }
 
+    /**
+     * Build a generic file chooser.
+     *
+     * @return the file chooser
+     */
     private JFileChooser buildGpxFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new GpxFileFilter());
         return fileChooser;
     }
 
+    /**
+     * Allows the selection of a GPX file from the file system.
+     *
+     * @return the file path
+     */
     public final String openGpxFile() {
         JFileChooser fileChooser = buildGpxFileChooser();
-        fileChooser.showOpenDialog(this);
+        fileChooser.showOpenDialog(this.frame);
         return fileChooser.getSelectedFile().getAbsolutePath();
     }
 
-    public final String saveGpxFile(String selectedFile) {
+    /**
+     * Allows the selection of a path to save a GPX file to the file system.
+     *
+     * @param selectedFile to save to
+     * @return the file path
+     */
+    public final String saveGpxFile(final String selectedFile) {
         JFileChooser fileChooser = buildGpxFileChooser();
         fileChooser.setSelectedFile(new File(selectedFile));
-        fileChooser.showSaveDialog(this);
+        fileChooser.showSaveDialog(this.frame);
         return fileChooser.getSelectedFile().getAbsolutePath();
+    }
+
+    /**
+     * Allows initialisation of the view.
+     */
+    public final void setVisible() {
+        this.frame.setVisible(true);
     }
 }
