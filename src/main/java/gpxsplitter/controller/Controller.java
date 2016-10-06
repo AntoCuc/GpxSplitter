@@ -35,7 +35,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -61,30 +60,12 @@ public final class Controller {
     private final View view;
 
     /**
-     * GpxSplitter bootstrapping method.
-     *
-     * @param args GpcSplitter arguments
-     */
-    public static void main(final String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.out.println("Error setting native LAF: " + e);
-        }
-
-        final Model model = new Model();
-        final View view = new View(model);
-        final Controller controller = new Controller(model, view);
-        controller.initialise();
-    }
-
-    /**
      * Initialise the Controller with references to the model and view.
      *
      * @param newModel GpxSplitter Business Logic
      * @param newView GpxSplitter Frontend
      */
-    private Controller(final Model newModel, final View newView) {
+    public Controller(final Model newModel, final View newView) {
         this.model = newModel;
         this.view = newView;
 

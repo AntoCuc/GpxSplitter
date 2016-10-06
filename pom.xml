@@ -68,9 +68,11 @@
                     <excludes>
                         <!-- JAXB generated classes are "trusted" -->
                         <exclude>gpxsplitter/model/generated/*.class</exclude>
-                        <!-- Matisse generated classes are "trusted" -->
+                        <!-- Launcher contains no business logic -->
+                        <exclude>gpxsplitter/Launcher.class</exclude>
+                        <!-- UI contains no business logic -->
                         <exclude>gpxsplitter/view/View.class</exclude>
-                        <!-- The controller contains no business logic -->
+                        <!-- Controller contains no business logic -->
                         <exclude>gpxsplitter/controller/Controller.class</exclude>
                     </excludes>
                 </configuration>
@@ -137,7 +139,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>gpxsplitter.controller.Controller</mainClass>
+                            <mainClass>gpxsplitter.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -159,7 +161,7 @@
                             <outfile>${project.build.directory}/${project.name}.exe</outfile>
                             <downloadUrl>http://java.com/download</downloadUrl>
                             <classPath>
-                                <mainClass>gpxsplitter.controller.Controller</mainClass>
+                                <mainClass>gpxsplitter.Launcher</mainClass>
                                 <preCp></preCp>
                             </classPath>
                             <icon>src/main/resources/gpxsplitter/media/map.ico</icon>
@@ -188,7 +190,7 @@
                 <artifactId>appbundle-maven-plugin</artifactId>
                 <version>1.1.1</version>
                 <configuration>
-                    <mainClass>gpxsplitter.controller.Controller</mainClass>
+                    <mainClass>gpxsplitter.Launcher</mainClass>
                     <iconFile>gpxsplitter/media/map.icns</iconFile>
                     <generateDiskImageFile>true</generateDiskImageFile>
                 </configuration>

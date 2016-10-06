@@ -41,6 +41,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
@@ -132,6 +133,11 @@ public class View {
      * @param model containing the business logic
      */
     public View(final Model model) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println("Error setting native LAF: " + e);
+        }
         frame = new JFrame(GPX_SPLITTER);
         final JPanel inputFilePanel = new JPanel();
         openFileField = new JTextField();
@@ -326,14 +332,12 @@ public class View {
      */
     public final void showAboutPane() {
         JOptionPane.showMessageDialog(this.frame,
-                "<html><h3>GPX Splitter vHEAD</h3>"
+                "<html><h3>GPX Splitter</h3>"
                 + "<p>Author: Antonio Cucchiara <br>"
                 + "Homepage: "
                 + GPX_SPLITTER_URL
                 + "<br>"
-                + "License:  Creative Commons  3.0"
-                + "<ul><li>Attribution</li><li>Non Commercial</li>"
-                + "<li>Share Alike</li></ul>"
+                + "The MIT License"
                 + "</p></html>",
                 "About " + GPX_SPLITTER,
                 JOptionPane.PLAIN_MESSAGE,
