@@ -26,6 +26,7 @@ package gpxsplitter.model;
 /**
  * GPX file type descriptor.
  * @author Antonino Cucchiara
+ * @since 0.3
  */
 public enum GpxDescriptor {
     /**

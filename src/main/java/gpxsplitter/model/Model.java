@@ -44,6 +44,7 @@ import javax.xml.namespace.QName;
  * Encapsulates GpxSplitter business logic.
  *
  * @author Antonino Cucchiara
+ * @since 0.1
  */
 public class Model {
 

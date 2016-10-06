@@ -34,6 +34,7 @@ import javax.xml.bind.Unmarshaller;
  * Loads GPX file to split.
  *
  * @author Antonino Cucchiara
+ * @since 0.1
  */
 public final class GpxFileLoader {
 

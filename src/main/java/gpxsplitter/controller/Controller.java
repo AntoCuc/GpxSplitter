@@ -41,6 +41,7 @@ import javax.xml.bind.JAXBException;
  * Coordinates data flows between Model and View.
  *
  * @author Antonino Cucchiara
+ * @since 0.1
  */
 public final class Controller {
 

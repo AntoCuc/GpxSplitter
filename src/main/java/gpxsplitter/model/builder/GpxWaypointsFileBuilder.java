@@ -32,6 +32,7 @@ import java.util.List;
  * Builds Gpx Waypoint-based files.
  *
  * @author Antonino Cucchiara
+ * @since 0.4
  */
 public final class GpxWaypointsFileBuilder extends GpxFileBuilder {
 

@@ -30,6 +30,7 @@ import javax.swing.filechooser.FileFilter;
 /**
  * Filters GPX files and directories for navigation.
  * @author Antonino Cucchiara
+ * @since 0.1
  */
 public final class GpxFileFilter extends FileFilter {
     /**

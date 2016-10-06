@@ -49,6 +49,7 @@ import javax.swing.border.TitledBorder;
  * GpxSplitter's Swing frontend.
  *
  * @author Antonio Cucchiara
+ * @since 0.1
  */
 public class View {
 

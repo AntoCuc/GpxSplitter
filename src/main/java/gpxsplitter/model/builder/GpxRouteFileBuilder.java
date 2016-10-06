@@ -32,6 +32,7 @@ import java.util.List;
 /**
  * Builds Gpx Route files.
  * @author Antonino Cucchiara
+ * @since 0.1
  */
 public final class GpxRouteFileBuilder extends GpxFileBuilder {
 

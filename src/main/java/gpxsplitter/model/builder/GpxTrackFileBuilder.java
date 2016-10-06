@@ -46,7 +46,7 @@ import java.util.List;
  * @see TrksegType
  * @see TrkType
  * @see WptType
- * @since GpxSplitter 0.1
+ * @since 0.1
  */
 public final class GpxTrackFileBuilder extends GpxFileBuilder {
 

@@ -31,6 +31,7 @@ import java.util.List;
  * Builds Gpx files given a binding object.
  *
  * @author Antonino Cucchiara
+ * @since 0.1
  */
 public abstract class GpxFileBuilder {
 

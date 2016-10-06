@@ -26,6 +26,7 @@ package gpxsplitter.model.exception;
 /**
  * Thrown when attempting to load a non-GPX file.
  * @author Antonino Cucchiara
+ * @since 0.1
  */
 public class FileNotValidException extends Exception {
 
