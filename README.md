@@ -101,6 +101,8 @@ __What does "Build Passing" mean:__
 
 ## Updates ##
 
+[![Dependency Status](https://www.versioneye.com/user/projects/5808c3cfd65a77005273b3a1/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5808c3cfd65a77005273b3a1)
+
 If no features are developed a monthly review of dependencies and plugins is 
 performed.
 
