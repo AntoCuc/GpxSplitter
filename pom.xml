@@ -53,7 +53,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.7.201606060606</version>
+                <version>0.7.8</version>
                 <configuration>
                     <excludes>
                         <!-- JAXB generated classes are "trusted" -->
@@ -137,7 +137,7 @@
             <plugin>
                 <groupId>com.akathist.maven.plugins.launch4j</groupId>
                 <artifactId>launch4j-maven-plugin</artifactId>
-                <version>1.7.13</version>
+                <version>1.7.15</version>
                 <executions>
                     <execution>
                         <id>l4j-clui</id>
