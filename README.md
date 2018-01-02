@@ -101,7 +101,7 @@ __What does "Build Passing" mean:__
 
 ## Updates ##
 
-[![Dependency Status](https://www.versioneye.com/user/projects/5808c3cfd65a77005273b3a1/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5808c3cfd65a77005273b3a1)
+[![Known Vulnerabilities](https://snyk.io/test/github/antocuc/gpxsplitter/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/antocuc/gpxsplitter?targetFile=pom.xml)
 
 If no features are developed a monthly review of dependencies and plugins is 
 performed.
